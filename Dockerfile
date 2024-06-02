@@ -1,14 +1,8 @@
-# ベースイメージとしてPython公式イメージを使用します 
-FROM python:3.9-slim 
+FROM python:3.7
 
-# 必要なパッケージをインストールします 
-RUN apt-get update && apt-get install -y gcc 
+COPY requirements.txt /
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /requirements.txt
 
-# Pythonの依存パッケージをコピーしてインストールします 
-COPY requirements.txt /app/ RUN pip install --no-cache-dir -r requirements.txt 
+EXPOSE 5000
 
-# カレントディレクトリのコードをコンテナ内の/appにコピーします 
-COPY . /app/ 
-
-# Flaskアプリを起動するコマンドを指定します 
-CMD [ "python", "app.py" ] 
