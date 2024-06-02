@@ -1,0 +1,10 @@
+{
+    "name": "web-example",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "web-example",
+    "workspaceFolder": "/app",
+    "forwardPorts": [5000],
+    "extensions": [
+        "ms-python.python"
+    ]
+}

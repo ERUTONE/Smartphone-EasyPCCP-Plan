@@ -1,17 +1,12 @@
-version: "3.5"
-
 services:
-    web-example:
-        build:
-            context: .
-        expose:
-            - 5000
-        volumes:
-            - .:/app:ro
-            - ./templates:/app/templates
-            - ./static:/app/static
-        command: /usr/local/bin/gunicorn -k gevent --reload --workers 10 --worker-connections 10 --access-logfile=- --pythonpath /app -b :5000 app:app
-        ports:
-          - "5000:5000"
-
-
+  python3:
+    build: .
+    container_name: Smartphone-EasyPCCP-Plan
+    tty: true
+    working_dir: "/app"
+    volumes:
+        - ./app.py:/app
+        - ./templates:/app/templates
+        - ./static:/app/static
+    ports:
+      - "5000:5000"
