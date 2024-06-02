@@ -11,5 +11,5 @@ def hello():
     if 'use_template' in request.args:
         return render_template('hello.html')
     else:
-        return 'Hello World!'
+        return 'Hello World! to sango'
 
