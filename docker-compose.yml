@@ -8,3 +8,4 @@ services:
         - .:/app
     ports:
       - "5000:5000"
+    command: /usr/local/bin/gunicorn -k gevent --reload --workers 10 --worker-connections 10 --access-logfile=- --pythonpath /app -b :5000 app:app

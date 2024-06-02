@@ -1,16 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>My ToDo App</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
-    <h1>ToDo List</h1>
-    <ul>
-      {% for todo in todos %}
-      <li>{{ todo.title }}</li>
-      {% endfor %}
-    </ul>
-    <a href="{{ url_for('todos.create') }}">Create New ToDo</a> 
-  </body> 
+<head>
+    <title>テストページ</title>
+</head>
+<body>
+    <h1>こんにちは、世界！</h1>
+    <p>これはテスト用のHTMLページです。</p>
+</body>
 </html>
