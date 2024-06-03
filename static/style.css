@@ -1,10 +1,37 @@
 body {
-    background-color: #f5f5f5;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 50px;
-  } 
-  
-  h1 {
-    color: #007bff;
-  }
+  background-color: #303030;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.wrapper {
+  width: 90vw;
+  height: 45vw;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: grid;
+  grid-template-columns: repeat(4, 25%);
+  grid-template-rows:    repeat(2, 50%);
+
+}
+
+.widget {
+  background-color: #b091ff;
+  padding: 1em;
+  margin: 0.2em;
+  border-radius: 0.5em;
+}
+
+#Audio {
+  grid-column: 3 / 5;
+  grid-row: 1 / 2;
+}
+
+#Shortcuts {
+  grid-column: 2 / 5;
+  grid-row: 2 / 3;
+}

@@ -13,7 +13,17 @@ def hello():
     if 'use_template' in request.args:
         dt_now = datetime.datetime.now()
         
-        return render_template('index.html', clockString=dt_now.strftime('%Y-%m-%d %H:%M:%S'))
+        return render_template('index.html', clockString=dt_now.strftime('%Y-%m-%d %H:%M:%S'), div=render_template('testdiv.html'))
     else:
-        return 'Hello World! to the local file'
+        my_dict = {
+            "name": "user",
+            "age": 25,
+            "gender": "male",
+            "hobbies": [
+                "reading",
+                "cooking",
+                "sleeping"
+            ]
+        }
+        return render_template('layout_prototype.html', my_dict=my_dict)
 
