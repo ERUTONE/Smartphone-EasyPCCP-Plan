@@ -1,0 +1,14 @@
+{
+    "column":2,
+    "row":1,
+    "title":"",
+    "sync":"* * * * *",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"text",
+            "content":"{{hhmm}}",
+            "text-size":"x"
+        }
+    ]
+}

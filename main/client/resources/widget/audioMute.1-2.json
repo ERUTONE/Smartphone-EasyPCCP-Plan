@@ -1,0 +1,21 @@
+{
+    "column":1,
+    "row":2,
+    "title":"Action",
+    "sync":"websocket",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"button-icon",
+            "id":"soundOn",
+            "action":"audio.setSoundMute(false)",
+            "src":"%resources%/icon/soundOn.png"
+        },
+        {
+            "type":"button-icon",
+            "id":"soundOff",
+            "action":"audio.setSoundMute(true)",
+            "src":"%resources%/icon/soundOff.png"
+        }
+    ]
+}

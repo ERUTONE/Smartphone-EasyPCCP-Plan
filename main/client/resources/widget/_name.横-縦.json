@@ -1,0 +1,71 @@
+{
+    "column":1,
+    "row":1,
+
+    "title": {
+        "":"no title",
+        "abc":   "medium abc",
+        "s:abc": "small  abc",
+        "m:abc": "medium abc",
+        "l:abc": "large  abc"
+    },
+
+    "sync":"none|websocket|* * * * * ( min hour date month dow / like cron )",
+
+    "containers":[
+        "* available:",
+        "vbox",
+        "hbox",
+        
+        "* unavailable:",
+        "grid",
+        "flex"
+    ],
+
+    "content":[
+        {
+            "*type":"text",
+            " id":"accessible from function sources",
+            "*text":"display text",
+            " text-size": "s/m/l/x , m by default - text size",
+            " custom-format":"true/false , false by default"
+        },
+        {
+            "*type":"image",
+            " id":"accessible from function sources",
+            "*src":"%resources%/img/hoge.jpg, png, ...",
+            " size":"s/m/l/x , m by default, x to full size",
+            " clip":"true/false : false by default, true to clip to square"
+        },
+        {
+            "*type":"button-text",
+            " id":"accessible from function sources",
+            "*action":"module.function(args)",
+            "*text":"display text",
+            " size":"s/m/l/x , m by default, x to full size",
+            " text-size": "s/m/l/x , m by default - text size",
+            " custom-format":"true/false , false by default",
+            " custom-text-color":"none / hex color",
+            " custom-color":"none / hex color",
+            " transparent":"true/false , false by default, good for x size button"
+
+        },
+        {
+            "*type":"button-icon",
+            " id":"accessible from function sources",
+            "*action":"module.function(args)",
+            "*src":"%resources%/icon/hoge.jpg, png, ...",
+            " size":"s/m/l/x , m by default, x to full size",
+            " custom-color":"none / hex color",
+            " transparent":"true/false , false by default, good for x size button"
+        },
+        {
+            "*type":"button-image",
+            " id":"accessible from function sources",
+            "*action":"module.function(args)",
+            "*src":"%resources%/img/hoge.jpg, png, ...",
+            " size":"s/m/l/x , m by default, x to full size",
+            " clip":"true/false : false by default, true to clip to square"
+        }
+    ]
+}
