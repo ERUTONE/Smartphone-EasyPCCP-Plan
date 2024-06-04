@@ -8,6 +8,8 @@ body {
 .widgets-container {
   width: 90vw;
   height: 45vw;
+  max-width: 180svh;
+  max-height: 90svh;
 
   position: absolute;
   top: 50%;
