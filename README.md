@@ -1,27 +1,26 @@
-# Simple Flask application using Docker and docker-compose
+Smartphone-EasyPCCP
 
-This small project demos use of the Flask framework with Jinja2 templates together with Docker / docker-compose for web development. It uses Gunicorn as an application server and NGINX as a proxy. Files are mounted in the container and both templates and the app.py will be reloaded automatically within the container when changed locally.
+## 必要な機能
+### Host
 
-## Installation
+- リクエストに対応した制御処理
+  - 種類豊富
+  - デフォルト機能＋カスタム機能
 
-```
-# git clone https://github.com/Kungbib/flask-docker-example
-# cd flask-docker-example
-```
+### Client
 
-## Run
+- htmlの組み立て
+  - ウィジェットの組み立て
+    - UIコンポーネントの配置
+    - UIコンポーネントの機能割り当て
+  - ウィジェットの配置
+    - CSS grid指定
+  - プリセットCSS/カスタムCSSの使用
 
-The following will build and deploy the container locally.
+- リクエストの送信
+  - 送信後、ページ遷移は起こらない
+  - 応答によって、ページ内の一部UIが動く感じ
+- ホストからの受信
+  - クライアントが何もアクションを起こさなくても同期するため
 
-```
-# docker-compose up
-```
-
-Add the `-d` parameter to run in background.
-
-## Test
-
-Test that the container is running by executing `docker-compose ps`. Check output logs with `docker-compose logs`. To continually monitor output run `docker-compose logs --tail 100 -f`.
-
-Go to http://localhost:8080/ or run `curl http://localhost:8080`. To test the template engine add parameter `use_template` to the URL.
-
+---
