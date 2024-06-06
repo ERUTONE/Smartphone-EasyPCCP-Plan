@@ -3,5 +3,7 @@
 ```py
     from app import app
 
-    @app.route("/function/module/function")
+    @app.route("/function/module/function", methods=["Get", "Post"])
+    def host_function():
+        ...
 ```
