@@ -36,6 +36,5 @@ def load_cores():
     import main.client.src.client
     import main.host.src.host
     
-if __name__ == '__main__':
-    load_cores()
-    app.run(host='0.0.0.0', port=5000)
+load_cores()
+app.run(host='0.0.0.0', port=5000)
