@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="{{ url_for(...) }}"> -->
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='main/client/src/template/base.css') }}">
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename=theme) }}">
     <title>EasyPCCP</title>
 </head>
 <body style="overflow: hidden;">
-    <div class="widgets-container">
-        <!-- {{ data.widgets }} -->
+    <div class="container">
+        hi there
+        {{ widgets }}
     </div>
 
 </body>

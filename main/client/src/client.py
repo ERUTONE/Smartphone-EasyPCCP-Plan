@@ -1,7 +1,8 @@
 print("client importing...")
+import os, json
+from flask import render_template
 from app import app
 import main.globals as g
-import os, json
 
 layout_name = ""
 theme_name = ""
@@ -44,3 +45,7 @@ load_usercfg()
 
 get_layout()
 get_theme()
+
+@app.route("/")
+def show_interface():
+    return render_template("base.html",theme=theme_path)

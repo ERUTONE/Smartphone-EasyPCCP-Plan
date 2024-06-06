@@ -1,0 +1,23 @@
+body {
+    background-color: #000000;
+    --accent: #9beeff;
+    color : white;
+    text-align: center;
+}
+
+.widget {
+    background-color: #212121;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.2rem;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.button {
+    background-color:var(--accent);
+    border-radius: 0.2rem;
+    color: black;
+}

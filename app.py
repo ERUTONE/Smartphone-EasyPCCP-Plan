@@ -1,26 +1,15 @@
 #!/usr/bin/env python3
-
 print("starting app..")
 
 from flask import Flask,request,render_template
-import os
+from jinja2 import FileSystemLoader
+import os, datetime
 import importlib.util
 from json import loads,dumps,load
-import datetime
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='/', template_folder='main/client/src/template/')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-@app.route('/template/')
-def template():
-    dt_now = datetime.datetime.now()
-    
-    return render_template('index.html', clockString=dt_now.strftime('%Y-%m-%d %H:%M:%S'))
-
-@app.route('/prototype/')
-def prototype():
-    return render_template('layout_prototype.html')
 
 def import_all_modules_from_dir(directory):
     for filename in os.listdir(directory):
