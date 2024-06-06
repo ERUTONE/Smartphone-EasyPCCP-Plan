@@ -1,5 +1,7 @@
 from typing import Final
 
+template:   Final[str] = "main/client/src/template/"
+
 resources:  Final[str] = "main/client/resources/"
 layout:     Final[str] = resources + "layout/"
 widget:     Final[str] = resources + "widget/"

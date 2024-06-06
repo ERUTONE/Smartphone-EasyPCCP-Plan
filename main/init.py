@@ -7,6 +7,5 @@ def config():
         # create usercfg.json
         with open("config/usercfg.json", "w") as f:
             json.dump({"layout":"default", "theme":"default"}, f, indent=4)
-            f.close()
             
 config()

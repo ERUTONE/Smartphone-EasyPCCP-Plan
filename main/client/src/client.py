@@ -16,7 +16,6 @@ def load_usercfg():
         _usercfg = json.load(f)
         layout_name = _usercfg["layout"]
         theme_name = _usercfg["theme"]
-        f.close()
 
 def get_layout():
     global layout_name, layout
@@ -28,7 +27,6 @@ def get_layout():
     
     with open(_path, "r") as f:
         layout = json.load(f)
-        f.close()
 
 def get_theme():
     global theme_name, theme_path
@@ -39,12 +37,27 @@ def get_theme():
         
     theme_path = _path
 
+def create_grid():
+    global layout
+    grid_col = layout["grid"][0]
+    grid_row = layout["grid"][1]
+    with open(g.template+"grid.css", "w") as f:
+        # TODO: .container
+        f.write(f".container{{ \
+            grid-template-columns : repeat({grid_col}, 1fr); \
+            grid-template-rows : repeat({grid_row}, 1fr);\
+            }}")
+            # TODO: size
+        # TODO: .widget
+        ...
+    
 # -------------------------------- #
 
 load_usercfg()
 
 get_layout()
 get_theme()
+create_grid()
 
 @app.route("/")
 def show_interface():

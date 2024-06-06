@@ -4,8 +4,7 @@ layoutからjsonを一つ指定
 
 ```json
 {
-    "grid-columns":4,
-    "grid-rows":2,
+    "grid":[4,2],
     "placement":[
         {
             "widget":"texttest.1-1",
