@@ -1,6 +1,6 @@
 print("client importing...")
 import os, json
-from flask import render_template
+from flask import render_template, request
 from app import app
 import main.globals as g
 
@@ -41,11 +41,16 @@ def create_grid():
     global layout
     grid_col = layout["grid"][0]
     grid_row = layout["grid"][1]
+    # 
     with open(g.template+"grid.css", "w") as f:
         # TODO: .container
         f.write(f".container{{ \
             grid-template-columns : repeat({grid_col}, 1fr); \
             grid-template-rows : repeat({grid_row}, 1fr);\
+            width: 90vw;\
+            height: {90*grid_row/grid_col}vw;\
+            max-width: {90*grid_col/grid_row}vh;\
+            max-height: 90vh;\
             }}")
             # TODO: size
         # TODO: .widget
@@ -53,12 +58,18 @@ def create_grid():
     
 # -------------------------------- #
 
-load_usercfg()
+def init() :
 
-get_layout()
-get_theme()
-create_grid()
+    load_usercfg()
+
+    get_layout()
+    get_theme()
+    create_grid()
+
+init()
 
 @app.route("/")
 def show_interface():
+    if "reload" in request.args:
+        init()
     return render_template("base.html",theme=theme_path)
