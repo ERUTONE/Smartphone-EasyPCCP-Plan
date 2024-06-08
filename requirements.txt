@@ -3,3 +3,4 @@ gunicorn>=19.7.0
 gevent>=1.4
 pycaw
 comtypes
+regex

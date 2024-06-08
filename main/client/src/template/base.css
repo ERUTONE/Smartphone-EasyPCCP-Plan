@@ -24,3 +24,8 @@ body {
     background-color:var(--accent-color);
     color:white;
 }
+
+.widget_title {
+    color: var(--accent-color);
+    font-weight: bold;
+}
