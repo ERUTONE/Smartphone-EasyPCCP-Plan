@@ -18,6 +18,11 @@ body {
     margin: 0.2rem;
 }
 
+.widget_title{
+    background-color: #ffffff00;
+
+}
+
 .button {
     background-color:var(--accent-color);
     border-radius: 0.2rem;
