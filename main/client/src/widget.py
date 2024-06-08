@@ -17,10 +17,10 @@ class sizedtext:
         if scale==None: scale = "m"
         else: scale = scale.group()
         
-        self.original = sizedtxt            # m:text
-        self.text = text                    # text
-        self.scale = scale                  # s, m, l, xl, xxl
-        self.font_size = self.font_size[scale]   # em
+        self.original = sizedtxt                # m:text
+        self.text = text                        # text
+        self.scale = scale                      # s, m, l, xl, xxl
+        self.font_size = self.font_size[scale]  # em
         
 
 class widget:
