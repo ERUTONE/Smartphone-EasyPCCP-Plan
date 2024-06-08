@@ -1,13 +1,13 @@
 
 body {
-    background-color: #e1e1e1;
+    background-color: #dedede;
     --accent-color: #4d9bee;
     color : black;
     text-align: center;
 }
 
 .container {
-    background-color: #c7c7c7;
+    background-color: #c9c9c9;
     border-radius: 0.9rem;
     padding: 0.2rem
 }
@@ -15,12 +15,7 @@ body {
 .widget {
     background-color: #ffffff;
     border-radius: 0.5rem;
-    padding: 1rem;
     margin: 0.2rem;
-}
-
-.accent {
-    color: var(--accent-color);
 }
 
 .button {

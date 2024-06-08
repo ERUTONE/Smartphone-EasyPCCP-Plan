@@ -12,10 +12,6 @@ body {
     margin: 0.2rem;
 }
 
-.accent {
-    color: var(--accent);
-}
-
 .button {
     background-color:var(--accent);
     border-radius: 0.2rem;

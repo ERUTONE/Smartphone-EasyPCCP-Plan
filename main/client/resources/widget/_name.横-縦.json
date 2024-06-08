@@ -1,13 +1,14 @@
 {
-    "column":1,
-    "row":1,
+    "*column":1,
+    "*row":1,
 
     "title": {
         "":"no title",
         "abc":   "medium abc",
         "s:abc": "small  abc",
         "m:abc": "medium abc",
-        "l:abc": "large  abc"
+        "l:abc": "large  abc",
+        "xl, xxl": "extra large abc"
     },
 
     "sync":"none|websocket|* * * * * ( min hour date month dow / like cron )",
@@ -27,14 +28,13 @@
             "*type":"text",
             " id":"accessible from function sources",
             "*text":"display text",
-            " text-size": "s/m/l/x , m by default - text size",
             " custom-format":"true/false , false by default"
         },
         {
             "*type":"image",
             " id":"accessible from function sources",
             "*src":"%resources%/img/hoge.jpg, png, ...",
-            " size":"s/m/l/x , m by default, x to full size",
+            " size":"s/m/l/xl , m by default, x to full size",
             " clip":"true/false : false by default, true to clip to square"
         },
         {
@@ -42,8 +42,7 @@
             " id":"accessible from function sources",
             "*action":"module.function(args)",
             "*text":"display text",
-            " size":"s/m/l/x , m by default, x to full size",
-            " text-size": "s/m/l/x , m by default - text size",
+            " size":"s/m/l/xl , m by default, x to full size",
             " custom-format":"true/false , false by default",
             " custom-text-color":"none / hex color",
             " custom-color":"none / hex color",
@@ -55,7 +54,7 @@
             " id":"accessible from function sources",
             "*action":"module.function(args)",
             "*src":"%resources%/icon/hoge.jpg, png, ...",
-            " size":"s/m/l/x , m by default, x to full size",
+            " size":"s/m/l/xl , m by default, x to full size",
             " custom-color":"none / hex color",
             " transparent":"true/false , false by default, good for x size button"
         },
@@ -64,7 +63,7 @@
             " id":"accessible from function sources",
             "*action":"module.function(args)",
             "*src":"%resources%/img/hoge.jpg, png, ...",
-            " size":"s/m/l/x , m by default, x to full size",
+            " size":"s/m/l/xl , m by default, x to full size",
             " clip":"true/false : false by default, true to clip to square"
         }
     ]
