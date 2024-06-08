@@ -1,14 +1,20 @@
-[
-    {
-        "widget":"texttest.1-1",
-        "position": [3,2]
-    },
-    {
-        "widget":"clock.2-1",
-        "position": [2,1]
-    },
-    {
-        "widget":"audioMute.1-2",
-        "position": [1,1]
-    }
-]
+{
+    "grid":[4,2],
+    "placement":[
+        {
+            "widget":"texttest.1-1",
+            "position": [4,2]
+        },
+        {
+            "widget":"clock.2-1",
+            "position": [2,1]
+        },
+        {
+            "widget":"audioMute.1-2",
+            "position": [1,1]
+        },
+        {
+            "widget":"none.1-1",
+            "position": [2,2]}
+    ]
+}

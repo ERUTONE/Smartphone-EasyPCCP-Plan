@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="{{ url_for(...) }}"> -->
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='main/client/src/template/base.css') }}">
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename=theme) }}">
+    <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='main/client/src/template/grid.css') }}">
     <title>EasyPCCP</title>
 </head>
 <body style="overflow: hidden;">
-    <div class="widgets-container">
-        <!-- {{ data.widgets }} -->
+    <div class="container">
+        {{ content | safe  }}
     </div>
-
+    <!--
+        safeとされた変数では、エスケープ処理が無くなる。
+        外部から持ち込んだモジュールによりXSS攻撃に遭う危険がある
+        内部データを流出される等のリスクがあるため、注意が必要
+    -->
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
     "column":2,
     "row":1,
-    "title":"",
+    "title":"s:Clock",
     "sync":"* * * * *",
     "container":"vbox",
     "content":[
