@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 print("starting app..")
 
-from flask import Flask,request,render_template
-from jinja2 import FileSystemLoader
-import os, datetime
+from flask import Flask
+import os
 import importlib.util
 from json import loads,dumps,load
 
 
-app = Flask(__name__, static_folder='/', template_folder='main/client/src/template/')
+app = Flask(__name__,
+    static_folder='/',
+    template_folder='main/client/src/template/')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 def import_all_modules_from_dir(directory):

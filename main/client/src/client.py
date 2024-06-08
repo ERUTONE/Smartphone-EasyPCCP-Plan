@@ -8,7 +8,7 @@ layout_name = ""
 theme_name = ""
 layout: dict
 theme_path = ""
-widgets = []
+layout_widgets = []
 
 def load_usercfg():
     global layout_name, theme_name
@@ -38,27 +38,26 @@ def get_theme():
         
     theme_path = _path
 
-from main.client.src.widget import create_widget
+from main.client.src.widget import widget as widget_creator
 def create_widgets():
-    global layout, widgets
-    print(type(layout["placement"]))
+    global layout, layout_widgets
     for i in range(len(layout["placement"]) ):
         jwidget = layout["placement"][i]
         widget_path = g.widget + jwidget["widget"] + ".json"
         if(os.path.exists(widget_path)):
-            print(widget_path)
-            widgets.append( create_widget(widget_path, i) )
+            # load as a new instance
+            print(f' loading widget {jwidget["widget"]}...')
+            _widget = widget_creator(widget_path, i)
+            layout_widgets.append( _widget.create_widget() )
         else:
             print("[ERROR] widget not found: " + widget_path)
-            widget_path = g.widget_default
 
 def create_grid():
     global layout
-    grid_col = layout["grid"][0]
-    grid_row = layout["grid"][1]
-    # 
     with open(g.template+"grid.css", "w") as f:
-        # TODO: .container
+        # .container
+        grid_col = layout["grid"][0]
+        grid_row = layout["grid"][1]
         f.write(f".container{{ \
             grid-template-columns : repeat({grid_col}, 1fr); \
             grid-template-rows : repeat({grid_row}, 1fr);\
@@ -67,7 +66,7 @@ def create_grid():
             max-width: {90*grid_col/grid_row}svh;\
             max-height: 90svh;\
             }}\n")
-        # TODO: .widget
+        # .widget
         for i in range(len(layout["placement"])):
             jwidget = layout["placement"][i]
             _scale = [int(n) for n in re.findall(r"(\d+)", jwidget["widget"])[-2:]]
@@ -84,7 +83,7 @@ def init() :
 
     get_layout()
     get_theme()
-    global widgets; widgets= []
+    global layout_widgets; layout_widgets= []
     create_widgets()
     create_grid()
 
@@ -94,4 +93,4 @@ init()
 def show_interface():
     if "reload" in request.args:
         init()
-    return render_template("base.html",theme=theme_path, content="\n".join(widgets))
+    return render_template("base.html",theme=theme_path, content="\n".join(layout_widgets))
