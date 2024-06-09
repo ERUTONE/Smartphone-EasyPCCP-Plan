@@ -27,7 +27,7 @@
         {
             "*type":"text",
             " id":"accessible from function sources",
-            "*text":"display text",
+            "*text":"s:display text",
             " custom-format":"true/false , false by default"
         },
         {
@@ -41,7 +41,7 @@
             "*type":"button-text",
             " id":"accessible from function sources",
             "*action":"module.function(args)",
-            "*text":"display text",
+            "*text":"s:display text",
             " size":"s/m/l/xl , m by default, x to full size",
             " custom-format":"true/false , false by default",
             " custom-text-color":"none / hex color",

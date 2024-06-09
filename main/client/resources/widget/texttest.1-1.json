@@ -6,7 +6,11 @@
     "content":[
         {
             "type":"text",
-            "content":"hello world"
+            "text":"hello world"
+        },
+        {
+            "type":"text",
+            "text":"l:welcome to my prooooooooject"
         }
     ]
 }

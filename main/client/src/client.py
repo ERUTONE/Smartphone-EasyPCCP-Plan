@@ -9,6 +9,7 @@ theme_name = ""
 layout: dict
 theme_path = ""
 layout_widgets = []
+widget_styles = []
 
 def load_usercfg():
     global layout_name, theme_name
@@ -49,10 +50,12 @@ def create_widgets():
             print(f' loading widget {jwidget["widget"]}...')
             _widget = widget_creator(widget_path, i)
             layout_widgets.append( _widget.create_widget() )
+            widget_styles.append( _widget.get_style() )
         else:
             print("[ERROR] widget not found: " + widget_path)
+            widget_styles.append("")
 
-def create_grid():
+def create_gridcss():
     global layout
     with open(g.template+"grid.css", "w") as f:
         # .container
@@ -73,7 +76,8 @@ def create_grid():
             f.write(f".widget#w{i}{{ \
                 grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; \
                 grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; \
-                }}\n")
+                }}\n\
+                {widget_styles[i]}")
     
 # -------------------------------- #
 
@@ -84,8 +88,9 @@ def init() :
     get_layout()
     get_theme()
     global layout_widgets; layout_widgets= []
+    global widget_styles;  widget_styles = []
     create_widgets()
-    create_grid()
+    create_gridcss()
 
 init()
 

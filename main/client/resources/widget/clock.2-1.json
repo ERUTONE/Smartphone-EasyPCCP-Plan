@@ -7,8 +7,8 @@
     "content":[
         {
             "type":"text",
-            "content":"{{hhmm}}",
-            "text-size":"x"
+            "text":"{{hhmm}}",
+            "custom-format":true
         }
     ]
 }
