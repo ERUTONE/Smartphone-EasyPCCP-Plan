@@ -13,7 +13,7 @@
 
     "sync":"none|websocket|* * * * * ( min hour date month dow / like cron )",
 
-    "containers":[
+    "container":[
         "* available:",
         "vbox",
         "hbox",

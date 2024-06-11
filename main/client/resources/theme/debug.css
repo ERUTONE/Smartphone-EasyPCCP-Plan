@@ -21,6 +21,10 @@ body {
 .widget_title{
     background-color: #ffffff00;
 
+    transform: translate(0, calc(-1lh - 0.4rem));
+    background-color: #ffffff;
+    width: fit-content;
+    border-radius: 0.5rem;
 }
 
 .button {

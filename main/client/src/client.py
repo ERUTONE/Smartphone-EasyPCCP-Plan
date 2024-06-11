@@ -39,7 +39,7 @@ def get_theme():
         
     theme_path = _path
 
-from main.client.src.widget import widget as widget_creator
+from main.client.src.widget import widget as new_widget
 def create_widgets():
     global layout, layout_widgets
     for i in range(len(layout["placement"]) ):
@@ -48,11 +48,12 @@ def create_widgets():
         if(os.path.exists(widget_path)):
             # load as a new instance
             print(f' loading widget {jwidget["widget"]}...')
-            _widget = widget_creator(widget_path, i)
+            _widget = new_widget(widget_path, i)
             layout_widgets.append( _widget.create_widget() )
             widget_styles.append( _widget.get_style() )
         else:
             print("[ERROR] widget not found: " + widget_path)
+            layout_widgets.append(f"ERROR: widget-{i} not found")
             widget_styles.append("")
 
 def create_gridcss():
@@ -76,8 +77,8 @@ def create_gridcss():
             f.write(f".widget#w{i}{{ \
                 grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; \
                 grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; \
-                }}\n\
-                {widget_styles[i]}")
+                }}\n")
+            f.write("\n".join(widget_styles))
     
 # -------------------------------- #
 
