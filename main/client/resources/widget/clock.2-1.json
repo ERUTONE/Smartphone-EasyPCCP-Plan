@@ -7,7 +7,8 @@
     "content":[
         {
             "type":"text",
-            "text":"{{hhmm}}",
+            "class":"accent_text",
+            "text":"xl:{{hhmm}}",
             "custom-format":true
         }
     ]

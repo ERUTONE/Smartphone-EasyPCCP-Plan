@@ -1,19 +1,39 @@
+:root {
+    --accent-color: linear-gradient(0deg, #6163eb, #6473e8);
+    --main-color: #222;
+    --text-color: #fff;
+
+    --margin: 0.2rem;
+    --border-radius: 0.5rem;
+}
+
 body {
-    background-color: #000000;
-    --accent: #9beeff;
-    color : white;
+    background: #111;
     text-align: center;
 }
 
 .widget {
-    background-color: #212121;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin: 0.2rem;
+    background: linear-gradient(0deg, #222, #1e1e1e);
 }
 
-.button {
-    background-color:var(--accent);
-    border-radius: 0.2rem;
-    color: black;
+.widget_title {
+    background: var(--accent-color);
+    background-clip:border-box !important;
+    color: var(--main-color) !important;
+    font-size: 1.6rem !important;
+
+    min-width: calc(100% - 2.5rem);
+    min-height: 1em;
+    margin: 0 auto;
+    top: -0.5em;
+}
+
+.accent_text {
+    background: var(--accent-color);
+    color: transparent;
+    background-clip: text;
+}
+
+.transparent {
+    background: linear-gradient(180deg, #ffffff05, #ffffff0a);
 }

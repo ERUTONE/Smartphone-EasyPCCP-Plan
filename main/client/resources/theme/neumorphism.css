@@ -1,0 +1,32 @@
+:root {
+    --accent-color: rgb(174, 189, 255);
+    --main-color: white;
+    --text-color: #6a6a6a;
+
+    --margin: 0.4rem;
+    --border-radius: 0.8rem;
+
+    --shadow: 0.5rem 0.5rem 0.7rem #00000010;
+}
+
+body {
+    background: var(--main-color);
+    text-align: center;
+}
+
+.widget {
+    box-shadow: var(--shadow);
+    background: linear-gradient(0deg, #ffffff, #fbfbfb);
+}
+
+.widget_title {
+    display: none;
+}
+
+.accent_text {
+    text-shadow: 0.2rem 0.2rem 0.3rem #00000010;
+}
+
+.transparent {
+    box-shadow: inset var(--shadow);
+}

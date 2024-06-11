@@ -1,20 +1,22 @@
-* {
+:root {
+    font-size:2vw;
+
     --accent-color: #000000;
     --main-color: #ffffff;
     --text-color: #000000;
 
-    --margin: 0.2rem;
-    --border-radius: 0.5rem;
+    --margin: 0;
+    --border-radius: 0;
+    --button-radius: var(--border-radius);
 }
 
 body {
     color : var(--text-color);
     font-family: Arial, sans-serif;
     text-align: center;
-    font-size:2vw;
-    
-    --margin: 0;
-    --border-radius: 0;
+    height: 100vh;
+
+    touch-action: manipulation;
 }
 
 .container {
@@ -42,6 +44,7 @@ body {
     font-weight: bold;
     border-radius: var(--border-radius);
 
+    display: inline-block;
     position:relative;
     overflow: hidden;
     height: fit-content;
@@ -62,11 +65,18 @@ body {
     overflow: hidden;
 }
 
-.accent {
+.accent_text {
     color: var(--accent-color);
+    font-weight: bold;
 }
 
-.button {
-    background-color:var(--accent-color);
+.accent_back {
+    background-color: var(--accent-color);
     color: var(--main-color);
+    border-radius: var(--button-radius);
+    font-weight: bold;
+}
+
+.transparent {
+    background-color: transparent;
 }

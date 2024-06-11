@@ -1,0 +1,28 @@
+:root {
+    --accent-color: #ffc6e5;
+    --main-color: #ffffff;
+    --text-color: #47b8ff;
+
+    --margin: 0.3rem;
+    --border-radius: 1rem;
+}
+
+body {
+    background: linear-gradient(180deg, #ffeefe, #fff0fb);
+    text-align: center;
+}
+
+.widget_title {
+    display: none;
+}
+
+.accent_text {
+    background: linear-gradient(180deg, #9cd7ff, #72c6ff);
+    color: transparent;
+    background-clip: text;
+}
+
+
+.transparent {
+    background: linear-gradient(180deg, #ffffff33, #ffffffaa);
+}

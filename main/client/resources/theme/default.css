@@ -1,12 +1,25 @@
-* {
+:root {
     --accent-color: #4d9bee;
     --main-color: #fff;
     --text-color: #000;
 
-    --margin: 0.1rem;
-    --border-radius: 0rem;
+    --margin: 0.2rem;
+    --border-radius: 0.5rem;
 }
 
 body {
-    background-color: #eee;
+    background-color: #dedede;
+    text-align: center;
+}
+
+.container {
+    background-color: #c7c7c7;
+}
+
+.widget_title{
+    background-color: var(--main-color);
+    color: var(--accent-color);
+
+    margin: 0 auto;
+    top:calc(-1em + var(--border-radius));
 }

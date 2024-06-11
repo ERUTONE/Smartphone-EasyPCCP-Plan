@@ -23,11 +23,5 @@ body {
     width: fit-content;
     margin-top: 0;
     /* margin: 0 auto; */
-    top:calc(-1lh - var(--margin));
-}
-
-.button {
-    background-color:var(--accent-color);
-    border-radius: 0.2rem;
-    color: var(--main-color);
+    top:calc(-1em + var(--border-radius));
 }

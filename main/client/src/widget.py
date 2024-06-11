@@ -28,26 +28,30 @@ class component:
     def __init__(self, parent_widget, content_num):
         self.component_style = []
         
+        _content_dict = parent_widget.content[content_num]
         self.parent = parent_widget
-        for k, v in self.parent.content[content_num].items():
+        for k, v in _content_dict.items():
             setattr(self, k, v)
         self.cssid = f"{self.parent.cssid}c{content_num}"
+        self.cls = _content_dict['class'] if "class" in _content_dict else ""
     
     def create_component(self):
         if not hasattr(self, "type"): return "ERROR: No type specified"
+        
         if self.type == "text":
+            self.component_style.append("margin: 0 auto;")
             return self.c_text()
         
         return f"ERROR: No {self.type} type generator<br>"
     
     def get_style(self):
-        # if len(self.component_style) == 0: return ""
+        if len(self.component_style) == 0: return ""
         _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
         return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
     def c_text(self):
         _text = sizedtext(self.text)
-        _div = f'<div class="component text" id="{self.cssid}" style="font-size:{_text.font_size};">'
+        _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
         return _div + _text.text + "</div>"
     
     
@@ -67,8 +71,10 @@ class widget:
         self.components = []
         
         with open(widget_path, "r") as f:
-            for k, v in json.load(f).items():
+            fd = json.load(f)
+            for k, v in fd.items():
                 setattr(self, k, v)
+            self.cls = fd['class'] if "class" in fd else ""
         self.id = id
         self.cssid = f"w{id}"
         self.scale = { "col": self.column, "row": self.row }
@@ -84,7 +90,7 @@ class widget:
         if (hasattr(self, "title") and self.title!="") :
             _title = sizedtext(self.title)
             _title.div =f'<div class="widget_title" id="{self.cssid}-title"\
-                style="font-size:{_title.font_size};">{_title.text}</div>'
+                style="font-size:{_title.font_size};">︎&nbsp;{_title.text}&nbsp;</div>'
         
         # sync      | function
         if hasattr(self, "sync") and self.sync != "none" :
@@ -92,7 +98,7 @@ class widget:
         
         # container | style
         if not hasattr(self, "container") : self.container = "vbox"
-        widget_html+= '<div class="subcontainer">'
+        widget_html+= '<div class=" subcontainer">'
         self.widget_style.append(self.container_style())
         
         # content   | object, style, function
@@ -106,7 +112,7 @@ class widget:
         widget_html += '</div>'
         # if _title: widget_html += _title.div
         self.widget_html = widget_html
-        return f'<div class="widget" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title else "" )
+        return f'<div class="widget {self.cls}" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title else "" )
 
     def get_style(self):
         return "\n".join(self.widget_style)
