@@ -53,7 +53,7 @@ def create_widgets():
             widget_styles.append( _widget.get_style() )
         else:
             print("[ERROR] widget not found: " + widget_path)
-            layout_widgets.append(f"ERROR: widget-{i} not found")
+            layout_widgets.append(f"ERROR: widget {jwidget} not found")
             widget_styles.append("")
 
 def create_gridcss():
@@ -78,7 +78,7 @@ def create_gridcss():
                 grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; \
                 grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; \
                 }}\n")
-            f.write("\n".join(widget_styles))
+        f.write("\n".join(widget_styles))
     
 # -------------------------------- #
 

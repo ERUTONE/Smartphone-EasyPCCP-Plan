@@ -54,6 +54,8 @@ class widget:
     widget_style = []
     components = []
     
+    # - public ------------------------------- #
+    
     def __init__(self, widget_path, id):
         
         with open(widget_path, "r") as f:
@@ -65,6 +67,9 @@ class widget:
         if hasattr(self, "content") :
             self.content_count = len(self.content)
         else: self.content_count = 0
+        
+        self.widget_style = []
+        self.components = []
                 
     
     def create_widget(self):
@@ -83,7 +88,7 @@ class widget:
         # container | style
         if not hasattr(self, "container") : self.container = "vbox"
         widget_html+= '<div class="subcontainer">'
-        self.widget_style.append(self.container_style(self.container))
+        self.widget_style.append(self.container_style())
         
         # content   | object, style, function
         if hasattr(self, "content") :
@@ -99,13 +104,15 @@ class widget:
         return f'<div class="widget" id="w{self.id}">{widget_html}</div>'
 
     def get_style(self):
+        print("\n\n\n\n\n\n\n\n")
+        print("\n".join(self.widget_style))
         return "\n".join(self.widget_style)
     
-    # -------------------------------- #
+    # - private ------------------------------- #
     
-    def container_style(self, container):
+    def container_style(self):
         _style = f"#{self.cssid} > .subcontainer{{ \n"
-        if container == "vbox":
+        if self.container == "vbox":
             _style += f"display:grid; grid-template-columns:1fr; align-content: center;"
         return _style + "\n}\n"
     
