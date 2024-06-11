@@ -104,8 +104,6 @@ class widget:
         return f'<div class="widget" id="w{self.id}">{widget_html}</div>'
 
     def get_style(self):
-        print("\n\n\n\n\n\n\n\n")
-        print("\n".join(self.widget_style))
         return "\n".join(self.widget_style)
     
     # - private ------------------------------- #
