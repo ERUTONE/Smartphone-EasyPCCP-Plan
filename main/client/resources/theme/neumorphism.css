@@ -20,7 +20,12 @@ body {
 }
 
 .widget_title {
-    display: none;
+    font-size: 0.5rem !important;
+    font-weight: normal;
+    color: var(--text-color);
+    opacity: 0.5;
+    
+    top:calc(100% - 1.5rem);
 }
 
 .accent_text {
