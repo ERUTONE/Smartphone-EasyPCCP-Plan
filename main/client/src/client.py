@@ -74,7 +74,11 @@ def create_gridcss():
         for i in range(len(layout["placement"])):
             jwidget = layout["placement"][i]
             _scale = [int(n) for n in re.findall(r"(\d+)", jwidget["widget"])[-2:]]
-            f.write(f".widget#w{i}{{ " +
+            f.write(f"\n.widget#w{i}{{ " +
+                f"grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; " +
+                f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
+                "}\n")
+            f.write(f".widget_title#w{i}-title{{ " +
                 f"grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; " +
                 f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
                 "}\n")

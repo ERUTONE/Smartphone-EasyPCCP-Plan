@@ -31,7 +31,7 @@ class component:
         self.parent = parent_widget
         for k, v in self.parent.content[content_num].items():
             setattr(self, k, v)
-        self.cssid = f"c{content_num}"
+        self.cssid = f"{self.parent.cssid}c{content_num}"
     
     def create_component(self):
         if not hasattr(self, "type"): return "ERROR: No type specified"
@@ -41,8 +41,8 @@ class component:
         return f"ERROR: No {self.type} type generator<br>"
     
     def get_style(self):
-        if len(self.component_style) == 0: return ""
-        _selector = f".widget#{self.parent.cssid} > .subcontainer > #{self.cssid}"
+        # if len(self.component_style) == 0: return ""
+        _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
         return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
     def c_text(self):
@@ -83,7 +83,7 @@ class widget:
         _title = None
         if (hasattr(self, "title") and self.title!="") :
             _title = sizedtext(self.title)
-            _title.div =f'<div class="widget_title" \
+            _title.div =f'<div class="widget_title" id="{self.cssid}-title"\
                 style="font-size:{_title.font_size};">{_title.text}</div>'
         
         # sync      | function
@@ -104,9 +104,9 @@ class widget:
                 self.widget_style.append(_component.get_style())
         
         widget_html += '</div>'
-        if _title: widget_html += _title.div
+        # if _title: widget_html += _title.div
         self.widget_html = widget_html
-        return f'<div class="widget" id="w{self.id}">{widget_html}</div>'
+        return f'<div class="widget" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title else "" )
 
     def get_style(self):
         return "\n".join(self.widget_style)
