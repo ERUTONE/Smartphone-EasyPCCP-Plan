@@ -18,7 +18,8 @@ body {
 }
 
 .widget {
-    display: block;
+    display:block;
+    overflow: hidden;
 }
 
 .widget_title {

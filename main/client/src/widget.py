@@ -23,7 +23,11 @@ class sizedtext:
         
 class component:
     
+    component_style = []
+    
     def __init__(self, parent_widget, content_num):
+        self.component_style = []
+        
         self.parent = parent_widget
         for k, v in self.parent.content[content_num].items():
             setattr(self, k, v)
@@ -37,9 +41,9 @@ class component:
         return f"ERROR: No {self.type} type generator<br>"
     
     def get_style(self):
+        if len(self.component_style) == 0: return ""
         _selector = f".widget#{self.parent.cssid} > .subcontainer > #{self.cssid}"
-        _style = []
-        return f'{_selector}{{ {" ".join(_style)} }}'
+        return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
     def c_text(self):
         _text = sizedtext(self.text)
@@ -58,6 +62,10 @@ class widget:
     
     def __init__(self, widget_path, id):
         
+        self.widget_html = ""
+        self.widget_style = []
+        self.components = []
+        
         with open(widget_path, "r") as f:
             for k, v in json.load(f).items():
                 setattr(self, k, v)
@@ -67,9 +75,6 @@ class widget:
         if hasattr(self, "content") :
             self.content_count = len(self.content)
         else: self.content_count = 0
-        
-        self.widget_style = []
-        self.components = []
                 
     
     def create_widget(self):
@@ -109,10 +114,10 @@ class widget:
     # - private ------------------------------- #
     
     def container_style(self):
-        _style = f"#{self.cssid} > .subcontainer{{ \n"
+        _style = f"\n.widget#{self.cssid} > .subcontainer{{ "
         if self.container == "vbox":
             _style += f"display:grid; grid-template-columns:1fr; align-content: center;"
-        return _style + "\n}\n"
+        return _style + "}"
     
     
     """

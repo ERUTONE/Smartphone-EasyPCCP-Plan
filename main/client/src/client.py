@@ -62,22 +62,22 @@ def create_gridcss():
         # .container
         grid_col = layout["grid"][0]
         grid_row = layout["grid"][1]
-        f.write(f".container{{ \
-            grid-template-columns : repeat({grid_col}, 1fr); \
-            grid-template-rows : repeat({grid_row}, 1fr);\
-            width: 90vw;\
-            height: {90*grid_row/grid_col}vw;\
-            max-width: {90*grid_col/grid_row}svh;\
-            max-height: 90svh;\
-            }}\n")
+        f.write(".container{ "+
+            f"grid-template-columns : repeat({grid_col}, 1fr); "+
+            f"grid-template-rows : repeat({grid_row}, 1fr); "+
+             "width: 90vw; "+
+            f"height: {90*grid_row/grid_col}vw; "+
+            f"max-width: {90*grid_col/grid_row}svh; "+
+             "max-height: 90svh; "+
+            "}\n")
         # .widget
         for i in range(len(layout["placement"])):
             jwidget = layout["placement"][i]
             _scale = [int(n) for n in re.findall(r"(\d+)", jwidget["widget"])[-2:]]
-            f.write(f".widget#w{i}{{ \
-                grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; \
-                grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; \
-                }}\n")
+            f.write(f".widget#w{i}{{ " +
+                f"grid-column: {jwidget['position'][0]}/{jwidget['position'][0]+_scale[0]}; " +
+                f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
+                "}\n")
         f.write("\n".join(widget_styles))
     
 # -------------------------------- #
