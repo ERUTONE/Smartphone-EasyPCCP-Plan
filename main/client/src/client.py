@@ -103,4 +103,7 @@ init()
 def show_interface():
     if "reload" in request.args:
         init()
+    if "theme" in request.args:
+        global theme_name; theme_name=request.args.get("theme")
+        get_theme()
     return render_template("base.html",theme=theme_path, content="\n".join(layout_widgets))
