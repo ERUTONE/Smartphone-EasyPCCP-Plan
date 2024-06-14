@@ -1,20 +1,46 @@
-import subprocess
-import time
-import pyautogui
-# import os
-# import signal
+import requests
+import win32com.client
+import pythoncom
 
-# Discordの実行ファイルパスを指定します
-discord_path = r"C:\Users\n1230084.STCN2\AppData\Local\Discord\Update.exe"
+class NotificationHandler:
+    def __init__(self, url):
+        self.url = url
 
-# Discordをバックグラウンドで起動
-subprocess.Popen([discord_path])
+    def on_notification(self, event):
+        try:
+            # WMIイベントから通知内容を取得
+            notification_text = event.Description
+            print(f"Detected notification: {notification_text}")
 
-# Discordが起動するのを待つ（適宜調整）
-time.sleep(1)
+            # Webサイトに通知を転送
+            self.send_notification_to_website(notification_text)
+        except Exception as e:
+            print(f"Error processing notification: {e}")
 
-# 特定のキーボード入力を送信
-# 例として、Ctrl+Shift+Iを送信（Discordの開発者ツールを開くショートカット）
-pyautogui.hotkey('ctrl', 'shift', 'm')
+    def send_notification_to_website(self, notification):
+        data = {"notification": notification}
+        response = requests.post(self.url, json=data)
+        print(f"Notification sent to website, status code: {response.status_code}")
 
-# os.kill(process.pid, signal.SIGTERM)
+def main():
+    notification_url = "https://example.com/notify"  # WebサイトのURL
+    handler = NotificationHandler(notification_url)
+
+    # WMIイベントの設定
+    wmi = win32com.client.GetObject("winmgmts:")
+    wql = "SELECT * FROM __InstanceCreationEvent WITHIN 1 WHERE TargetInstance ISA 'Win32_NTLogEvent'"
+    watcher = wmi.ExecNotificationQuery(wql)
+
+    print("Listening for notifications...")
+    
+    while True:
+        try:
+            event = watcher.NextEvent()
+            pythoncom.PumpWaitingMessages()
+            handler.on_notification(event)
+        except KeyboardInterrupt:
+            print("Stopping notification listener.")
+            break
+
+if __name__ == "__main__":
+    main()
