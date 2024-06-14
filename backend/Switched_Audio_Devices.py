@@ -1,48 +1,16 @@
-import ctypes
+import subprocess
 
-class ERole(ctypes.c_uint):
-    eConsole = 0
-    eMultimedia = 1
-    eCommunications = 2
-    ERole_enum_count = 3
+# PowerShell 実行ファイルのパス
+powershell_path = r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
 
-class IPolicyConfig(ctypes.Structure):
-    _fields_ = [
-        ("GetMixFormat", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("GetDeviceFormat", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("ResetDeviceFormat", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("SetDeviceFormat", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("GetProcessingPeriod", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("SetProcessingPeriod", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("GetShareMode", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("SetShareMode", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("GetPropertyValue", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("SetPropertyValue", ctypes.WINFUNCTYPE(ctypes.c_int)),
-        ("SetDefaultEndpoint", ctypes.WINFUNCTYPE(ctypes.c_int, ctypes.c_wchar_p, ERole)),
-        ("SetEndpointVisibility", ctypes.WINFUNCTYPE(ctypes.c_int))
-    ]
+# 実行する PowerShell スクリプトのパス
+script_path = r"C:\Users\n1230084.STCN2\Documents\githubクローン用ファイル\Smartphone-EasyPCCP-Plan\backend\Switched_Audio_Devices.ps1"
 
-class _CPolicyConfigClient(ctypes.Structure):
-    _fields_ = []
+# スクリプトに渡す引数
+script_arg = r"{51576283-45ac-44a4-8252-a4dba0948c0f}"
 
-class PolicyConfigClient:
-    @staticmethod
-    def SetDefaultDevice(device_id):
-        _policyConfigClient = IPolicyConfig()
-        try:
-            ctypes.windll.ole32.CoCreateInstance(ctypes.byref(ctypes.c_wchar_p("{870AF99C-171D-4F9E-AF0D-E63DF40C2BC9}")), None, 1, ctypes.byref(ctypes.c_wchar_p("{F8679F50-850A-41CF-9C72-430F290290C8}")), ctypes.byref(_policyConfigClient))
-            ctypes.windll.ole32.CoCreateInstance(ctypes.byref(ctypes.c_wchar_p("{F8679F50-850A-41CF-9C72-430F290290C8}")), None, 1, ctypes.byref(ctypes.c_wchar_p("{870AF99C-171D-4F9E-AF0D-E63DF40C2BC9}")), ctypes.byref(_policyConfigClient))
-            ctypes.windll.ole32.CoCreateInstance(ctypes.byref(ctypes.c_wchar_p("{870AF99C-171D-4F9E-AF0D-E63DF40C2BC9}")), None, 1, ctypes.byref(ctypes.c_wchar_p("{F8679F50-850A-41CF-9C72-430F290290C8}")), ctypes.byref(_policyConfigClient))
-            return 0
-        except:
-            return 1
+# コマンドを構成
+command = [powershell_path, '-File', script_path, script_arg]
 
-def Set_DefaultAudioDevice(device_id):
-    if PolicyConfigClient.SetDefaultDevice(f"{{0.0.0.00000000}}.{device_id}") == 0:
-        print("SUCCESS: The default audio device has been set.")
-    else:
-        print("ERROR: There has been a problem setting the default audio device.")
-
-id = "{43966c92-6c3d-41a3-bd3f-7f061a619756}"
-Set_DefaultAudioDevice (id)
-
+# コマンドを実行
+result = subprocess.run(command, capture_output=True, text=True)
