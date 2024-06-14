@@ -4,7 +4,6 @@ print("starting app..")
 from flask import Flask
 import os
 import importlib.util
-from json import loads,dumps,load
 
 
 app = Flask(__name__,
@@ -28,26 +27,6 @@ def load_cores():
     
 load_cores()
 app.run(host='0.0.0.0', port=5000, debug=True)
-=======
-
-@app.route('/')
-def hello():
-    if 'use_template' in request.args:
-        dt_now = datetime.datetime.now()
-        
-        return render_template('index.html', clockString=dt_now.strftime('%Y-%m-%d %H:%M:%S'))
-    else:
-        my_dict = {
-            "name": "user",
-            "age": 25,
-            "gender": "male",
-            "hobbies": [
-                "reading",
-                "cooking",
-                "sleeping"
-            ]
-        }
-        return render_template('layout_prototype.html', my_dict=my_dict)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

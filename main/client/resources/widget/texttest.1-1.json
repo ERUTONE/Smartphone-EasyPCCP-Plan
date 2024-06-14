@@ -1,12 +1,16 @@
 {
     "column":1,
     "row":1,
-    "title":"xl:test",
+    "title":"l:Test",
     "container":"vbox",
     "content":[
         {
             "type":"text",
-            "content":"hello world"
+            "text":"hello world"
+        },
+        {
+            "type":"text",
+            "text":"l:from Flask"
         }
     ]
 }

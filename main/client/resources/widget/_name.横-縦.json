@@ -13,7 +13,7 @@
 
     "sync":"none|websocket|* * * * * ( min hour date month dow / like cron )",
 
-    "containers":[
+    "container":[
         "* available:",
         "vbox",
         "hbox",
@@ -25,23 +25,25 @@
 
     "content":[
         {
+            "*type":"--common--",
+            " class":"for css",
+            " id":"accessible from function sources"
+        },
+        {
             "*type":"text",
-            " id":"accessible from function sources",
-            "*text":"display text",
+            "*text":"s:display text",
             " custom-format":"true/false , false by default"
         },
         {
             "*type":"image",
-            " id":"accessible from function sources",
             "*src":"%resources%/img/hoge.jpg, png, ...",
             " size":"s/m/l/xl , m by default, x to full size",
             " clip":"true/false : false by default, true to clip to square"
         },
         {
             "*type":"button-text",
-            " id":"accessible from function sources",
             "*action":"module.function(args)",
-            "*text":"display text",
+            "*text":"s:display text",
             " size":"s/m/l/xl , m by default, x to full size",
             " custom-format":"true/false , false by default",
             " custom-text-color":"none / hex color",
@@ -51,7 +53,6 @@
         },
         {
             "*type":"button-icon",
-            " id":"accessible from function sources",
             "*action":"module.function(args)",
             "*src":"%resources%/icon/hoge.jpg, png, ...",
             " size":"s/m/l/xl , m by default, x to full size",
@@ -60,7 +61,6 @@
         },
         {
             "*type":"button-image",
-            " id":"accessible from function sources",
             "*action":"module.function(args)",
             "*src":"%resources%/img/hoge.jpg, png, ...",
             " size":"s/m/l/xl , m by default, x to full size",

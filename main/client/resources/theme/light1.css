@@ -1,18 +1,35 @@
+:root {
+    --accent-color: linear-gradient(180deg, #4fbeff, #4c9ff8);
+    --main-color: #ffffff;
+    --text-color: #000000;
+
+    --margin: 0.2rem;
+    --border-radius: 0.5rem;
+}
+
 body {
-    background-color: #e1e1e1;
-    --accent: #9beeff;
-    color : black;
+    background: linear-gradient(180deg, #d4eeff, #c4d4ff);
     text-align: center;
 }
 
-.widget {
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin: 0.2rem;
+.widget_title {
+    background: var(--accent-color);
+    background-clip:border-box !important;
+    color: var(--main-color) !important;
+    font-size: 1.6rem !important;
+
+    min-width: calc(100% - 2.5rem);
+    min-height: 1em;
+    margin: 0 auto;
+    top: -0.5em;
 }
-.button {
-    background-color:var(--accent);
-    border-radius: 0.2rem;
-    color: black;
+
+.accent_text {
+    background: var(--accent-color);
+    color: transparent;
+    background-clip: text;
+}
+
+.transparent {
+    background: linear-gradient(180deg, #ffffff33, #ffffff11);
 }
