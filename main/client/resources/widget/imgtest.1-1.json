@@ -1,0 +1,14 @@
+{
+    "column":1,
+    "row":1,
+    "title":"s:imgtest",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"image",
+            "src":"fox.jpg",
+            "size":"m",
+            "clip":"false"
+        }
+    ]
+}

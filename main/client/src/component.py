@@ -20,6 +20,8 @@ class component:
         if self.type == "text":
             self.component_style.append("margin: 0 auto;")
             return self.c_text()
+        if self.type == "image":
+            return self.c_image()
         
         return f"ERROR: No {self.type} type generator<br>"
     
@@ -28,10 +30,17 @@ class component:
         _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
         return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
+    # -------------- #
+    
     def c_text(self):
         _text = sizedtext(self.text)
         _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
         return _div + _text.text + "</div>"
+    
+    def c_image(self):
+        _div = f'<div class="component {self.cls} image " id="{self.cssid}" style="margin: 0 auto;">'
+        _img = f'<img src="main/client/resources/img/{self.src}" style="width:100%;height:auto;">'
+        return _div + _img + '</div>'
     
 # ---------------------------------------------------- #
 
