@@ -63,6 +63,7 @@ body {
 
 .component {
     overflow: hidden;
+    border-radius: calc(var(--border-radius) - var(--margin));
 }
 
 .accent_text {
