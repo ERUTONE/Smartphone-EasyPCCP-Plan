@@ -39,7 +39,7 @@ class component:
             "s" : "3em",
             "m" : "4em",
             "l" : "6em",
-            "xl": "10em",
+            "xl": "9em",
             "xxl": "100%"
         }
         if hasattr(self, "size") and self.size in _scales:
@@ -57,8 +57,10 @@ class component:
     
     def c_image(self):
         _image = image(self.src)
-        _div = f'<div class="component {self.cls} image" id="{self.cssid}" style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; background-color:red;">'
-        _imgtag = f'<img src="{_image.src}" style="height:100%; width:auto; margin: 0 auto;">'
+        _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
+            style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; position: relative;">'
+        _imgtag = f'<img src="{_image.src}" style="width:100%; height:100%; object-fit:cover;\
+            position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);">'
         return _div + _imgtag + '</div>'
     
 # ---------------------------------------------------- #
