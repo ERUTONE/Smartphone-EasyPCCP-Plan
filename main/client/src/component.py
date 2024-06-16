@@ -40,7 +40,7 @@ class component:
             "m" : "4em",
             "l" : "6em",
             "xl": "9em",
-            "xxl": "100%"
+            "xxl": "100%" #TODO
         }
         if hasattr(self, "size") and self.size in _scales:
             _size = self.size
@@ -64,6 +64,7 @@ class component:
         else:_object_fit = "width:100%; height:100%; object-fit: contain;"
         _imgtag = f'<img src="{_image.src}" style="{_object_fit}\
             position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);">'
+        
         return _div + _imgtag + '</div>'
     
 # ---------------------------------------------------- #

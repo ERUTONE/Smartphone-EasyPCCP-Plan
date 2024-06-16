@@ -7,7 +7,7 @@
         {
             "type":"image",
             "src":"%resources%/img/fox.jpg",
-            "size":"xl",
+            "size":"xxl",
             "clip":"true"
         }
     ]
