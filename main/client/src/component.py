@@ -2,6 +2,8 @@ import regex as re
 
 class component:
     
+    # --public------ #
+    
     component_style = []
     
     def __init__(self, parent_widget, content_num):
@@ -30,7 +32,23 @@ class component:
         _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
         return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
-    # -------------- #
+    # --private----- #
+    
+    def siz(self):
+        _scales = {
+            "s" : "3em",
+            "m" : "4em",
+            "l" : "6em",
+            "xl": "10em",
+            "xxl": "100%"
+        }
+        if hasattr(self, "size") and self.size in _scales:
+            _size = self.size
+        else:
+            _size = "m"
+        return _scales[_size]
+        
+    # --element----- #
     
     def c_text(self):
         _text = sizedtext(self.text)
@@ -38,9 +56,10 @@ class component:
         return _div + _text.text + "</div>"
     
     def c_image(self):
-        _div = f'<div class="component {self.cls} image " id="{self.cssid}" style="margin: 0 auto;">'
-        _img = f'<img src="main/client/resources/img/{self.src}" style="width:100%;height:auto;">'
-        return _div + _img + '</div>'
+        _image = image(self.src)
+        _div = f'<div class="component {self.cls} image" id="{self.cssid}" style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; background-color:red;">'
+        _imgtag = f'<img src="{_image.src}" style="height:100%; width:auto; margin: 0 auto;">'
+        return _div + _imgtag + '</div>'
     
 # ---------------------------------------------------- #
 
@@ -64,3 +83,16 @@ class sizedtext:
         self.scale = scale                      # s, m, l, xl, xxl
         self.font_size = self.font_size[scale]  # em
         
+class image:
+    destinations = {
+        r"%resources%": r"main/client/resources/",
+        r"%custom%": r"custom/"
+    }
+    
+    def __init__(self, src):
+        # %で囲まれた文字列を置換
+        _destination = re.match(r"%[^%]+%", src)
+        if _destination != None and _destination.group() in self.destinations:
+            src = src.replace(_destination.group(), self.destinations[_destination.group()])
+        
+        self.src = src

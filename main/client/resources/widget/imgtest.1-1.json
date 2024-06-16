@@ -6,8 +6,8 @@
     "content":[
         {
             "type":"image",
-            "src":"fox.jpg",
-            "size":"m",
+            "src":"%resources%/img/fox.jpg",
+            "size":"s",
             "clip":"false"
         }
     ]
