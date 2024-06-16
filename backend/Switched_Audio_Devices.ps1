@@ -78,7 +78,7 @@ function Set-DefaultAudioDevice
     }
     Else
     {
-        Write-Host "ERROR: There has been a problem setting the default audio device."
+        Write-Host "ERROR: There has been a problem setting the default audio device." -ForegroundColor Red
     }
 }
 

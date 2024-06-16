@@ -1,4 +1,18 @@
 {
     "layout": "default",
-    "theme": "neumorphism"
+    "theme": "neumorphism",
+    "audio_devices":{
+        "koral_speaker":{
+            "uuid": "{8a921e89-844b-4404-9a8d-7264c026783f}"
+        },
+        "koral_headset":{
+            "uuid": "{66c634c9-57ff-4f0b-8584-efdf7182c943}"
+        },
+        "erutone_speaker":{
+            "uuid": "{43966c92-6c3d-41a3-bd3f-7f061a619756}"
+        },
+        "erutone_headphone":{
+            "uuid": "{51576283-45ac-44a4-8252-a4dba0948c0f}"
+        }
+    }
 }
