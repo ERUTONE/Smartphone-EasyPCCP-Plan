@@ -59,7 +59,10 @@ class component:
         _image = image(self.src)
         _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
             style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; position: relative;">'
-        _imgtag = f'<img src="{_image.src}" style="width:100%; height:100%; object-fit:cover;\
+        if hasattr(self, "clip") and self.clip=="true":
+            _object_fit = "width:100%; height:100%; object-fit:cover;"
+        else:_object_fit = "width:100%; height:100%; object-fit: contain;"
+        _imgtag = f'<img src="{_image.src}" style="{_object_fit}\
             position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);">'
         return _div + _imgtag + '</div>'
     
