@@ -6,9 +6,9 @@
     "content":[
         {
             "type":"image",
-            "src":"%resources%/img/fox.jpg",
+            "src":"%resources%/img/vertical.png",
             "size":"xxl",
-            "clip":"true"
+            "fill":"width"
         }
     ]
 }
