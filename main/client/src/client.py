@@ -86,10 +86,14 @@ def create_gridcss():
     
 # -------------------------------- #
 
-def init() :
+def init(get_args=False) :
 
     load_usercfg()
-
+    if get_args:
+        if "layout" in request.args:
+            global layout_name; layout_name=request.args.get("layout")
+        if "theme" in request.args:
+            global theme_name; theme_name=request.args.get("theme")
     get_layout()
     get_theme()
     global layout_widgets; layout_widgets= []
@@ -101,14 +105,6 @@ init()
 
 @app.route("/")
 def show_interface():
-    if "reload" in request.args:
-        init()
-    if "layout" in request.args:
-        global layout_name; layout_name=request.args.get("layout")
-        get_layout()
-        create_widgets()
-        create_gridcss()
-    if "theme" in request.args:
-        global theme_name; theme_name=request.args.get("theme")
-        get_theme()
+    init(get_args=True)
+    
     return render_template("base.html",theme=theme_path, content="\n".join(layout_widgets))
