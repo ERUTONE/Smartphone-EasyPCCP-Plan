@@ -60,12 +60,16 @@ body {
 
     display: grid;
     align-content: center;
+    gap: var(--margin);
 }
 
 .component {
     overflow: hidden;
     border-radius: calc(var(--border-radius) - var(--margin));
-    margin: calc(var(--margin) / 1) auto;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
 .accent_text {
