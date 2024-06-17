@@ -34,20 +34,7 @@ class component:
     
     # --private----- #
     
-    def siz(self):
-        _scales = {
-            "s" : "3em",
-            "m" : "4em",
-            "l" : "6em",
-            "xl": "9em",
-            "xxl": "100%",
-            "xxl": "100%"
-        }
-        if hasattr(self, "size") and self.size in _scales:
-            _size = self.size
-        else:
-            _size = "m"
-        return _scales[_size]
+
         
     # --element----- #
     
@@ -57,31 +44,13 @@ class component:
         return _div + _text.text + "</div>\n"
     
     def c_image(self):
-        _image = image(self.src)
+        _image = image(self)
         _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
-            style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; position: relative;">'
-            
-        if self.siz()!="100%":
+            style="overflow:hidden; width:{_image.length}; height:{_image.length}; position: relative;">'
+
+        _imgtag = _image.get_imgtag()
         
-            if hasattr(self, "fill") and self.fill=="true":
-                _object_fit = "width:100%; height:100%; object-fit: cover;"
-            else:
-                _object_fit = "width:100%; height:100%; object-fit: contain;"
-            _pos = ""
-        
-        else:
-            if hasattr(self, "fill") and self.fill=="height":
-                # cut horizontal side
-                _object_fit = "width:auto; height:100%; object-fit: cover;"
-                _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
-            else:
-                # cut vertival side
-                _object_fit = "width:100%; height:100%; object-fit: cover;"
-                _pos = "position: static !important;"
-        
-        _imgtag = f'<img src="{_image.src}" style="{_object_fit} {_pos}">'
-        
-        if self.siz()=="100%":
+        if _image.length=="100%":
             return _imgtag
         return _div + _imgtag + '</div>\n'
     
@@ -113,10 +82,52 @@ class image:
         r"%custom%": r"custom/"
     }
     
-    def __init__(self, src):
-        # %で囲まれた文字列を置換
+    def siz(self, obj):
+        _scales = {
+            "s" : "3em",
+            "m" : "4em",
+            "l" : "6em",
+            "xl": "9em",
+            "xxl": "100%",
+            "xxl": "100%"
+        }
+        if hasattr(obj, "size") and obj.size in _scales:
+            _size = obj.size
+        else:
+            _size = "m"
+        return _scales[_size]
+    
+    def __init__(self, obj):
+        # src: %xxx% to path
+        src = obj.src
         _destination = re.match(r"%[^%]+%", src)
         if _destination != None and _destination.group() in self.destinations:
             src = src.replace(_destination.group(), self.destinations[_destination.group()])
-        
         self.src = src
+        
+        # siz -> length
+        self.length = self.siz(obj)
+        
+        # style: object-fit, position
+        if self.length!="100%":
+        
+            if hasattr(obj, "fill") and obj.fill=="true":
+                _object_fit = "width:100%; height:100%; object-fit: cover;"
+            else:
+                _object_fit = "width:100%; height:100%; object-fit: contain;"
+            _pos = ""
+        
+        else:
+            if hasattr(obj, "fill") and obj.fill=="height":
+                # cut horizontal side
+                _object_fit = "width:auto; height:100%;"
+                _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
+            else:
+                # cut vertival side
+                _object_fit = "width:100%; height:100%;" # TODO: 画像サイズが画面サイズに負けてると結局切れる
+                _pos = "position: static !important;"
+        
+        self.style = _object_fit + _pos
+    
+    def get_imgtag(self):
+        return f'<img src="{self.src}" style="{self.style}">'
