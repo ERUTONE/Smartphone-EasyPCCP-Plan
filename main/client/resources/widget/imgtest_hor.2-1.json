@@ -1,8 +1,8 @@
 {
-    "column":1,
-    "row":2,
-    "title":"s:imgtest",
-    "container":"vbox",
+    "column":2,
+    "row":1,
+    "title":"s:hbox",
+    "container":"hbox",
     "content":[
         {
             "type":"image",

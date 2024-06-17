@@ -70,7 +70,10 @@ class widget:
     def container_style(self):
         _style = f"\n.widget#{self.cssid} > .subcontainer{{ "
         if self.container == "vbox":
-            _style += f"display:grid; grid-template-columns:1fr; align-content: center; margin: 0 auto; width:fit-content;"
+            _style += f"display:grid; align-content: center; margin: var(--margin) auto; width:fit-content;"
+        if self.container == "hbox":
+            _style += f"display:flex;  align-content: center; margin: var(--margin) auto; width:fit-content;"
+        
         return _style + "}"
     
     

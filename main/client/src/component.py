@@ -54,7 +54,7 @@ class component:
     def c_text(self):
         _text = sizedtext(self.text)
         _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
-        return _div + _text.text + "</div>"
+        return _div + _text.text + "</div>\n"
     
     def c_image(self):
         _image = image(self.src)
@@ -67,7 +67,7 @@ class component:
                 _object_fit = "width:100%; height:100%; object-fit: cover;"
             else:
                 _object_fit = "width:100%; height:100%; object-fit: contain;"
-            _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
+            _pos = ""
         
         else:
             if hasattr(self, "fill") and self.fill=="height":
@@ -83,7 +83,7 @@ class component:
         
         if self.siz()=="100%":
             return _imgtag
-        return _div + _imgtag + '</div>'
+        return _div + _imgtag + '</div>\n'
     
 # ---------------------------------------------------- #
 
