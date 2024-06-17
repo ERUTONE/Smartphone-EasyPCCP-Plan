@@ -1,12 +1,12 @@
 {
-    "column":1,
-    "row":2,
+    "column":2,
+    "row":1,
     "title":"s:imgtest",
     "container":"vbox",
     "content":[
         {
             "type":"image",
-            "src":"%resources%/img/vertical.png",
+            "src":"%resources%/img/fox.jpg",
             "size":"xxl",
             "fill":"width"
         }

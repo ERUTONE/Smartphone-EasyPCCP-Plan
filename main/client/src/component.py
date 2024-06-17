@@ -40,7 +40,8 @@ class component:
             "m" : "4em",
             "l" : "6em",
             "xl": "9em",
-            "xxl": "100%" #TODO
+            "xxl": "100%",
+            "xxl": "100%"
         }
         if hasattr(self, "size") and self.size in _scales:
             _size = self.size
@@ -53,19 +54,36 @@ class component:
     def c_text(self):
         _text = sizedtext(self.text)
         _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
-        return _div + _text.text + "</div>"
+        return _div + _text.text + "</div>\n"
     
     def c_image(self):
         _image = image(self.src)
         _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
             style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; position: relative;">'
-        if hasattr(self, "clip") and self.clip=="true":
-            _object_fit = "width:100%; height:100%; object-fit:cover;"
-        else:_object_fit = "width:100%; height:100%; object-fit: contain;"
-        _imgtag = f'<img src="{_image.src}" style="{_object_fit}\
-            position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);">'
+            
+        if self.siz()!="100%":
         
-        return _div + _imgtag + '</div>'
+            if hasattr(self, "fill") and self.fill=="true":
+                _object_fit = "width:100%; height:100%; object-fit: cover;"
+            else:
+                _object_fit = "width:100%; height:100%; object-fit: contain;"
+            _pos = ""
+        
+        else:
+            if hasattr(self, "fill") and self.fill=="height":
+                # cut horizontal side
+                _object_fit = "width:auto; height:100%; object-fit: cover;"
+                _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
+            else:
+                # cut vertival side
+                _object_fit = "width:100%; height:100%; object-fit: cover;"
+                _pos = "position: static !important;"
+            
+        _imgtag = f'<img src="{_image.src}" style="{_object_fit} {_pos}">'
+        
+        if self.siz()=="100%":
+            return _imgtag
+        return _div + _imgtag + '</div>\n'
     
 # ---------------------------------------------------- #
 

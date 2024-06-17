@@ -1,5 +1,5 @@
 {
-    "layout": "default",
+    "layout": "imagetest",
     "theme": "neumorphism",
     "audio_devices":{
         "koral_speaker":{

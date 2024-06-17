@@ -1,0 +1,26 @@
+{
+    "column":1,
+    "row":2,
+    "title":"s:imgtest",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"l",
+            "fill":"true"
+        },
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"s",
+            "fill":"true"
+        },
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"s",
+            "fill":"true"
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "column":2,
+    "row":1,
+    "title":"s:hbox",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"l",
+            "fill":"true"
+        },
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"s",
+            "fill":"true"
+        },
+        {
+            "type":"image",
+            "src":"%resources%/img/vertical.png",
+            "size":"s",
+            "fill":"true"
+        }
+    ]
+}

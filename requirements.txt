@@ -5,4 +5,3 @@ pycaw
 comtypes
 regex
 pypresence
-tkinter
