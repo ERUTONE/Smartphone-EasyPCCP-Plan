@@ -78,7 +78,7 @@ class component:
                 # cut vertival side
                 _object_fit = "width:100%; height:100%; object-fit: cover;"
                 _pos = "position: static !important;"
-            
+        
         _imgtag = f'<img src="{_image.src}" style="{_object_fit} {_pos}">'
         
         if self.siz()=="100%":

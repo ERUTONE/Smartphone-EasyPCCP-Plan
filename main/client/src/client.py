@@ -103,6 +103,11 @@ init()
 def show_interface():
     if "reload" in request.args:
         init()
+    if "layout" in request.args:
+        global layout_name; layout_name=request.args.get("layout")
+        get_layout()
+        create_widgets()
+        create_gridcss()
     if "theme" in request.args:
         global theme_name; theme_name=request.args.get("theme")
         get_theme()
