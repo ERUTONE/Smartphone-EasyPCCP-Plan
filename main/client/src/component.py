@@ -60,11 +60,17 @@ class component:
         _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
             style="overflow:hidden; width:{self.siz()}; height:{self.siz()}; position: relative;">'
         if hasattr(self, "clip") and self.clip=="true":
-            _object_fit = "width:100%; height:100%; object-fit:cover;"
-        else:_object_fit = "width:100%; height:100%; object-fit: contain;"
-        _imgtag = f'<img src="{_image.src}" style="{_object_fit}\
-            position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);">'
+            if self.siz() == "100%":
+                _object_fit = "width:auto; height:100%; object-fit:cover;"
+            else:
+               _object_fit = "width:100%; height:100%; object-fit:cover;"
+        else:
+            _object_fit = "width:100%; height:100%; object-fit: contain;"
+        _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
+        _imgtag = f'<img src="{_image.src}" style="{_object_fit} {_pos}">'
         
+        if self.siz()=="100%":
+            return _imgtag
         return _div + _imgtag + '</div>'
     
 # ---------------------------------------------------- #

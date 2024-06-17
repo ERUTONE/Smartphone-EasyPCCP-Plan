@@ -10,20 +10,20 @@
             "position": [2,1]
         },
         {
-            "widget":"none.1-1",
-            "position": [4,1]
-        },
-        {
             "widget":"imgtest.1-1",
             "position": [2,2]
         },
         {
-            "widget":"none.1-1",
+            "widget":"texttest.1-1",
             "position": [3,2]
         },
         {
-            "widget":"texttest.1-1",
+            "widget":"none.1-1",
             "position": [4,2]
+        },
+        {
+            "widget":"imgtest.1-2",
+            "position": [4,1]
         }
     ]
 }

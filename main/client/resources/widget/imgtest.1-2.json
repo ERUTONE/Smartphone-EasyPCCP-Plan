@@ -6,7 +6,7 @@
     "content":[
         {
             "type":"image",
-            "src":"%resources%/img/vertical.png",
+            "src":"%resources%/img/fox.jpg",
             "size":"xxl",
             "clip":"true"
         }
