@@ -9,7 +9,9 @@
             "type":"button-icon",
             "id":"soundOn",
             "action":"audio.setSoundMute(false)",
-            "src":"%resources%/icon/soundOn.png"
+            "src":"%resources%/icon/soundOn.png",
+            "size":"m:s"
+
         },
         {
             "type":"button-icon",

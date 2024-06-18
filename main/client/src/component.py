@@ -89,24 +89,42 @@ class image:
         r"%resources%": r"main/client/resources/",
         r"%custom%": r"custom/"
     }
-    
+    component_scales = {
+        "s" : "3em",
+        "m" : "4em",
+        "l" : "6em",
+        "xl": "9em",
+        "xxl": "100%"
+    }
+    innner_scales = {
+        "s" : "50%",
+        "m" : "75%",
+        "l" : "100%"
+    }
+
     def siz(self, obj, allow_fill):
-        _scales = {
-            "s" : "3em",
-            "m" : "4em",
-            "l" : "6em",
-            "xl": "9em",
-            "xxl": "100%"
-        }
-        if hasattr(obj, "size") and obj.size in _scales:
-            _size = obj.size
-        else:
-            _size = "m"
+        _size = "m"
+        if hasattr(obj, "size"):
+            if (_outersize := re.match(r"^[^:]+:?", obj.size)) != None:
+                _outersize = re.match(r"[^:]+", _outersize.group()).group()
+                if _outersize in self.component_scales:
+                    _size = _outersize
         
         if _size=="xxl" and not allow_fill:
             _size = "xl"
         
-        return _scales[_size]
+        return self.component_scales[_size]
+    
+    def innersize(self, obj):
+        _size = "l"
+        if hasattr(obj, "size"):
+            if (_innnersize := re.search(r":[^:]+", obj.size)) != None:
+                _size = _innnersize.group()[1:]
+                if not _size in self.innner_scales:
+                    _size = "l"
+            else:
+                print(_innnersize)
+        return self.innner_scales[_size]
     
     def __init__(self, obj, allow_fill=True):
         # src: %xxx% to path
@@ -125,7 +143,8 @@ class image:
             if hasattr(obj, "fill") and obj.fill=="true":
                 _object_fit = "width:100%; height:100%; object-fit: cover;"
             else:
-                _object_fit = "width:100%; height:100%; object-fit: contain;"
+                _innerscale = self.innersize(obj)
+                _object_fit = f"width:{_innerscale}; height:{_innerscale}; object-fit: contain;"
             _pos = ""
         
         else:
@@ -137,7 +156,6 @@ class image:
                 # cut vertival side
                 _object_fit = "width:100%; height:100%;" # TODO: 画像サイズが画面サイズに負けてると結局切れる
                 _pos = "position: static !important;"
-        
         self.style = _object_fit + _pos
     
     def get_imgtag(self):

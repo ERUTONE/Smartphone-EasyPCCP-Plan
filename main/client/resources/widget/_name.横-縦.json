@@ -56,7 +56,8 @@
             "*type":"button-icon",
             "*action":"module.function(args)",
             "*src":"%resources%/icon/hoge.jpg, png, ...",
-            " size":"s/m/l/xl , m by default, x to full size",
+            " size":"m:l  s/m/l/xl , m by default, x to full size",
+            " ^ innner imagesize":"s/m/l , l by default(100%) ",
             " custom-color":"none / hex color",
             " transparent":"true/false , false by default, good for x size button"
         },
