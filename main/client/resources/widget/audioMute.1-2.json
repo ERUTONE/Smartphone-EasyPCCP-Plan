@@ -10,14 +10,15 @@
             "id":"soundOn",
             "action":"audio.setSoundMute(false)",
             "src":"%resources%/icon/soundOn.png",
-            "size":"m:s"
+            "size":":m"
 
         },
         {
             "type":"button-icon",
             "id":"soundOff",
             "action":"audio.setSoundMute(true)",
-            "src":"%resources%/icon/soundOff.png"
+            "src":"%resources%/icon/soundOff.png",
+            "size":":m"
         }
     ]
 }

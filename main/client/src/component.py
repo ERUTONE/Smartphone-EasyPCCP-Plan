@@ -122,8 +122,6 @@ class image:
                 _size = _innnersize.group()[1:]
                 if not _size in self.innner_scales:
                     _size = "l"
-            else:
-                print(_innnersize)
         return self.innner_scales[_size]
     
     def __init__(self, obj, allow_fill=True):
