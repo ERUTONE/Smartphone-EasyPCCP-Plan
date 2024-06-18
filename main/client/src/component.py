@@ -24,6 +24,8 @@ class component:
             return self.c_text()
         if self.type == "image":
             return self.c_image()
+        if self.type == "button-icon":
+            return self.c_button_icon()
         
         return f"ERROR: No {self.type} type generator<br>"
     
@@ -54,6 +56,12 @@ class component:
             return _imgtag
         return _div + _imgtag + '</div>\n'
     
+    def c_button_icon(self):
+        _icon = image(self, allow_fill=False)
+        _div = f'<div class="component {self.cls} button button-icon" id="{self.cssid}"\
+            style="overflow:hidden; width:{_icon.length}; height:{_icon.length}; position: relative;">'
+            
+        return _div + _icon.get_imgtag() + '</div>\n'
 # ---------------------------------------------------- #
 
 class sizedtext:
@@ -82,22 +90,25 @@ class image:
         r"%custom%": r"custom/"
     }
     
-    def siz(self, obj):
+    def siz(self, obj, allow_fill):
         _scales = {
             "s" : "3em",
             "m" : "4em",
             "l" : "6em",
             "xl": "9em",
-            "xxl": "100%",
             "xxl": "100%"
         }
         if hasattr(obj, "size") and obj.size in _scales:
             _size = obj.size
         else:
             _size = "m"
+        
+        if _size=="xxl" and not allow_fill:
+            _size = "xl"
+        
         return _scales[_size]
     
-    def __init__(self, obj):
+    def __init__(self, obj, allow_fill=True):
         # src: %xxx% to path
         src = obj.src
         _destination = re.match(r"%[^%]+%", src)
@@ -106,7 +117,7 @@ class image:
         self.src = src
         
         # siz -> length
-        self.length = self.siz(obj)
+        self.length = self.siz(obj,allow_fill)
         
         # style: object-fit, position
         if self.length!="100%":

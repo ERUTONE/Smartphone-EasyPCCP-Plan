@@ -7,7 +7,7 @@
 
     --margin: 0;
     --border-radius: 0;
-    --button-radius: var(--border-radius);
+    --button-radius: calc( var(--border-radius) - var(--margin) );
 }
 
 body {
@@ -91,4 +91,11 @@ img { -webkit-user-drag: none; }
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
+}
+
+.button {
+    background-color: var(--accent-color);
+    color: var(--main-color);
+    border-radius: var(--button-radius);
+    font-weight: bold;
 }
