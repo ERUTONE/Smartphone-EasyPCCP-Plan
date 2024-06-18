@@ -17,7 +17,9 @@ body {
     height: 100vh;
 
     touch-action: manipulation;
+    user-select: none;
 }
+img { -webkit-user-drag: none; }
 
 .container {
     border-radius: calc( var(--border-radius) + var(--margin) * 2 );
