@@ -86,8 +86,8 @@ class sizedtext:
         
 class image:
     destinations = {
-        r"%resources%": r"main/client/resources/",
-        r"%custom%": r"custom/"
+        r"%resources%": r"main/client/resources",
+        r"%custom%": r"custom"
     }
     component_scales = {
         "s" : "3em",
@@ -124,6 +124,14 @@ class image:
                     _size = "l"
         return self.innner_scales[_size]
     
+    def flatcolor(self):
+        _style = f"\n \
+            background-color: {self.color};\
+            mask-image: url(soundOn.png);\
+        "
+        return _style
+        
+    
     def __init__(self, obj, allow_fill=True):
         # src: %xxx% to path
         src = obj.src
@@ -135,7 +143,7 @@ class image:
         # siz -> length
         self.length = self.siz(obj,allow_fill)
         
-        # style: object-fit, position
+        # size: object-fit, position
         if self.length!="100%":
         
             if hasattr(obj, "fill") and obj.fill=="true":
@@ -154,7 +162,16 @@ class image:
                 # cut vertival side
                 _object_fit = "width:100%; height:100%;" # TODO: 画像サイズが画面サイズに負けてると結局切れる
                 _pos = "position: static !important;"
-        self.style = _object_fit + _pos
+        
+        # color
+        _color = ""
+        if hasattr(obj, "color"):
+            self.color = obj.color 
+            _color = self.flatcolor()
+            
+        self.style = _object_fit + _pos + _color
     
     def get_imgtag(self):
+        if hasattr(self, "color"):
+            return f'<div style="{self.style}"></div>'
         return f'<img src="{self.src}" style="{self.style}">'

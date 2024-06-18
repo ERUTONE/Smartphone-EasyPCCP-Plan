@@ -10,7 +10,8 @@
             "id":"soundOn",
             "action":"audio.setSoundMute(false)",
             "src":"%resources%/icon/soundOn.png",
-            "size":":m"
+            "size":":m",
+            "color": "red"
 
         },
         {
