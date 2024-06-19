@@ -9,9 +9,9 @@
     <title>EasyPCCP</title>
 </head>
 <body style="overflow: hidden;">
-    <div class="container">
+    <form class="container">
         {{ content | safe  }}
-    </div>
+    </form>
     <!--
         safeとされた変数では、エスケープ処理が無くなる。
         外部から持ち込んだモジュールによりXSS攻撃に遭う危険がある

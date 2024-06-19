@@ -86,22 +86,25 @@ def create_gridcss():
     
 # -------------------------------- #
 
-def init(get_args=False) :
+def init(get_args=False, regen=False) :
 
     load_usercfg()
     if get_args:
         if "layout" in request.args:
             global layout_name; layout_name=request.args.get("layout")
+            regen = True
         if "theme" in request.args:
             global theme_name; theme_name=request.args.get("theme")
     get_layout()
     get_theme()
-    global layout_widgets; layout_widgets= []
-    global widget_styles;  widget_styles = []
-    create_widgets()
-    create_gridcss()
+    if regen:
+        global layout_widgets; layout_widgets= []
+        global widget_styles;  widget_styles = []
+        create_widgets()
+        create_gridcss()
 
-init()
+# regen when py (re)starts
+init(regen=True)
 
 @app.route("/")
 def show_interface():

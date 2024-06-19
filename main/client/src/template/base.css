@@ -93,6 +93,10 @@ img { -webkit-user-drag: none; }
     transform: translate(0, -50%);
 }
 
+button {
+    border:none;
+}
+
 .button {
     background-color: var(--accent-color);
     color: var(--main-color);

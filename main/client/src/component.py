@@ -58,19 +58,19 @@ class component:
     
     def c_button_icon(self):
         _icon = image(self, allow_fill=False)
-        _div = f'<div class="component {self.cls} button button-icon" id="{self.cssid}"\
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-icon" id="{self.cssid}"\
             style="overflow:hidden; width:{_icon.length}; height:{_icon.length}; position: relative;">'
             
-        return _div + _icon.get_imgtag() + '</div>\n'
+        return _div + _icon.get_imgtag() + '</button>\n'
 # ---------------------------------------------------- #
 
 class sizedtext:
     font_size = {
-        "s" : "0.5em",
-        "m" : "1em",
-        "l" : "2em",
-        "xl": "4em",
-        "xxl": "8em"
+        "s" : "0.5rem",
+        "m" : "1rem",
+        "l" : "2rem",
+        "xl": "4rem",
+        "xxl": "8rem"
     }
     
     def __init__(self, sizedtxt):
@@ -90,10 +90,10 @@ class image:
         r"%custom%": r"custom"
     }
     component_scales = {
-        "s" : "3em",
-        "m" : "4em",
-        "l" : "6em",
-        "xl": "9em",
+        "s" : "3rem",
+        "m" : "4rem",
+        "l" : "6rem",
+        "xl": "9rem",
         "xxl": "100%"
     }
     innner_scales = {
