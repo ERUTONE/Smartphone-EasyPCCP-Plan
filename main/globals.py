@@ -11,3 +11,5 @@ img:        Final[str] = resources + "img/"
 
 layout_default: Final[str] = layout + "default.json"
 theme_default:  Final[str] = theme + "default.css"
+
+functions:  Final[str] = "main/functions/"

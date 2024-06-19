@@ -98,6 +98,7 @@ def init(get_args=False, regen=False) :
             global theme_name; theme_name=request.args.get("theme")
     get_layout()
     get_theme()
+    
     if regen:
         global layout_widgets; layout_widgets= []
         global widget_styles;  widget_styles = []
@@ -109,8 +110,14 @@ def init(get_args=False, regen=False) :
 init(regen=True)
 
 @app.route("/")
-@cache.cached(timeout=3600)  # 3600秒（1時間）のキャッシュ時間を設定
 def show_interface():
     init(get_args=True)
+    
+    print(f"get {len(request.args)} arguments:")
+    for key in request.args:
+        print(f" - {key} : {request.args.get(key)} ",end="")
+        if key in host.actions:
+            print({host.actions[key]})
+            exec(f"host.{key}()")
     
     return render_template("base.html",theme=theme_path, content="\n".join(layout_widgets))

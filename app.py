@@ -3,8 +3,6 @@ print("starting app..")
 
 from flask import Flask
 from flask_caching import Cache
-import os
-import importlib.util
 
 
 app = Flask(__name__,
@@ -12,16 +10,6 @@ app = Flask(__name__,
     template_folder='main/client/src/template/')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
-
-def import_all_modules_from_dir(directory):
-    for filename in os.listdir(directory):
-        if filename.endswith('.py') and filename != '__init__.py':
-            module_name = filename[:-3]
-            file_path = os.path.join(directory, filename)
-            spec = importlib.util.spec_from_file_location(module_name, file_path)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            globals()[module_name] = module
 
 def load_cores():
     import main.client.src.client
