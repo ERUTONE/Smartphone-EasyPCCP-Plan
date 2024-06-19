@@ -16,7 +16,8 @@ class component:
             setattr(self, k, v)
         self.cssid = f"{self.parent.cssid}c{content_num}"
         self.cls = _content_dict['class'] if "class" in _content_dict else ""
-    
+        self.length = self.get_component_length()
+        
     def create_component(self):
         if not hasattr(self, "type"): return "ERROR: No type specified"
         
@@ -37,7 +38,19 @@ class component:
     
     # --private----- #
     
-
+    def get_component_length(self):
+        component_scales = {
+            "s" : "3rem",
+            "m" : "4rem",
+            "l" : "6rem",
+            "xl": "9rem",
+            "xxl": "100%"
+        }
+        
+        if hasattr(self, "size") and self.size in component_scales:
+            _scale = self.size
+        else: _scale = "m"
+        return component_scales[_scale]
         
     # --element----- #
     
@@ -57,14 +70,36 @@ class component:
             return _imgtag
         return _div + _imgtag + '</div>\n'
     
+    def c_button(self):
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button" id="{self.cssid}"\
+            style="width:{self.length}; height:{self.length}; position: relative;">'
+    
+    def c_button_text(self):
+        _text = sizedtext(self.text)
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
+            style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
+        
+        host.add_action(f"b_{self.cssid}", self.action)
+        
+        return _div + _text.text + '</button>\n'
+    
     def c_button_icon(self):
         _icon = image(self, allow_fill=False)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-icon" id="{self.cssid}"\
-            style="overflow:hidden; width:{_icon.length}; height:{_icon.length}; position: relative;">'
+            style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
         host.add_action(f"b_{self.cssid}", self.action)
         
         return _div + _icon.get_imgtag() + '</button>\n'
+
+    def c_button_image(self):
+        _image = image(self)
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-image" id="{self.cssid}"\
+            style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
+        
+        host.add_action(f"b_{self.cssid}", self.action)
+        
+        return _div + _image.get_imgtag() + '</button>\n'
 # ---------------------------------------------------- #
 
 class sizedtext:
@@ -81,11 +116,14 @@ class sizedtext:
         text = sizedtxt[(0 if scale==None else len(scale.group())+1):]
         if scale==None: scale = "m"
         else: scale = scale.group()
+        if not scale in self.font_size:
+            scale = "m"
+            text = sizedtxt
         
         self.original = sizedtxt                # m:text
         self.text = text                        # text
         self.scale = scale                      # s, m, l, xl, xxl
-        self.font_size = self.font_size[scale]  # em
+        self.font_size = self.font_size[scale]  # rem
         
 class image:
     destinations = {
@@ -105,7 +143,7 @@ class image:
         "l" : "100%"
     }
 
-    def siz(self, obj, allow_fill):
+    def siz(self, obj, allow_fill=True):
         _size = "m"
         if hasattr(obj, "size"):
             if (_outersize := re.match(r"^[^:]+:?", obj.size)) != None:

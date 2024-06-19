@@ -43,6 +43,11 @@
         },
         
         {
+            "*type":"button",
+            "*action":"module.function(args)",
+            " size":"s/m/l/xl , m by default, x to full size"
+        },
+        {
             "*type":"button-text",
             "*action":"module.function(args)",
             "*text":"s:display text",

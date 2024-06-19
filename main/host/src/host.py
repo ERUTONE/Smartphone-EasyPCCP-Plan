@@ -24,7 +24,7 @@ def add_action(name, action):
 
 def execute(name):
     if name in actions:
-        print(f"executing {name} : {actions[name]} ...")
+        print(f" - executing {name} : {actions[name]} ...")
         exec(actions[name])
     else:
         print(f"action {name} not found")

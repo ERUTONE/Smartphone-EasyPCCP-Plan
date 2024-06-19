@@ -24,6 +24,12 @@ def load_usercfg():
 def get_layout():
     global layout_name, layout
     
+    _path = g.c_layout + layout_name + ".json"
+    if(os.path.exists(_path)) :
+        with open(_path, "r") as f:
+            layout = json.load(f)
+        return
+    
     _path = g.layout + layout_name + ".json"
     if(not os.path.exists(_path)) : 
         print("[ERROR] layout not found: " + _path)
@@ -34,6 +40,12 @@ def get_layout():
 
 def get_theme():
     global theme_name, theme_path
+    
+    _path = g.c_theme + theme_name + ".css"
+    if(os.path.exists(_path)) :
+        theme_path = _path
+        return
+    
     _path = g.theme + theme_name + ".css"
     if(not os.path.exists(_path)) : 
         print("[ERROR] theme not found: " + _path)
@@ -114,12 +126,9 @@ init(regen=True)
 def show_interface():
     init(get_args=True)
     
-    print(f"get {len(request.args)} arguments:")
+    print(f"got request with {len(request.args)} arguments")
     for key in request.args:
-        print(f" - {key} : {request.args.get(key)} ",end="")
-        if key in host.actions:
-            print({host.actions[key]})
-            host.execute(key)
+        host.execute(key)
     
     global widgets_html
     return render_template("base.html",theme=theme_path, content=widgets_html)
