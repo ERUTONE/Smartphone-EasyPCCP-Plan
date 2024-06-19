@@ -2,6 +2,7 @@
 print("starting app..")
 
 from flask import Flask
+from flask_caching import Cache
 import os
 import importlib.util
 
@@ -10,6 +11,7 @@ app = Flask(__name__,
     static_folder='/',
     template_folder='main/client/src/template/')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 def import_all_modules_from_dir(directory):
     for filename in os.listdir(directory):

@@ -1,7 +1,7 @@
 print("client importing...")
 import os, json, regex as re
 from flask import render_template, request
-from app import app
+from app import app, cache
 import main.globals as g
 
 layout_name = ""
@@ -107,6 +107,7 @@ def init(get_args=False, regen=False) :
 init(regen=True)
 
 @app.route("/")
+@cache.cached(timeout=3600)  # 3600秒（1時間）のキャッシュ時間を設定
 def show_interface():
     init(get_args=True)
     
