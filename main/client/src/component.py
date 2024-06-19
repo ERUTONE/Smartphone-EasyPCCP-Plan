@@ -164,7 +164,6 @@ class image:
         
         _style = f" filter: brightness({brightness*100}%); "
         return _style
-        
     
     def __init__(self, obj, allow_fill=True):
         # src: %xxx% to path
@@ -205,7 +204,5 @@ class image:
             
         self.style = _object_fit + _pos + self.flatcolor()
     
-    def get_imgtag(self):
-        if self.filetype() == "svg":
-            return f'<img src="{self.src}" style="{self.style}">'      
+    def get_imgtag(self):    
         return f'<img src="{self.src}" style="{self.style}">'
