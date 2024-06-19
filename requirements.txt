@@ -5,3 +5,4 @@ pycaw
 comtypes
 regex
 pypresence
+flask_caching

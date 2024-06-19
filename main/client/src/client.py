@@ -1,7 +1,7 @@
 print("client importing...")
 import os, json, regex as re
 from flask import render_template, request
-from app import app
+from app import app, cache
 import main.globals as g
 
 layout_name = ""
@@ -86,24 +86,28 @@ def create_gridcss():
     
 # -------------------------------- #
 
-def init(get_args=False) :
+def init(get_args=False, regen=False) :
 
     load_usercfg()
     if get_args:
         if "layout" in request.args:
             global layout_name; layout_name=request.args.get("layout")
+            regen = True
         if "theme" in request.args:
             global theme_name; theme_name=request.args.get("theme")
     get_layout()
     get_theme()
-    global layout_widgets; layout_widgets= []
-    global widget_styles;  widget_styles = []
-    create_widgets()
-    create_gridcss()
+    if regen:
+        global layout_widgets; layout_widgets= []
+        global widget_styles;  widget_styles = []
+        create_widgets()
+        create_gridcss()
 
-init()
+# regen when py (re)starts
+init(regen=True)
 
 @app.route("/")
+@cache.cached(timeout=3600)  # 3600秒（1時間）のキャッシュ時間を設定
 def show_interface():
     init(get_args=True)
     

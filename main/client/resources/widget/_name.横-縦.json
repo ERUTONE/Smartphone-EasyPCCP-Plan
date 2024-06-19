@@ -41,6 +41,7 @@
             " fill":"true/false : false by default, true to clip to square",
             " xxl-clip":"cut -> width / height, width by default"
         },
+        
         {
             "*type":"button-text",
             "*action":"module.function(args)",
@@ -50,15 +51,16 @@
             " custom-text-color":"none / hex color",
             " custom-color":"none / hex color",
             " transparent":"true/false , false by default, good for x size button"
-
         },
         {
             "*type":"button-icon",
             "*action":"module.function(args)",
             "*src":"%resources%/icon/hoge.jpg, png, ...",
-            " size":"s/m/l/xl , m by default, x to full size",
-            " custom-color":"none / hex color",
-            " transparent":"true/false , false by default, good for x size button"
+            " size":"outer:innner",
+              "^ outersize":"s/m/l/xl/xxl , m by default, xxl to full size",
+              "^ innnersize":"s/m/l ,       l by default(100%)",
+            " color":"none / hex color",
+            " transparent":"true/false ,    false by default, good for x size button"
         },
         {
             "*type":"button-image",
