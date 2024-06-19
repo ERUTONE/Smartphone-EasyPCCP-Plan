@@ -2,14 +2,12 @@
 print("starting app..")
 
 from flask import Flask
-from flask_caching import Cache
 
 
 app = Flask(__name__,
     static_folder='/',
     template_folder='main/client/src/template/')
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 def load_cores():
     import main.client.src.client

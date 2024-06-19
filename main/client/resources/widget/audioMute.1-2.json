@@ -8,7 +8,7 @@
         {
             "type":"button-icon",
             "id":"soundOn",
-            "action":"audio.set_sound_mute(false)",
+            "action":"audio.set_sound_mute(False)",
             "src":"%resources%/icon/soundOn.svg",
             "size":":m"
 
@@ -16,7 +16,7 @@
         {
             "type":"button-icon",
             "id":"soundOff",
-            "action":"audio.set_sound_mute(true)",
+            "action":"audio.set_sound_mute(True)",
             "src":"%resources%/icon/soundOff.svg",
             "size":":m"
         }

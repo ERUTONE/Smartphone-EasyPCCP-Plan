@@ -22,11 +22,9 @@ def add_action(name, action):
     global actions
     actions[name] = action # module.function(args)
 
-def load_actions():
-    print("loading actions...")
-    global actions
-    
-    for name, action in actions.items():
-        print(f" - loading action {name}() : {action}")
-        exec(f"def {name}(): {action}", globals())
-
+def execute(name):
+    if name in actions:
+        print(f"executing {name} : {actions[name]} ...")
+        exec(actions[name])
+    else:
+        print(f"action {name} not found")

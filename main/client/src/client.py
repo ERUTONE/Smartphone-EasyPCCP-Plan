@@ -1,7 +1,7 @@
 print("client importing...")
 import os, json, regex as re
 from flask import render_template, request
-from app import app, cache
+from app import app
 import main.globals as g
 import main.host.src.host as host
 
@@ -11,6 +11,7 @@ layout: dict
 theme_path = ""
 layout_widgets = []
 widget_styles = []
+widgets_html = ""
 
 def load_usercfg():
     global layout_name, theme_name
@@ -104,7 +105,7 @@ def init(get_args=False, regen=False) :
         global widget_styles;  widget_styles = []
         create_widgets()
         create_gridcss()
-        host.load_actions()
+        global widgets_html; widgets_html = "\n".join(layout_widgets)
 
 # regen when py (re)starts
 init(regen=True)
@@ -118,6 +119,7 @@ def show_interface():
         print(f" - {key} : {request.args.get(key)} ",end="")
         if key in host.actions:
             print({host.actions[key]})
-            exec(f"host.{key}()")
+            host.execute(key)
     
-    return render_template("base.html",theme=theme_path, content="\n".join(layout_widgets))
+    global widgets_html
+    return render_template("base.html",theme=theme_path, content=widgets_html)
