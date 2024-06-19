@@ -3,6 +3,7 @@ import os, json, regex as re
 from flask import render_template, request
 from app import app, cache
 import main.globals as g
+import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
@@ -47,7 +48,7 @@ def create_widgets():
         widget_path = g.widget + jwidget["widget"] + ".json"
         if(os.path.exists(widget_path)):
             # load as a new instance
-            print(f' loading widget {jwidget["widget"]}...')
+            print(f' - loading widget {jwidget["widget"]}...')
             _widget = new_widget(widget_path, i)
             layout_widgets.append( _widget.create_widget() )
             widget_styles.append( _widget.get_style() )
@@ -102,6 +103,7 @@ def init(get_args=False, regen=False) :
         global widget_styles;  widget_styles = []
         create_widgets()
         create_gridcss()
+        host.load_actions()
 
 # regen when py (re)starts
 init(regen=True)

@@ -1,4 +1,5 @@
 import regex as re
+import main.host.src.host as host
 
 class component:
     
@@ -60,7 +61,9 @@ class component:
         _icon = image(self, allow_fill=False)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-icon" id="{self.cssid}"\
             style="overflow:hidden; width:{_icon.length}; height:{_icon.length}; position: relative;">'
-            
+        
+        host.add_action(f"b_{self.cssid}", self.action)
+        
         return _div + _icon.get_imgtag() + '</button>\n'
 # ---------------------------------------------------- #
 
@@ -167,7 +170,7 @@ class image:
     
     def __init__(self, obj, allow_fill=True):
         # src: %xxx% to path
-        src = obj.src
+        src = obj.src if hasattr(obj, "src") else ""
         _destination = re.match(r"%[^%]+%", src)
         if _destination != None and _destination.group() in self.destinations:
             src = src.replace(_destination.group(), self.destinations[_destination.group()])
