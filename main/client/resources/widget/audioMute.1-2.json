@@ -9,16 +9,16 @@
             "type":"button-icon",
             "id":"soundOn",
             "action":"audio.setSoundMute(false)",
-            "src":"%resources%/icon/soundOn.png",
+            "src":"%resources%/icon/soundOn.svg",
             "size":":m",
-            "color": "red"
+            "color": "#f00"
 
         },
         {
             "type":"button-icon",
             "id":"soundOff",
             "action":"audio.setSoundMute(true)",
-            "src":"%resources%/icon/soundOff.png",
+            "src":"%resources%/icon/soundOff.svg",
             "size":":m"
         }
     ]

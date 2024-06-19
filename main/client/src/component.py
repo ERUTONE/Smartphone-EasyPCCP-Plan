@@ -126,9 +126,7 @@ class image:
     
     def flatcolor(self):
         _style = f"\n \
-            background-color: {self.color};\
-            mask-image: url(soundOn.png);\
-        "
+            background-color: {self.color};\n"
         return _style
         
     
@@ -171,7 +169,5 @@ class image:
             
         self.style = _object_fit + _pos + _color
     
-    def get_imgtag(self):
-        if hasattr(self, "color"):
-            return f'<div style="{self.style}"></div>'
+    def get_imgtag(self):           
         return f'<img src="{self.src}" style="{self.style}">'
