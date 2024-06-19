@@ -124,9 +124,45 @@ class image:
                     _size = "l"
         return self.innner_scales[_size]
     
+    def filetype(self):
+        return re.search(r"[^\.]+$", self.src).group()
+    
     def flatcolor(self):
-        _style = f"\n \
-            background-color: {self.color};\n"
+        if self.color[0] != "#": return ""
+        # hex RGB to HSB
+        # TODO: not available for HSB, only Brightness
+        
+        # hex to int
+        self.color = self.color.replace("#", "")
+        if len(self.color)==3:
+            self.color = ''.join([c*2 for c in self.color])
+        r = int(self.color[0:2], 16)
+        g = int(self.color[2:4], 16)
+        b = int(self.color[4:6], 16)
+        
+        maxv = max(r,g,b)
+        # minv = min(r,g,b)
+        # maxc = "r"
+        # if g > r: maxc = "g"
+        # if b > g: maxc = "b"
+        
+        # # hue degree 0-360
+        # if r==g==b:
+        #     hue = 0
+        # elif maxc == "r":
+        #     hue = 60 * ((g - b) / (maxv - minv))
+        # elif maxc == "g":
+        #     hue = 60 * ((b - r) / (maxv - minv)) + 120
+        # elif maxc == "b":
+        #     hue = 60 * ((r - g) / (maxv - minv)) + 240
+        
+        # # saturation %
+        # saturation = (maxv - minv) / maxv
+        
+        # brightness %
+        brightness = maxv / 255
+        
+        _style = f" filter: brightness({brightness*100}%); "
         return _style
         
     
@@ -162,12 +198,14 @@ class image:
                 _pos = "position: static !important;"
         
         # color
-        _color = ""
         if hasattr(obj, "color"):
-            self.color = obj.color 
-            _color = self.flatcolor()
+            self.color = obj.color
+        else: 
+            self.color = "#ffffff"
             
-        self.style = _object_fit + _pos + _color
+        self.style = _object_fit + _pos + self.flatcolor()
     
-    def get_imgtag(self):           
+    def get_imgtag(self):
+        if self.filetype() == "svg":
+            return f'<img src="{self.src}" style="{self.style}">'      
         return f'<img src="{self.src}" style="{self.style}">'

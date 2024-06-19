@@ -9,7 +9,8 @@
 	.st3{display:inline;fill:none;stroke:#000000;stroke-width:34.8589;stroke-miterlimit:10;}
 	.st4{display:inline;fill:none;stroke:#FFFFFF;stroke-width:20;stroke-miterlimit:10;}
 	.st5{display:inline;fill:none;stroke:#FFFFFF;stroke-width:36.7794;stroke-miterlimit:10;}
-	.st6{fill:none;stroke:#000000;stroke-width:20;stroke-miterlimit:10;}
+	.st6{fill:#FFFFFF;}
+	.st7{fill:none;stroke:#FFFFFF;stroke-width:20;stroke-miterlimit:10;}
 </style>
 <g id="back" class="st0">
 	<rect class="st1" width="512" height="512"/>
@@ -39,12 +40,12 @@
 	<circle class="st5" cx="255.5" cy="168.5" r="15"/>
 </g>
 <g id="soundOn">
-	<path d="M201.75,116.82l-90.22,108.8c-14.14,17.05-14.14,44.7,0,61.76l90.22,108.8c22.81,27.51,61.82,8.03,61.82-30.88V147.7
-		C263.57,108.8,224.57,89.31,201.75,116.82z"/>
-	<path d="M209.85,180.94H97.75c-13.25,0-24,10.74-24,24v103.14c0,13.25,10.74,24,24,24h112.11V180.94z"/>
-	<path class="st6" d="M307.76,312.12c34.11-34.11,34.11-89.41,0-123.52"/>
-	<path class="st6" d="M345.7,350.06c55.07-55.07,55.07-144.34,0-199.41"/>
-	<path class="st6" d="M382.89,387.25c75.6-75.6,75.6-198.18,0-273.79"/>
+	<path class="st6" d="M201.75,116.82l-90.22,108.8c-14.14,17.05-14.14,44.7,0,61.76l90.22,108.8c22.81,27.51,61.82,8.03,61.82-30.88
+		V147.7C263.57,108.8,224.57,89.31,201.75,116.82z"/>
+	<path class="st6" d="M209.85,180.94H97.75c-13.25,0-24,10.74-24,24v103.14c0,13.25,10.74,24,24,24h112.11V180.94z"/>
+	<path class="st7" d="M307.76,312.12c34.11-34.11,34.11-89.41,0-123.52"/>
+	<path class="st7" d="M345.7,350.06c55.07-55.07,55.07-144.34,0-199.41"/>
+	<path class="st7" d="M382.89,387.25c75.6-75.6,75.6-198.18,0-273.79"/>
 </g>
 <g id="soundOff" class="st0">
 	<path class="st2" d="M201.75,116.82l-90.22,108.8c-14.14,17.05-14.14,44.7,0,61.76l90.22,108.8c22.81,27.51,61.82,8.03,61.82-30.88

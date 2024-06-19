@@ -11,7 +11,7 @@
             "action":"audio.setSoundMute(false)",
             "src":"%resources%/icon/soundOn.svg",
             "size":":m",
-            "color": "#f00"
+            "color": "#fff"
 
         },
         {
