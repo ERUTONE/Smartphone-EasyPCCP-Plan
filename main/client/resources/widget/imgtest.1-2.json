@@ -8,19 +8,19 @@
             "type":"image",
             "src":"%resources%/img/vertical.png",
             "size":"l",
-            "fill":"true"
+            "fill":true
         },
         {
             "type":"image",
             "src":"%resources%/img/vertical.png",
             "size":"s",
-            "fill":"true"
+            "fill":true
         },
         {
             "type":"image",
             "src":"%resources%/img/vertical.png",
             "size":"s",
-            "fill":"true"
+            "fill":true
         }
     ]
 }

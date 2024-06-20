@@ -66,13 +66,6 @@
               "^ innnersize":"s/m/l ,       l by default(100%)",
             " color":"none / hex color",
             " transparent":"true/false ,    false by default, good for x size button"
-        },
-        {
-            "*type":"button-image",
-            "*action":"module.function(args)",
-            "*src":"%resources%/img/hoge.jpg, png, ...",
-            " size":"s/m/l/xl , m by default, x to full size",
-            " fill":"true/false : false by default, true to clip to square"
         }
     ]
 }

@@ -26,6 +26,10 @@ class component:
             return self.c_text()
         if self.type == "image":
             return self.c_image()
+        if self.type == "button":
+            return self.c_button()
+        if self.type == "button-text":
+            return self.c_button_text()
         if self.type == "button-icon":
             return self.c_button_icon()
         
@@ -73,7 +77,9 @@ class component:
     def c_button(self):
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
-    
+        host.add_action(f"b_{self.cssid}", self.action)
+        return _div + '</button>\n'
+        
     def c_button_text(self):
         _text = sizedtext(self.text)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
@@ -92,7 +98,6 @@ class component:
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
-    def c_button_image(self):
         _image = image(self)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-image" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
@@ -220,7 +225,7 @@ class image:
         # size: object-fit, position
         if self.length!="100%":
         
-            if hasattr(obj, "fill") and obj.fill=="true":
+            if hasattr(obj, "fill") and obj.fill==True:
                 _object_fit = "width:100%; height:100%; object-fit: cover;"
             else:
                 _innerscale = self.innersize(obj)
