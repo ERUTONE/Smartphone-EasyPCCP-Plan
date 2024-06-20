@@ -64,7 +64,7 @@ class component:
         return _div + _text.text + "</div>\n"
     
     def c_image(self):
-        _image = image(self)
+        _image = image(self, allow_fill=True)
         _div = f'<div class="component {self.cls} image" id="{self.cssid}" \
             style="overflow:hidden; width:{_image.length}; height:{_image.length}; position: relative;">'
 
@@ -98,13 +98,6 @@ class component:
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
-        _image = image(self)
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-image" id="{self.cssid}"\
-            style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
-        
-        host.add_action(f"b_{self.cssid}", self.action)
-        
-        return _div + _image.get_imgtag() + '</button>\n'
 # ---------------------------------------------------- #
 
 class sizedtext:

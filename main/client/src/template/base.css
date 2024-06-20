@@ -1,5 +1,5 @@
 :root {
-    font-size:calc(2vw *4 );
+    font-size:2vw;
 
     --accent-color: #000000;
     --main-color: #ffffff;
@@ -68,6 +68,7 @@ img { -webkit-user-drag: none; }
 .component {
     overflow: hidden;
     border-radius: calc(var(--border-radius) - var(--margin));
+    
 }
 
 .accent_text {
@@ -95,15 +96,15 @@ img { -webkit-user-drag: none; }
 
 button {
     border:none;
-    border-radius: var(--button-radius);
-
-    background-color: var(--accent-color);
-    color: var(--main-color);
-    font-weight: bold;
-
 }
 
 .button {
+    border-radius: var(--button-radius) !important;
+
+    background: var(--accent-color);
+    color: var(--main-color);
+    font-weight: bold;
+
     margin: 0 auto;
     position: absolute;
     top: 50%;
