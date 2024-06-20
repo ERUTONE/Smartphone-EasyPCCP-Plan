@@ -1,21 +1,27 @@
 {
     "column":2,
     "row":1,
-    "title":"Action",
+    "title":"",
     "sync":"websocket",
     "container":"hbox",
     "content":[
         {
             "type":"button",
             "action":"audio.set_sound_mute(False)",
-            "size":":m"
+            "size":"m:m"
 
         },
         {
             "type":"button-text",
             "action":"audio.set_sound_mute(True)",
             "text":"m:text yeah",
-            "size":":m"
+            "size":"m:m"
+        },
+        {
+            "type":"button-text",
+            "action":"audio.set_sound_mute(True)",
+            "text":"m:button yeah",
+            "size":"m:m"
         }
     ]
 }

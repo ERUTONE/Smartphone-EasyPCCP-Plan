@@ -8,6 +8,10 @@
         {
             "widget":"buttontest.2-1",
             "position":[2,1]
+        },
+        {
+            "widget":"imgtest_hor.2-1",
+            "position": [2,2]
         }
     ]
 }
