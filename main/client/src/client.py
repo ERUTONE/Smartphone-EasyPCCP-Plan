@@ -128,6 +128,7 @@ def show_interface():
     
     print(f"got request with {len(request.args)} arguments")
     for key in request.args:
+        if(key=="reload"): init(regen=True, get_args=True)
         host.execute(key)
     
     global widgets_html

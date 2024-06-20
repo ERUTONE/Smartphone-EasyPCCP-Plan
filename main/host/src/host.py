@@ -7,6 +7,7 @@ import main.globals as g
 actions = {}
 
 def import_all_modules_from_dir(directory):
+    print(f"host: importing all modules from {directory}...")
     for filename in os.listdir(directory):
         if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3]
@@ -27,4 +28,4 @@ def execute(name):
         print(f" - executing {name} : {actions[name]} ...")
         exec(actions[name])
     else:
-        print(f"action {name} not found")
+        print(f"action '{name}' not found")

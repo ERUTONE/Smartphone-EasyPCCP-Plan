@@ -10,7 +10,7 @@
             "id":"soundOn",
             "action":"audio.set_sound_mute(False)",
             "src":"%resources%/icon/soundOn.svg",
-            "size":":m"
+            "size":"l:m"
 
         },
         {
@@ -18,7 +18,7 @@
             "id":"soundOff",
             "action":"audio.set_sound_mute(True)",
             "src":"%resources%/icon/soundOff.svg",
-            "size":":m"
+            "size":"l:m"
         }
     ]
 }
