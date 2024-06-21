@@ -1,15 +1,12 @@
 
 def time(format="hh:mm:ss"):
     # TODO
-    result = f"TIME {format}"
-    return result
+    return f"TIME {format}"
 
 def date(format="YYYY/MM/DD"):
     # TODO
-    result = f"DATE {format}"
-    return result
+    return f"DATE {format}"
 
 def dow(format=""):
     # TODO
-    result = f"DOW {format}"
-    return result
+    return f"DOW {format}"

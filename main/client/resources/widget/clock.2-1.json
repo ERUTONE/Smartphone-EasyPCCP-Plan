@@ -1,7 +1,7 @@
 {
     "column":2,
     "row":1,
-    "title":"s:Clock",
+    "title":"s:",
     "sync":"* * * * *",
     "container":"vbox",
     "content":[
@@ -13,7 +13,7 @@
         },
         {
             "type":"text",
-            "text":"s:{{datetime.date('MM/DD')}} ({{datetime.dow('es')}})",
+            "text":"m:{{datetime.date('MM/DD')}} ({{datetime.dow('es')}})",
             "customformat":true
         }
     ]

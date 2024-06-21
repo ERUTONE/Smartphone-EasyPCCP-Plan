@@ -60,7 +60,7 @@ class widget:
         widget_html += '</div>'
         # if _title: widget_html += _title.div
         self.widget_html = widget_html
-        return f'<div class="widget {self.cls}" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title else "" )
+        return f'<div class="widget {self.cls}" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title and _title.text!="" else "" )
 
     def get_style(self):
         return "\n".join(self.widget_style)
