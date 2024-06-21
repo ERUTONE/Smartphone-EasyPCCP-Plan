@@ -38,7 +38,7 @@ class widget:
         if (hasattr(self, "title") and self.title!="") :
             _title = sizedtext(self.title)
             _title.div =f'<div class="widget_title" id="{self.cssid}-title"\
-                style="font-size:{_title.font_size};">︎&nbsp;{_title.text}&nbsp;</div>'
+                style="font-size:{_title.font_size};">&nbsp;{_title.text}&nbsp;</div>'
         
         # sync      | function
         if hasattr(self, "sync") and self.sync != "none" :
@@ -70,9 +70,9 @@ class widget:
     def container_style(self):
         _style = f"\n.widget#{self.cssid} > .subcontainer{{ "
         if self.container == "vbox":
-            _style += f"display:grid; align-content: center; margin: var(--margin) auto; width:fit-content;"
+            _style += f"display:grid; align-content: center; margin: 0 auto; width:fit-content;"
         if self.container == "hbox":
-            _style += f"display:flex;  align-content: center; margin: var(--margin) auto; width:fit-content;"
+            _style += f"display:flex;  align-content: center; margin: 0 auto; width:fit-content;"
         
         return _style + "}"
     
