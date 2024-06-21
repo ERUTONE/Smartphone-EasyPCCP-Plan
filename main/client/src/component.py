@@ -92,7 +92,7 @@ class component:
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
-            _text.text = client.custom_string_format(_text.text)
+            _text.text = customformattext(_text.text).format()
         host.add_action(f"b_{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
@@ -132,16 +132,31 @@ class sizedtext:
         self.font_size = self.font_size[scale]  # rem
 
 class customformattext:
-    pattern = r"(?<=\{\{)(.*?)(?=\}\})"
     actions = []
+    results = []
     plains = []
     
     def __init__(self, original):
-        self.actions = re.findall(self.pattern, original)
-        self.plains =  re.split  (self.pattern, original)
+        self.actions = re.findall(r"(?<=\{\{)(.*?)(?=\}\})", original) # pattern: module.function(arg)
+        self.plains =  re.split  (r"\{\{.*?\}\}", original)            # pattern: {{module.function(arg)}}
+        self.results = []
     
-    def format():
-        return "formatted"
+    def execute(self):
+        for action in self.actions:
+            _result = host.execute_function(action)
+            self.results.append( _result if _result else "-" )
+    
+    def format(self):
+        if(len(self.actions) != len(self.results)):
+            self.execute()
+        
+        _joined = ""
+        for i in range(max(len(self.plains), len(self.results))):
+            if i < len(self.plains):
+                _joined += self.plains[i]
+            if i < len(self.results):
+                _joined += self.results[i]
+        return _joined
     
 class image:
     destinations = {
