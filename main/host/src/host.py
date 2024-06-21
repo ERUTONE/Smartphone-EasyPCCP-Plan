@@ -23,7 +23,19 @@ def add_action(name, action):
     global actions
     actions[name] = action # module.function(args)
 
-def execute(name):
+def execute_function(function):
+    namespace = {}
+    try:
+        exec(function, namespace)
+    except Exception as e:
+        print(f"host: execution '{function}' failed!")
+        print(e)
+    if "result" in namespace:
+        return namespace["result"]
+    else:
+        return None
+
+def execute_action(name):
     if name in actions:
         print(f" - executing {name} : {actions[name]} ...")
         exec(actions[name])
