@@ -49,6 +49,7 @@ img { -webkit-user-drag: none; }
 
     display: inline-block;
     position:relative;
+
     overflow: hidden;
     height: fit-content;
     margin: var(--margin);

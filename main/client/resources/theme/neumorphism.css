@@ -10,12 +10,12 @@
 }
 
 body {
-    background: var(--accent-color);
+    background: var(--main-color);
     text-align: center;
 }
 
 .widget {
-    box-shadow: none;
+    box-shadow: var(--shadow);
     background: linear-gradient(0deg, #ffffff, #fbfbfb);
 }
 

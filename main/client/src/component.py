@@ -51,8 +51,12 @@ class component:
             "xxl": "100%"
         }
         
-        if hasattr(self, "size") and self.size in component_scales:
-            _scale = self.size
+        if hasattr(self, "size"):
+            _scale = re.match(r"^[^:]+(?=:)", self.size)
+            if _scale != None and _scale.group() in component_scales:
+                _scale = _scale.group()
+            else:
+                _scale = "m"
         else: _scale = "m"
         return component_scales[_scale]
         
