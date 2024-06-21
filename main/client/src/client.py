@@ -100,6 +100,12 @@ def create_gridcss():
     
 # -------------------------------- #
 
+def custom_string_format(original):
+    ...
+    return original
+
+# -------------------------------- #
+
 def init(get_args=False, regen=False) :
 
     load_usercfg()

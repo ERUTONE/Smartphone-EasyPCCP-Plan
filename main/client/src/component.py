@@ -1,5 +1,6 @@
 import regex as re
 import main.host.src.host as host
+import main.client.src.client as client
 
 class component:
     
@@ -65,6 +66,8 @@ class component:
     def c_text(self):
         _text = sizedtext(self.text)
         _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
+        if hasattr(self,"customformat") and self.customformat == True:
+            _text.text = client.custom_string_format(_text.text)
         return _div + _text.text + "</div>\n"
     
     def c_image(self):
@@ -88,7 +91,8 @@ class component:
         _text = sizedtext(self.text)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
-        
+        if hasattr(self,"customformat") and self.customformat == True:
+            _text.text = client.custom_string_format(_text.text)
         host.add_action(f"b_{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
