@@ -32,14 +32,14 @@
         {
             "*type":"text",
             "*text":"s:display text",
-            " custom-format":"true/false , false by default"
+            " customformat":"true/false , false by default"
         },
         {
             "*type":"image",
             "*src":"%resources%/img/hoge.jpg, png, ...",
             " size":"s/m/l/xl , m by default, xxl to full size",
             " fill":"true/false : false by default, true to clip to square",
-            " xxl-clip":"cut -> width / height, width by default"
+            " ^ xxl":"cut -> width / height, width by default"
         },
         
         {
@@ -52,10 +52,7 @@
             "*action":"module.function(args)",
             "*text":"s:display text",
             " size":"s/m/l/xl , m by default, x to full size",
-            " custom-format":"true/false , false by default",
-            " custom-text-color":"none / hex color",
-            " custom-color":"none / hex color",
-            " transparent":"true/false , false by default, good for x size button"
+            " customformat":"true/false , false by default"
         },
         {
             "*type":"button-icon",
@@ -64,8 +61,7 @@
             " size":"outer:innner",
               "^ outersize":"s/m/l/xl/xxl , m by default, xxl to full size",
               "^ innnersize":"s/m/l ,       l by default(100%)",
-            " color":"none / hex color",
-            " transparent":"true/false ,    false by default, good for x size button"
+            " color":"none / hex color"
         }
     ]
 }

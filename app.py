@@ -10,8 +10,8 @@ app = Flask(__name__,
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 def load_cores():
-    import main.client.src.client
     import main.host.src.host
+    import main.client.src.client
     
 load_cores()
 app.run(host='0.0.0.0', port=5000, debug=True)
