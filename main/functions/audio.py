@@ -18,3 +18,12 @@ def set_sound_mute(mute):
         print("amixer set Master mute")
     else:
         print("amixer set Master unmute")
+        
+        
+def set_master_volume(value):
+    from .audio.master_volume import set_master_volume as function
+    function(value)
+
+def add_master_volume(change):
+    from .audio.master_volume import add_master_volume as function
+    function(change)

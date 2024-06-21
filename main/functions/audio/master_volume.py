@@ -2,7 +2,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from comtypes import CLSCTX_ALL
 from ctypes import cast, POINTER
 
-def add_master_volume(change):
+def add_master_volume(change): # -100 ~ 100 int
     # スピーカーデバイスの取得
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -27,8 +27,13 @@ def add_master_volume(change):
         volume.SetMasterVolumeLevelScalar(new_volume, None)
         print("New volume: %f" % new_volume)
 
-# 音量を10%上げる
-# add_master_volume(10)
+# ------------------- #
 
-# 音量を10%下げる
-# add_master_volume(-10)
+def set_master_volume(value): # 0~100 int
+
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+
+    adjustment = value / 100.0
+    volume.SetMasterVolumeLevelScalar(adjustment, None)
