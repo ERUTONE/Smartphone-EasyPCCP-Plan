@@ -1,6 +1,5 @@
 flask
 regex
 pyautogui #shortcut.py
-subprocess #exe_startup.py
 pycaw #volume
 comtypes #volume

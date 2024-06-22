@@ -1,5 +1,6 @@
 import regex as re
 import main.host.src.host as host
+import main.client.src.client as client
 
 class component:
     
@@ -65,6 +66,8 @@ class component:
     def c_text(self):
         _text = sizedtext(self.text)
         _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
+        if hasattr(self,"customformat") and self.customformat == True:
+            _text.text = customformattext(_text.text).format()
         return _div + _text.text + "</div>\n"
     
     def c_image(self):
@@ -88,7 +91,8 @@ class component:
         _text = sizedtext(self.text)
         _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
-        
+        if hasattr(self,"customformat") and self.customformat == True:
+            _text.text = customformattext(_text.text).format()
         host.add_action(f"b_{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
@@ -118,15 +122,39 @@ class sizedtext:
         text = sizedtxt[(0 if scale==None else len(scale.group())+1):]
         if scale==None: scale = "m"
         else: scale = scale.group()
-        if not scale in self.font_size:
-            scale = "m"
-            text = sizedtxt
         
         self.original = sizedtxt                # m:text
         self.text = text                        # text
-        self.scale = scale                      # s, m, l, xl, xxl
-        self.font_size = self.font_size[scale]  # rem
+        self.font_size = self.font_size[scale] \
+            if scale in self.font_size else scale
+
+class customformattext:
+    actions = []
+    results = []
+    plains = []
+    
+    def __init__(self, original):
+        self.actions = re.findall(r"(?<=\{\{)(.*?)(?=\}\})", original) # pattern: module.function(arg)
+        self.plains =  re.split  (r"\{\{.*?\}\}", original)            # pattern: {{module.function(arg)}}
+        self.results = []
+    
+    def execute(self):
+        for action in self.actions:
+            _result = host.execute_function(action)
+            self.results.append( _result if _result else "-" )
+    
+    def format(self):
+        if(len(self.actions) != len(self.results)):
+            self.execute()
         
+        _joined = ""
+        for i in range(max(len(self.plains), len(self.results))):
+            if i < len(self.plains):
+                _joined += self.plains[i]
+            if i < len(self.results):
+                _joined += self.results[i]
+        return _joined
+    
 class image:
     destinations = {
         r"%resources%": r"main/client/resources",
@@ -144,6 +172,45 @@ class image:
         "m" : "75%",
         "l" : "100%"
     }
+    
+    def __init__(self, obj, allow_fill=True):
+        # src: %xxx% to path
+        src = obj.src if hasattr(obj, "src") else ""
+        _destination = re.match(r"%[^%]+%", src)
+        if _destination != None and _destination.group() in self.destinations:
+            src = src.replace(_destination.group(), self.destinations[_destination.group()])
+        self.src = src
+        
+        # siz -> length
+        self.length = self.siz(obj,allow_fill)
+        
+        # size: object-fit, position
+        if self.length!="100%":
+        
+            if hasattr(obj, "fill") and obj.fill==True:
+                _object_fit = "width:100%; height:100%; object-fit: cover;"
+            else:
+                _innerscale = self.innersize(obj)
+                _object_fit = f"width:{_innerscale}; height:{_innerscale}; object-fit: contain;"
+            _pos = ""
+        
+        else:
+            if hasattr(obj, "fill") and obj.fill=="height":
+                # cut horizontal side
+                _object_fit = "width:auto; height:100%;"
+                _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
+            else:
+                # cut vertival side
+                _object_fit = "width:100%; height:100%;" # TODO: 画像サイズが画面サイズに負けてると結局切れる
+                _pos = "position: static !important;"
+        
+        # color
+        if hasattr(obj, "color"):
+            self.color = obj.color
+        else: 
+            self.color = "#ffffff"
+            
+        self.style = _object_fit + _pos + self.flatcolor()
 
     def siz(self, obj, allow_fill=True):
         _size = "m"
@@ -207,45 +274,6 @@ class image:
         
         _style = f" filter: brightness({brightness*100}%); "
         return _style
-    
-    def __init__(self, obj, allow_fill=True):
-        # src: %xxx% to path
-        src = obj.src if hasattr(obj, "src") else ""
-        _destination = re.match(r"%[^%]+%", src)
-        if _destination != None and _destination.group() in self.destinations:
-            src = src.replace(_destination.group(), self.destinations[_destination.group()])
-        self.src = src
-        
-        # siz -> length
-        self.length = self.siz(obj,allow_fill)
-        
-        # size: object-fit, position
-        if self.length!="100%":
-        
-            if hasattr(obj, "fill") and obj.fill==True:
-                _object_fit = "width:100%; height:100%; object-fit: cover;"
-            else:
-                _innerscale = self.innersize(obj)
-                _object_fit = f"width:{_innerscale}; height:{_innerscale}; object-fit: contain;"
-            _pos = ""
-        
-        else:
-            if hasattr(obj, "fill") and obj.fill=="height":
-                # cut horizontal side
-                _object_fit = "width:auto; height:100%;"
-                _pos = "position: absolute; left:50%; top:50%; transform: translate(-50%, -50%);"
-            else:
-                # cut vertival side
-                _object_fit = "width:100%; height:100%;" # TODO: 画像サイズが画面サイズに負けてると結局切れる
-                _pos = "position: static !important;"
-        
-        # color
-        if hasattr(obj, "color"):
-            self.color = obj.color
-        else: 
-            self.color = "#ffffff"
-            
-        self.style = _object_fit + _pos + self.flatcolor()
     
     def get_imgtag(self):    
         return f'<img src="{self.src}" style="{self.style}">'

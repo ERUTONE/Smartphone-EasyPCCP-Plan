@@ -97,7 +97,7 @@ def create_gridcss():
                 f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
                 "}\n")
         f.write("\n".join(widget_styles))
-    
+
 # -------------------------------- #
 
 def init(get_args=False, regen=False) :
@@ -118,6 +118,7 @@ def init(get_args=False, regen=False) :
         create_widgets()
         create_gridcss()
         global widgets_html; widgets_html = "\n".join(layout_widgets)
+        host.merge_onload_js()
 
 # regen when py (re)starts
 init(regen=True)
@@ -129,7 +130,7 @@ def show_interface():
     print(f"got request with {len(request.args)} arguments")
     for key in request.args:
         if(key=="reload"): init(regen=True, get_args=True)
-        host.execute(key)
+        host.execute_action(key)
     
     global widgets_html
     return render_template("base.html",theme=theme_path, content=widgets_html)
