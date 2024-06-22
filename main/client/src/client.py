@@ -16,7 +16,7 @@ widgets_html = ""
 def load_usercfg():
     global layout_name, theme_name
 
-    with open("config/usercfg.json", "r", encoding='utf-8') as f:
+    with open(g.usercfg, "r", encoding='utf-8') as f:
         _usercfg = json.load(f)
         layout_name = _usercfg["layout"]
         theme_name = _usercfg["theme"]
