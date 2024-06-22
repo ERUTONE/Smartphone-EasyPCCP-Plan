@@ -96,13 +96,13 @@ def merge_onload_js():
     global onload_js
     print("host: merging onload scripts...")
     # reset
-    with open(g.template+"script.js", "w") as f:
+    with open(g.template+"script.js", "w", encoding='utf-8') as f:
         f.write("//auto-generated\n\n")
-    with open(g.template+"script.js", "a") as f:
+    with open(g.template+"script.js", "a", encoding='utf-8') as f:
         for script in onload_js:
             if script["type"] == "path":
                 print(f" - ({script['type']}) {script['path']}")
-                with open(script["path"], "r") as js:
+                with open(script["path"], "r", encoding='utf-8') as js:
                     f.write(js.read())
             elif script["type"] == "code":
                 print(f" - ({script['type']}) {script['code']}")
