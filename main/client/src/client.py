@@ -16,7 +16,7 @@ widgets_html = ""
 def load_usercfg():
     global layout_name, theme_name
 
-    with open("config/usercfg.json", "r") as f:
+    with open("config/usercfg.json", "r", encoding='utf-8') as f:
         _usercfg = json.load(f)
         layout_name = _usercfg["layout"]
         theme_name = _usercfg["theme"]
@@ -26,7 +26,7 @@ def get_layout():
     
     _path = g.c_layout + layout_name + ".json"
     if(os.path.exists(_path)) :
-        with open(_path, "r") as f:
+        with open(_path, "r", encoding='utf-8') as f:
             layout = json.load(f)
         return
     
@@ -35,7 +35,7 @@ def get_layout():
         print("[ERROR] layout not found: " + _path)
         _path = g.layout_default
     
-    with open(_path, "r") as f:
+    with open(_path, "r", encoding='utf-8') as f:
         layout = json.load(f)
 
 def get_theme():
@@ -72,7 +72,7 @@ def create_widgets():
 
 def create_gridcss():
     global layout
-    with open(g.template+"grid.css", "w") as f:
+    with open(g.template+"grid.css", "w", encoding='utf-8') as f:
         # .container
         grid_col = layout["grid"][0]
         grid_row = layout["grid"][1]
