@@ -1,6 +1,6 @@
 print("host importing...")
 
-import os
+import os, regex as re
 import importlib.util
 import main.globals as g
 
@@ -67,17 +67,44 @@ def execute_function(function): # module.function(args)
         return None
 
 # ------------------ #
-onload_js_pathes = []
+onload_js = []
 
-def add_onload_js_queue(path): # path to js
-    if path.endswith(".js") and os.path.exists(path):
-        onload_js_pathes.append(path)
+def is_valid_path(path):
+    # パスの妥当性をチェックする正規表現
+    pattern = r'^[a-zA-Z0-9_\-\/\.]+$'
+    return bool(re.match(pattern, path))
+
+def add_onload_js_queue(arg, type=None): # path to js / js code
+    global onload_js
+    if type == None:
+        if is_valid_path(arg):
+            type = "path"
+        else:
+            type = "code"
+    
+    if type == "path":
+        if arg.endswith(".js") and os.path.exists(arg):
+            onload_js.append({"type":"path", "path":arg})
+        else:
+            print(f"AddOnloadScriptQueue: invalid path: {arg}")
+    elif type == "code":
+        onload_js.append({"type":"code", "code":arg})
     else:
-        print(f"AddOnloadScriptQueue: invalid path: {path}")
+        print(f"AddOnloadScriptQueue: invalid type: {type}")
 
 def merge_onload_js():
+    global onload_js
     print("host: merging onload scripts...")
+    # reset
     with open(g.template+"script.js", "w") as f:
-        for path in onload_js_pathes:
-            with open(path, "r") as s:
-                f.write(s.read())
+        f.write("//auto-generated\n\n")
+    with open(g.template+"script.js", "a") as f:
+        for script in onload_js:
+            if script["type"] == "path":
+                print(f" - {script['path']} ({script['type']})")
+                with open(script["path"], "r") as js:
+                    f.write(js.read())
+            elif script["type"] == "code":
+                print(f" - {script['code']} ({script['type']})")
+                f.write(script["code"])
+            f.write("\n")
