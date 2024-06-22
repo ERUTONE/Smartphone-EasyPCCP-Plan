@@ -8,17 +8,10 @@
         {
             "type":"button-icon",
             "id":"soundOn",
-            "action":"audio.set_sound_mute(False)",
+            "action":"audio.toggle_master_volume()",
             "src":"%resources%/icon/soundOn.svg",
             "size":"l:m"
 
-        },
-        {
-            "type":"button-icon",
-            "id":"soundOff",
-            "action":"audio.set_sound_mute(True)",
-            "src":"%resources%/icon/soundOff.svg",
-            "size":"l:m"
         }
     ]
 }

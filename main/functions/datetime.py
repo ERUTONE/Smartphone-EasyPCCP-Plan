@@ -1,7 +1,7 @@
 import main.globals as g
 import main.host.src.host as host
 
-host.add_onload_js_queue("main/functions/datetime/datetime.js", type="path")
+host.add_onload_js_queue("main/functions/_datetime/datetime.js", type="path")
 
 def time(format="hh:mm:ss"):
     host.add_onload_js_queue(f'startClockUpdate("{format}");', type="code")

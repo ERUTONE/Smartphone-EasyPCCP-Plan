@@ -42,7 +42,7 @@ def set_master_volume(value): # 0~100 int
 
 # ------------------- #
 
-def toggle_master_volumea():
+def toggle_master_volume():
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
