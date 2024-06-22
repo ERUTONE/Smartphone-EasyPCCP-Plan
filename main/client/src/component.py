@@ -122,14 +122,11 @@ class sizedtext:
         text = sizedtxt[(0 if scale==None else len(scale.group())+1):]
         if scale==None: scale = "m"
         else: scale = scale.group()
-        if not scale in self.font_size:
-            scale = "m"
-            text = sizedtxt
         
         self.original = sizedtxt                # m:text
         self.text = text                        # text
-        self.scale = scale                      # s, m, l, xl, xxl
-        self.font_size = self.font_size[scale]  # rem
+        self.font_size = self.font_size[scale] \
+            if scale in self.font_size else scale
 
 class customformattext:
     actions = []
