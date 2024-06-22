@@ -101,10 +101,10 @@ def merge_onload_js():
     with open(g.template+"script.js", "a") as f:
         for script in onload_js:
             if script["type"] == "path":
-                print(f" - {script['path']} ({script['type']})")
+                print(f" - ({script['type']}) {script['path']}")
                 with open(script["path"], "r") as js:
                     f.write(js.read())
             elif script["type"] == "code":
-                print(f" - {script['code']} ({script['type']})")
+                print(f" - ({script['type']}) {script['code']}")
                 f.write(script["code"])
             f.write("\n")
