@@ -118,7 +118,7 @@ def init(get_args=False, regen=False) :
         create_widgets()
         create_gridcss()
         global widgets_html; widgets_html = "\n".join(layout_widgets)
-        host.merge_onload_script_js()
+        host.merge_onload_js()
 
 # regen when py (re)starts
 init(regen=True)

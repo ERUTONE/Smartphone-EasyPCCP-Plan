@@ -30,7 +30,7 @@ def import_all_modules():
 # ------------------ #
 actions = {}
 
-def add_action_list(name, action): # param : module.function(args)
+def add_action(name, action): # param : module.function(args)
     global actions
     actions[name] = action
 
@@ -67,17 +67,17 @@ def execute_function(function): # module.function(args)
         return None
 
 # ------------------ #
-onload_script_pathes = []
+onload_js_pathes = []
 
-def add_onload_script_queue(path): # path to js
+def add_onload_js_queue(path): # path to js
     if path.endswith(".js") and os.path.exists(path):
-        onload_script_pathes.append(path)
+        onload_js_pathes.append(path)
     else:
         print(f"AddOnloadScriptQueue: invalid path: {path}")
 
-def merge_onload_script_js():
+def merge_onload_js():
     print("host: merging onload scripts...")
     with open(g.template+"script.js", "w") as f:
-        for path in onload_script_pathes:
+        for path in onload_js_pathes:
             with open(path, "r") as s:
                 f.write(s.read())
