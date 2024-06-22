@@ -4,7 +4,6 @@ import os
 import importlib.util
 import main.globals as g
 
-actions = {}
 modules_imported = False
 
 def import_all_modules_from_dir(directory):
@@ -29,26 +28,13 @@ def import_all_modules():
     import_all_modules_from_dir(g.functions)
     
 # ------------------ #
+actions = {}
 
-def add_action(name, action): 
+def add_action_list(name, action): # param : module.function(args)
     global actions
-    actions[name] = action # module.function(args)
+    actions[name] = action
 
-def execute_function(function):
-    import_all_modules()
-    namespace = {}
-    try:
-        print(f" - executing {function} ...")
-        exec(f"result = {function}", globals(), namespace)
-    except Exception as e:
-        print(f"  > execution failed: ",e)
-    
-    if "result" in namespace:
-        return namespace["result"]
-    else:
-        return None
-
-def execute_action(name):
+def execute_action(name): # param
     import_all_modules()
     if name in actions:
         print(f" - executing {name} : {actions[name]} ...")
@@ -65,3 +51,33 @@ def execute_action(name):
     else:
         print(f"action '{name}' not found")
         return None
+
+def execute_function(function): # module.function(args)
+    import_all_modules()
+    namespace = {}
+    try:
+        print(f" - executing {function} ...")
+        exec(f"result = {function}", globals(), namespace)
+    except Exception as e:
+        print(f"  > execution failed: ",e)
+    
+    if "result" in namespace:
+        return namespace["result"]
+    else:
+        return None
+
+# ------------------ #
+onload_script_pathes = []
+
+def add_onload_script_queue(path): # path to js
+    if path.endswith(".js") and os.path.exists(path):
+        onload_script_pathes.append(path)
+    else:
+        print(f"AddOnloadScriptQueue: invalid path: {path}")
+
+def merge_onload_script_js():
+    print("host: merging onload scripts...")
+    with open(g.template+"script.js", "w") as f:
+        for path in onload_script_pathes:
+            with open(path, "r") as s:
+                f.write(s.read())
