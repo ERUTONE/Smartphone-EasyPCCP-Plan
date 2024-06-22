@@ -1,8 +1,12 @@
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from comtypes import CLSCTX_ALL
 from ctypes import cast, POINTER
+import pythoncom
 
 def add_master_volume(change): # -100 ~ 100 int
+
+    pythoncom.CoInitialize()
+
     # スピーカーデバイスの取得
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -27,9 +31,14 @@ def add_master_volume(change): # -100 ~ 100 int
         volume.SetMasterVolumeLevelScalar(new_volume, None)
         print("New volume: %f" % new_volume)
 
+    # プログラムの最後に COM ライブラリの初期化解除を行う
+    pythoncom.CoUninitialize()
+
 # ------------------- #
 
 def set_master_volume(value): # 0~100 int
+
+    pythoncom.CoInitialize()
 
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -38,19 +47,24 @@ def set_master_volume(value): # 0~100 int
     adjustment = value / 100.0
     volume.SetMasterVolumeLevelScalar(adjustment, None)
 
-
+    pythoncom.CoUninitialize()
 
 # ------------------- #
 
 def toggle_master_volume():
+
+    pythoncom.CoInitialize()
+
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
-    
+
     is_muted = volume.GetMute()
     print("Current Mute State:", is_muted)
     
     volume.SetMute(not is_muted, None)
     print("Mute state has been toggled.")
     
+    pythoncom.CoUninitialize()
+
 # ------------------- #
