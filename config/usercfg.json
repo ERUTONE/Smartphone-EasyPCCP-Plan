@@ -1,6 +1,7 @@
 {
     "layout": "default",
     "theme": "neumorphism",
+    "host": "100.117.100.147",
     "audio_devices":{
         "koral_speaker":{
             "uuid": "{8a921e89-844b-4404-9a8d-7264c026783f}"

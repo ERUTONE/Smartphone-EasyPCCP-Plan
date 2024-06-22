@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 print("starting app..")
-
+import json
 from flask import Flask
 
 
@@ -12,9 +12,16 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 def load_cores():
     import main.host.src.host
     import main.client.src.client
-    
-load_cores()
-app.run(host='0.0.0.0', port=5000, debug=True)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+with open('config/usercfg.json') as f:
+    config = json.load(f)
+
+    if "host" in config:
+        host_ip = config["host"]
+    else:
+        host_ip = "0.0.0.0"
+load_cores()
+
+app.run(host=host_ip, port=5000, debug=True)
+
