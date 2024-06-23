@@ -21,6 +21,23 @@ def add_master_volume(change):
     from main.functions._audio.master_volume import add_master_volume as function
     function(change)
     
-def toggle_master_volume():
-    from main.functions._audio.master_volume import toggle_master_volume as function
+def toggle_master_volume_mute():
+    from main.functions._audio.master_volume import toggle_master_volume_mute as function
     function()
+
+def set_application_volume(app, value):
+    from main.functions._audio.application_volume import set_application_volume as function
+    function(app, value)
+
+def add_application_volume(app, change):
+    from main.functions._audio.application_volume import add_application_volume as function
+    function(app, change)
+
+def toggle_application_volume(app):
+    from main.functions._audio.application_volume import toggle_application_volume as function
+    function(app)
+
+def get_application_volume_mute(app):
+    from main.functions._audio.application_volume import get_application_volume_mute as function
+    return function(app)
+
