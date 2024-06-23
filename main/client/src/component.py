@@ -89,7 +89,7 @@ class component:
         
     def c_button_text(self):
         _text = sizedtext(self.text)
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-text" id="{self.cssid}"\
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
@@ -99,7 +99,7 @@ class component:
     
     def c_button_icon(self):
         _icon = image(self, allow_fill=False)
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button-icon" id="{self.cssid}"\
+        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
         host.add_action(f"b_{self.cssid}", self.action)
@@ -207,8 +207,6 @@ class image:
         # color
         if hasattr(obj, "color"):
             self.color = obj.color
-        else: 
-            self.color = "#ffffff"
             
         self.style = _object_fit + _pos + self.flatcolor()
 
@@ -238,6 +236,7 @@ class image:
         return re.search(r"[^\.]+$", self.src).group()
     
     def flatcolor(self):
+        if not hasattr(self, "color"): return ""
         if self.color[0] != "#": return ""
         # hex RGB to HSB
         # TODO: not available for HSB, only Brightness

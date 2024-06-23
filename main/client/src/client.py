@@ -127,10 +127,14 @@ init(regen=True)
 def show_interface():
     init(get_args=True)
     
-    print(f"got request with {len(request.args)} arguments")
-    for key in request.args:
+    global widgets_html
+    return render_template("base.html",theme=theme_path, content=widgets_html)
+
+@app.route("/action", methods=["POST"])
+def action():
+    
+    print(f"got json {request.get_json()} arguments")
+    for key in request.get_json():
         if(key=="reload"): init(regen=True, get_args=True)
         host.execute_action(key)
     
-    global widgets_html
-    return render_template("base.html",theme=theme_path, content=widgets_html)

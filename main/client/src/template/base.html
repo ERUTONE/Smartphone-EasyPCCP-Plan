@@ -9,7 +9,7 @@
     <title>EasyPCCP</title>
 </head>
 <body style="overflow: hidden;">
-    <form class="container">
+    <form class="container" id="root_form" method="post" onsubmit="event.preventDefault();">
         {{ content | safe  }}
     </form>
     <!--
@@ -17,6 +17,22 @@
         外部から持ち込んだモジュールにより、
         不正な処理が行われる可能性がある。注意が必要
     -->
+    <script>
+        function sendData() {
+            var xhr = new XMLHttpRequest();
+            var url = "/submit";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    document.getElementById("response").innerHTML = json.message;
+                }
+            };
+            var data = JSON.stringify({"name": document.getElementById("name").value});
+            xhr.send(data);
+        }
+    </script>
     <script src="{{ url_for('static', filename='main/client/src/template/script.js') }}"></script>
 </body>
 </html>

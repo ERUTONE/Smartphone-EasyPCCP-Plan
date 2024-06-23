@@ -9,7 +9,7 @@
             "type":"button-icon",
             "id":"soundOn",
             "action":"audio.toggle_master_volume()",
-            "src":"%resources%/icon/soundOn.svg",
+            "src":"%resources%/icon/audio.png",
             "size":"l:m"
 
         }
