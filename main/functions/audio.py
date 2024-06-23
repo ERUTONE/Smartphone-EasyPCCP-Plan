@@ -1,4 +1,4 @@
-import subprocess, json
+import subprocess
 
 def get_audio_devices():
     # PowerShell 実行ファイルのパス

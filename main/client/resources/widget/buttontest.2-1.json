@@ -20,7 +20,7 @@
         },
         {
             "type":"button-text",
-            "action":"client.set_layout('default')",
+            "action":"shortcut.take_screenshot()",
             "text":"m:layout default",
             "size":"m:m"
         }
