@@ -51,7 +51,7 @@ def set_master_volume(value): # 0~100 int
 
 # ------------------- #
 
-def toggle_master_volume():
+def toggle_master_volume_mute():
 
     pythoncom.CoInitialize()
 
