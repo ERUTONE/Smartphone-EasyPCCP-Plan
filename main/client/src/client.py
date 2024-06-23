@@ -1,6 +1,6 @@
 print("client importing...")
 import os, json, regex as re
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from app import app
 import main.globals as g
 import main.host.src.host as host
@@ -125,7 +125,7 @@ init(regen=True)
 
 @app.route("/")
 def show_interface():
-    init(get_args=True)
+    init(get_args=True, regen=True)
     
     global widgets_html
     return render_template("base.html",theme=theme_path, content=widgets_html)
@@ -133,8 +133,8 @@ def show_interface():
 @app.route("/action", methods=["POST"])
 def action():
     
-    print(f"got json {request.get_json()} arguments")
+    print(f" ! got POST with arg {request.get_json()}")
     for key in request.get_json():
-        if(key=="reload"): init(regen=True, get_args=True)
         host.execute_action(key)
-    
+
+    return request.get_json()
