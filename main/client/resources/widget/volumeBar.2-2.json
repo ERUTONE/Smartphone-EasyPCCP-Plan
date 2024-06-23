@@ -1,0 +1,19 @@
+{
+    "column":2,
+    "row":2,
+    "title":"s:app volume",
+    "sync":"none",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_application_volume('chrome.exe')}}",
+            "action":"audio.set_application_volume('chrome.exe', $)"
+        },
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_application_volume('chrome.exe')}}",
+            "action":"audio.set_application_volume('chrome.exe', $)"
+        }
+    ]
+}

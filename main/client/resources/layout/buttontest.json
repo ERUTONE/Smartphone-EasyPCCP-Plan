@@ -1,5 +1,5 @@
 {
-    "grid":[5,3],
+    "grid":[6,3],
     "placement":[
         {
             "widget":"audioMute.1-2",
@@ -12,6 +12,14 @@
         {
             "widget":"imgtest_hor.2-1",
             "position": [2,2]
+        },
+        {
+            "widget":"clock.2-1",
+            "position":[5,1]
+        },
+        {
+            "widget":"volumeBar.2-2",
+            "position":[4,2]
         }
     ]
 }

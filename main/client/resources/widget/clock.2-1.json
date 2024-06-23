@@ -8,7 +8,7 @@
         {
             "type":"text",
             "class":"accent_text",
-            "text":"7rem:{{datetime.time('hh:mm')}}",
+            "text":"7em:{{datetime.time('hh:mm')}}",
             "customformat":true
         },
         {

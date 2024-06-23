@@ -47,13 +47,16 @@ def execute_action(name, arg=None): # param
         # arg
         if arg != None and arg != "":
             namespace["arg"] = arg
-        else:
-            namespace["arg"] = None
+            if type(arg) == str:
+                action = action.replace("$", f'"{arg}"')
+            else:
+                action = action.replace("$", arg)
+            
         
         # execute
         try:
-            print(f" - executing {name} : {actions[name]} ...")
-            exec(f"result = {actions[name]}", globals(), namespace)
+            print(f" - executing {name} : {action} ...")
+            exec(f"result = {action}", globals(), namespace)
         except Exception as e:
             print("   > execution failed: ",e)
         
