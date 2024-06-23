@@ -134,7 +134,7 @@ def show_interface():
 def action():
     
     print(f" ! got POST with arg {request.get_json()}")
-    for key in request.get_json():
-        host.execute_action(key)
+    for key, value in request.get_json().items():
+        host.execute_action(key, value)
 
     return request.get_json()

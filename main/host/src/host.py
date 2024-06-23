@@ -34,12 +34,21 @@ def add_action(name, action): # param : module.function(args)
     global actions
     actions[name] = action
 
-def execute_action(name): # param
+def execute_action(name, arg=None): # param
     import_all_modules()
     if name in actions:
-        print(f" - executing {name} : {actions[name]} ...")
         namespace = {}
+        action = actions[name]
+        
+        # arg
+        if arg != None and arg != "":
+            namespace["arg"] = arg
+        else:
+            namespace["arg"] = None
+        
+        # execute
         try:
+            print(f" - executing {name} : {actions[name]} ...")
             exec(f"result = {actions[name]}", globals(), namespace)
         except Exception as e:
             print("   > execution failed: ",e)
