@@ -27,12 +27,20 @@ class component:
             return self.c_text()
         if self.type == "image":
             return self.c_image()
+        
         if self.type == "button":
             return self.c_button()
         if self.type == "button-text":
             return self.c_button_text()
         if self.type == "button-icon":
             return self.c_button_icon()
+        
+        if self.type == "slider":
+            return self.c_slider("horizontal")
+        if self.type == "slider-horizontal":
+            return self.c_slider("horizontal")
+        if self.type == "slider-vertical":
+            return self.c_slider("vertical")
         
         return f"ERROR: No {self.type} type generator<br>"
     
@@ -106,6 +114,12 @@ class component:
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
+    def c_slider(self, direction="horizontal"):
+        _slider = slider(self, direction)
+        _div = f'<div class="component {self.cls} slider slider_{direction}" id="{self.cssid}"\
+            style="width:auto; height:auto; position: relative;">'
+        host.add_action(f"{self.cssid}_slider", self.action)
+        return _div + '</div>\n'
 # ---------------------------------------------------- #
 
 class sizedtext:
@@ -276,3 +290,19 @@ class image:
     
     def get_imgtag(self):    
         return f'<img src="{self.src}" style="{self.style}">'
+
+class slider:
+    
+    def __init__(self, obj, direction="horizontal"):
+        self.min = obj.min if hasattr(obj, "min") else 0
+        self.max = obj.max if hasattr(obj, "max") else 1
+        self.step = obj.step if hasattr(obj, "step") else \
+            1 if (self.max - self.min) > 1 else 0.1
+        
+        self.direction = direction
+        self.value = obj.value if hasattr(obj, "value") else 0
+        if type(self.value) == str:
+            _format = customformattext(self.value)
+            self.value = int(_format.format())
+        
+        self.action = obj.action if hasattr(obj, "action") else None

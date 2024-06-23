@@ -8,12 +8,16 @@
         {
             "type":"slider-vertical",
             "value":"{{audio.get_application_volume('chrome.exe')}}",
-            "action":"audio.set_application_volume('chrome.exe', $)"
+            "action":"audio.set_application_volume('chrome.exe', $)",
+            "min":0,
+            "max":100
         },
         {
             "type":"slider-vertical",
             "value":"{{audio.get_application_volume('chrome.exe')}}",
-            "action":"audio.set_application_volume('chrome.exe', $)"
+            "action":"audio.set_application_volume('chrome.exe', $)",
+            "min":0,
+            "max":100
         }
     ]
 }
