@@ -21,6 +21,11 @@ def load_usercfg():
         layout_name = _usercfg["layout"]
         theme_name = _usercfg["theme"]
 
+def set_layout(arg = "default"):
+    global layout_name
+    layout_name = arg
+    return "reload"
+
 def get_layout():
     global layout_name, layout
     
@@ -37,6 +42,11 @@ def get_layout():
     
     with open(_path, "r", encoding='utf-8') as f:
         layout = json.load(f)
+
+def set_theme(arg = "default"):
+    global theme_name
+    theme_name = arg
+    return "reload"
 
 def get_theme():
     global theme_name, theme_path
@@ -100,41 +110,36 @@ def create_gridcss():
 
 # -------------------------------- #
 
-def init(get_args=False, regen=False) :
+def init():
 
-    load_usercfg()
-    if get_args:
-        if "layout" in request.args:
-            global layout_name; layout_name=request.args.get("layout")
-            regen = True
-        if "theme" in request.args:
-            global theme_name; theme_name=request.args.get("theme")
     get_layout()
     get_theme()
     
-    if regen:
-        global layout_widgets; layout_widgets= []
-        global widget_styles;  widget_styles = []
-        create_widgets()
-        create_gridcss()
-        global widgets_html; widgets_html = "\n".join(layout_widgets)
-        host.merge_onload_js()
+    host.clear_actions()
+    global layout_widgets; layout_widgets= []
+    global widget_styles;  widget_styles = []
+    create_widgets()
+    create_gridcss()
+    global widgets_html; widgets_html = "\n".join(layout_widgets)
+    host.merge_onload_js()
 
 # regen when py (re)starts
-init(regen=True)
+load_usercfg()
+init()
 
 @app.route("/")
 def show_interface():
-    init(get_args=True, regen=True)
+    init()
     
-    global widgets_html
+    global widgets_html, theme_path
     return render_template("base.html",theme=theme_path, content=widgets_html)
 
 @app.route("/action", methods=["POST"])
 def action():
     
     print(f" ! got POST with arg {request.get_json()}")
+    returns = {}
     for key, value in request.get_json().items():
-        host.execute_action(key, value)
+        returns[key] = host.execute_action(key, value) 
 
-    return request.get_json()
+    return jsonify(returns)

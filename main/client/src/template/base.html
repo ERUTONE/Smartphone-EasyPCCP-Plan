@@ -31,8 +31,13 @@
                 type: 'POST',
                 data: JSON.stringify({[submitter]: value}),
                 contentType: 'application/json',
-                success: function(data) {
-                    console.log("Success:",data);
+                success: function(responce) {
+                    console.log("Success:",responce);
+
+                    console.log(Object.values(responce));
+                    if (Object.values(responce).includes("reload")) {
+                        location.reload();
+                    }
                 },
                 error: function(xhr, status, error) {
                     // リクエストが失敗した場合の処理

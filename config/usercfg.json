@@ -1,5 +1,5 @@
 {
-    "layout": "default",
+    "layout": "buttontest",
     "theme": "neumorphism",
     "host": "0.0.0.0",
     "audio_devices":{

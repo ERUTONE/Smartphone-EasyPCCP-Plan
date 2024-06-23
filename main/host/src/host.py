@@ -24,7 +24,7 @@ def import_all_modules():
     global modules_imported
     if modules_imported : return
     else: modules_imported = True
-
+    
     import_all_modules_from_dir(g.functions)
     
 # ------------------ #
@@ -33,6 +33,10 @@ actions = {}
 def add_action(name, action): # param : module.function(args)
     global actions
     actions[name] = action
+
+def clear_actions():
+    global actions
+    actions.clear()
 
 def execute_action(name, arg=None): # param
     import_all_modules()
@@ -117,3 +121,5 @@ def merge_onload_js():
                 print(f" - ({script['type']}) {script['code']}")
                 f.write(script["code"])
             f.write("\n")
+
+import main.client.src.client as client

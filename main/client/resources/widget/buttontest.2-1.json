@@ -6,21 +6,22 @@
     "container":"hbox",
     "content":[
         {
-            "type":"button",
-            "action":"audio.add_master_volume(10)",
+            "type":"button-text",
+            "action":"audio.add_master_volume(-10)",
+            "text":"m:vol-10",
             "size":"m:m"
 
         },
         {
             "type":"button-text",
-            "action":"audio.add_master_volume(-10)",
-            "text":"m:text yeah",
+            "action":"audio.add_master_volume(10)",
+            "text":"m:vol+10",
             "size":"m:m"
         },
         {
             "type":"button-text",
-            "action":"audio.set_sound_mute(True)",
-            "text":"m:button yeah",
+            "action":"client.set_layout('default')",
+            "text":"m:layout default",
             "size":"m:m"
         }
     ]
