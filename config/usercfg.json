@@ -2,6 +2,11 @@
     "layout": "buttontest",
     "theme": "neumorphism",
     "host": "0.0.0.0",
+    "layout_groups":[
+        "default",
+        "buttontest",
+        "imagetest"
+    ],
     "audio_devices":{
         "koral_speaker":{
             "uuid": "{8a921e89-844b-4404-9a8d-7264c026783f}"

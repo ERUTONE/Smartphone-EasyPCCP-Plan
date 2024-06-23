@@ -23,7 +23,27 @@ def load_usercfg():
 
 def set_layout(arg = "default"):
     global layout_name
-    layout_name = arg
+    if type(arg) == str: layout_name = arg
+    elif type(arg) == int:
+        with open(g.usercfg, "r", encoding='utf-8') as f:
+            _usercfg = json.load(f)
+            _group = _usercfg["layout_group"]
+            if arg < len(_group) and arg >= 0:
+                layout_name = _group[arg]
+    return "reload"
+
+layout_group_count = 0
+def rotate_layout(arg = 1): # change
+    global layout_name, layout_group_count
+    with open(g.usercfg, "r", encoding='utf-8') as f:
+        _usercfg = json.load(f)
+        _group = _usercfg["layout_group"]
+        _len = len(_group)
+    # get current layout
+    if layout_name in _group:
+        layout_group_count = _group.index(layout_name)
+    layout_group_count = (layout_group_count + arg) % _len
+    layout_name = _group[layout_group_count]
     return "reload"
 
 def get_layout():
