@@ -318,12 +318,12 @@ class slider:
     def getStyle(self):
         # 中央
         if self.direction=="horizontal":
-            return f"width: 80%; height: 2rem;\
+            return f"width: 80%; height: 3rem;\
                 margin: 0 auto;\
                 writing-mode: lr-tb;\
                 -webkit-appearance: slider-horizontal;"
         else:
-            return f"width: 2rem; height: 80%;\
+            return f"width: 3rem; height: 80%;\
                 position: relative; top:50%; transform: translate(0%, -50%);\
                 writing-mode: bt-lr;\
                 -webkit-appearance: slider-vertical;"

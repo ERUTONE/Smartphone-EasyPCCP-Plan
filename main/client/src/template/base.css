@@ -126,3 +126,30 @@ button {
     left:50%;
     transform: translate(-50%, -50%);
 }
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+.slider::-webkit-slider-runnable-track {
+    width: 50%;
+    height: 0.5rem;
+    cursor: pointer;
+    background: var(--accent-color);
+    border-radius: 2rem;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    background: var(--main-color);
+    border-radius: 50%;
+}
