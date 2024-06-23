@@ -68,3 +68,35 @@ def toggle_master_volume_mute():
     pythoncom.CoUninitialize()
 
 # ------------------- #
+
+def get_master_volume():
+
+    pythoncom.CoInitialize()
+
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+
+    current_volume = volume.GetMasterVolumeLevelScalar()
+    print("Current volume: %f" % current_volume)
+
+    pythoncom.CoUninitialize()
+
+    return current_volume
+
+# ------------------- #
+
+def get_master_volume_mute():
+
+    pythoncom.CoInitialize()
+
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+
+    is_muted = volume.GetMute()
+    print("Current Mute State:", is_muted)
+
+    pythoncom.CoUninitialize()
+
+    return is_muted

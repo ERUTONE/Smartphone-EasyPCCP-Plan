@@ -61,7 +61,7 @@ def set_application_volume(app, value):
 # ----------------------------------------------------------- #
 
 
-def toggle_application_volume(app):
+def toggle_application_volume_mute(app):
     # app: アプリケーション名（拡張子を含む）
 
     pythoncom.CoInitialize()
@@ -85,7 +85,7 @@ def toggle_application_volume(app):
 # ----------------------------------------------------------- #
 
 
-def get_application_volume_mute(app):
+def get_application_volume(app):
     # app: アプリケーション名（拡張子を含む）
 
     pythoncom.CoInitialize()
@@ -106,14 +106,26 @@ def get_application_volume_mute(app):
     # Return None if the application is not found
     return None
 
-# Example usage:
-volume = get_application_volume("chrome.exe")
-if volume is not None:
-    print(f"Chrome current volume is {volume}%")
-else:
-    print("Chrome is not running or was not found.")
-
-
-
 # ----------------------------------------------------------- #
 
+def get_application_volume_mute(app):
+    # app: アプリケーション名（拡張子を含む）
+
+    pythoncom.CoInitialize()
+
+    sessions = AudioUtilities.GetAllSessions()
+    for session in sessions:
+        process = session.Process
+        if process and process.name().lower() == app.lower():
+            volume = session._ctl.QueryInterface(ISimpleAudioVolume)
+            is_muted = volume.GetMute()
+            print(f"{app} Current Mute State: {is_muted}")
+            return is_muted
+
+    # Program end: uninitialize COM library
+    pythoncom.CoUninitialize()
+
+    # Return None if the application is not found
+    return None
+
+# ----------------------------------------------------------- #
