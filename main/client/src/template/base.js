@@ -58,30 +58,38 @@ function sendData(e) {
 
 // ------------------------------------------------ //
 
-const sliders = document.getElementsByClassName('slider');
-for (let i = 0; i < sliders.length; i++) {
-    sliders[i].addEventListener('input', function(event) {
-        // SendData
-        sendData({preventDefault: () => {}, submitter: {name: sliders[i].name, value: event.target.value}});
-    });
+function updateSliderGradient(slider, direction) {
+    // Gradient// max 属性の値が省略されている場合は100を設定
+    if(!slider.max) {
+        slider.max = 100;
+    }
+    // 現在の値から割合（%）を取得
+    const progress = (slider.value / slider.max) * 100;
+    // linear-gradient で Track の色を設定
+    const dir = (direction === "horizontal") ? "to right" : "to top";
+    slider.style.background = `linear-gradient(${dir}, ${sld_activeColor} ${progress}%, ${sld_baseColor} ${progress}%)`;
 }
 
-function updateSlider(direction) {
-    const slider_horizontal = document.getElementsByClassName(`slider_${direction}`);
-    // get CSS variable
-    const computedStyle = getComputedStyle(document.documentElement);
-    const activeColor = computedStyle.getPropertyValue('--accent-color').trim();
-    const baseColor = computedStyle.getPropertyValue('--base-color').trim();
-    for (let i = 0; i < slider_horizontal.length; i++) {
-        slider_horizontal[i].addEventListener('input', function(event) {
-            // Gradient
-            const value = event.target.value / event.target.max * 100;
-            const dir = (direction === "horizontal") ? "to right" : "to top";
-            slider_horizontal[i].style.background = `linear-gradient(${dir}, ${activeColor} ${value}%, ${baseColor} ${value}%)`;
+function initSliders(){
+
+    // visual & sender init
+    const updateSliders = (direction) => {
+        const sliders = document.querySelectorAll(`.slider_${direction}`);
+        sliders.forEach((slider) => {
+            
+            slider.addEventListener('input', (e) => {
+                updateSliderGradient(e.target, direction);
+                sendData({preventDefault: () => {}, submitter: {name: slider.name, value: e.target.value}});
+            });
+            updateSliderGradient(slider, direction);
         });
     }
+    updateSliders("horizontal");
+    updateSliders("vertical");
 }
 
-updateSlider("horizontal");
-updateSlider("vertical");
-
+// get CSS variable
+const computedStyle = getComputedStyle(document.documentElement);
+const sld_activeColor = computedStyle.getPropertyValue('--accent-color').trim();
+const sld_baseColor = computedStyle.getPropertyValue('--base-color').trim();
+initSliders();
