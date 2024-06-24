@@ -6,6 +6,7 @@
     --margin: 0;
     --border-radius: 0;
     --button-radius: calc( var(--border-radius) - var(--margin) );
+    --base-color: #dddddd;
 }
 
 body {
@@ -125,40 +126,41 @@ button {
     transform: translate(-50%, -50%);
 }
 
-/* .slider {
-    -webkit-appearance: none;
-    appearance: none;
-    outline: none;
-    background: transparent;
-    cursor: pointer;
-    width: 100%;
-}
-
-.slider::-webkit-slider-runnable-track {
-    width: 50%;
-    height: 0.5rem;
-    cursor: pointer;
-    border-radius: 2rem;
-}
-
-.slider::-webkit-slider-thumb {
-    -slider-thumb-color: var(--accent-color);
-} */
-
 .slider {
     -webkit-appearance: none;
     appearance: none;
     outline: none;
-    background: transparent;
+    background: var(--accent-color);
+    border-radius: var(--margin);
     cursor: pointer;
     width: 100%;
 }
 
 .slider_vertical {
-    -webkit-appearance: slider-vertical;
-    appearance: slider-vertical;
+    writing-mode: vertical-rl;
+    direction: rtl;
     position: relative;
     margin: auto;
-    width: 3rem;
+    width: calc(var(--margin)*2);
     height: 80%;
+}
+
+.slider_horizontal {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    height: calc(var(--margin)*2);
+    margin-top:0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--main-color);
+    border: solid calc(var(--margin)/2) var(--accent-color);;
+    border-radius: 50%;
+    cursor: pointer;
 }

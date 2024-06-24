@@ -3,24 +3,24 @@
     "row":2,
     "title":"s:app volume",
     "sync":"none",
-    "container":"hbox",
+    "container":"vbox",
     "content":[
         {
-            "type":"slider-vertical",
+            "type":"slider-horizontal",
             "value":"{{audio.get_master_volume()}}",
             "action":"audio.set_master_volume($)",
             "min":0,
             "max":100
         },
         {
-            "type":"slider-vertical",
+            "type":"slider-horizontal",
             "value":"{{audio.get_application_volume('chrome.exe')}}",
             "action":"audio.set_application_volume('chrome.exe', $)",
             "min":0,
             "max":100
         },
         {
-            "type":"slider-vertical",
+            "type":"slider-horizontal",
             "value":"{{audio.get_application_volume('chrome.exe')}}",
             "action":"audio.set_application_volume('chrome.exe', $)",
             "min":0,

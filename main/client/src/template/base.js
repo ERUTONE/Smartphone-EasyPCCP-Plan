@@ -58,11 +58,30 @@ function sendData(e) {
 
 // ------------------------------------------------ //
 
-// sliderの値が変更されたときにSendDataを呼び出す
-
 const sliders = document.getElementsByClassName('slider');
 for (let i = 0; i < sliders.length; i++) {
     sliders[i].addEventListener('input', function(event) {
+        // SendData
         sendData({preventDefault: () => {}, submitter: {name: sliders[i].name, value: event.target.value}});
     });
 }
+
+function updateSlider(direction) {
+    const slider_horizontal = document.getElementsByClassName(`slider_${direction}`);
+    // get CSS variable
+    const computedStyle = getComputedStyle(document.documentElement);
+    const activeColor = computedStyle.getPropertyValue('--accent-color').trim();
+    const baseColor = computedStyle.getPropertyValue('--base-color').trim();
+    for (let i = 0; i < slider_horizontal.length; i++) {
+        slider_horizontal[i].addEventListener('input', function(event) {
+            // Gradient
+            const value = event.target.value / event.target.max * 100;
+            const dir = (direction === "horizontal") ? "to right" : "to top";
+            slider_horizontal[i].style.background = `linear-gradient(${dir}, ${activeColor} ${value}%, ${baseColor} ${value}%)`;
+        });
+    }
+}
+
+updateSlider("horizontal");
+updateSlider("vertical");
+
