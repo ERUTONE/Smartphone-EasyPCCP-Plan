@@ -77,7 +77,7 @@ def get_master_volume():
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-    current_volume = volume.GetMasterVolumeLevelScalar()
+    current_volume = int(volume.GetMasterVolumeLevelScalar()*100)
     print("Current volume: %f" % current_volume)
 
     pythoncom.CoUninitialize()

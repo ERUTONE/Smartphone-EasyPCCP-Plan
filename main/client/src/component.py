@@ -296,6 +296,7 @@ class slider:
     def __init__(self, obj, direction="horizontal"):
         self.parent = obj
         self.cssid = obj.cssid
+        self.cls = obj.cls
         
         self.min = obj.min if hasattr(obj, "min") else 0
         self.max = obj.max if hasattr(obj, "max") else 1
@@ -311,7 +312,7 @@ class slider:
         self.action = obj.action if hasattr(obj, "action") else None
 
     def get_slider(self):
-        _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction}" name={self.cssid} \
+        _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction} {self.cls}" name={self.cssid} \
             min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
             style="{self.getStyle()}">'
         return _slider
