@@ -90,27 +90,27 @@ class component:
         return _div + _imgtag + '</div>\n'
     
     def c_button(self):
-        _div = f'<button name=btn_{self.cssid} class="component {self.cls} button" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         return _div + '</button>\n'
         
     def c_button_text(self):
         _text = sizedtext(self.text)
-        _div = f'<button name=btn_{self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
     
     def c_button_icon(self):
         _icon = image(self, allow_fill=False)
-        _div = f'<button name=btn_{self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
@@ -310,20 +310,10 @@ class slider:
         self.action = obj.action if hasattr(obj, "action") else None
 
     def get_slider(self):
-        _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction}" name="sld_{self.cssid}" \
+        _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction}" name={self.cssid} \
             min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
             style="{self.getStyle()}">'
         return _slider
 
     def getStyle(self):
-        # 中央
-        if self.direction=="horizontal":
-            return f"width: 80%; height: 3rem;\
-                margin: 0 auto;\
-                writing-mode: lr-tb;\
-                -webkit-appearance: slider-horizontal;"
-        else:
-            return f"width: 3rem; height: 80%;\
-                position: relative; top:50%; transform: translate(0%, -50%);\
-                writing-mode: bt-lr;\
-                -webkit-appearance: slider-vertical;"
+        return ""

@@ -127,7 +127,7 @@ button {
     transform: translate(-50%, -50%);
 }
 
-.slider {
+/* .slider {
     -webkit-appearance: none;
     appearance: none;
     outline: none;
@@ -140,16 +140,27 @@ button {
     width: 50%;
     height: 0.5rem;
     cursor: pointer;
-    background: var(--accent-color);
     border-radius: 2rem;
 }
 
 .slider::-webkit-slider-thumb {
+    -slider-thumb-color: var(--accent-color);
+} */
+
+.slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 1.5rem;
-    height: 1.5rem;
+    outline: none;
+    background: transparent;
     cursor: pointer;
-    background: var(--main-color);
-    border-radius: 50%;
+    width: 100%;
+}
+
+.slider_vertical {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    position: relative;
+    margin: auto;
+    width: 3rem;
+    height: 80%;
 }
