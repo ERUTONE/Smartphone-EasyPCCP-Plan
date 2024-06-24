@@ -47,6 +47,12 @@ def set_master_volume(value): # 0~100 int
     adjustment = value / 100.0
     volume.SetMasterVolumeLevelScalar(adjustment, None)
 
+    if value == 0:
+        volume.SetMute(1, None)
+    else:
+        volume.SetMute(0, None)
+
+    print(f'Master Volume > {value} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
     pythoncom.CoUninitialize()
 
 # ------------------- #
@@ -59,11 +65,8 @@ def toggle_master_volume_mute():
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-    is_muted = volume.GetMute()
-    print("Current Mute State:", is_muted)
-    
-    volume.SetMute(not is_muted, None)
-    print("Mute state has been toggled.")
+    volume.SetMute(not volume.GetMute(), None)
+    print(f'Master Volume Mute state toggled > {volume.GetMute()}')
     
     pythoncom.CoUninitialize()
 

@@ -12,19 +12,16 @@ def add_application_volume(app, change):
         if process and process.name().lower() == app.lower():
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             
-            is_muted = volume.GetMute()
-            print(f"{app} Current Mute State: {is_muted}")
-            
-            if is_muted:
-                volume.SetMute(0, None)
-                print(f"{app} has been unmuted.")
-
             current_volume = volume.GetMasterVolume()
             new_volume = max(0.0, min(1.0, current_volume + change / 100.0))
             volume.SetMasterVolume(new_volume, None)
-            print(f"{app} Current Volume: {current_volume}")
-            print(f"{app} New Volume: {new_volume}")
-            return
+            
+            if new_volume == 0:
+                volume.SetMute(1, None)
+            else:
+                volume.SetMute(0, None)
+                
+            print(f'{app} Volume {"+"if change>0 else""}{change}> {new_volume} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
 
     pythoncom.CoUninitialize()
 
@@ -43,17 +40,15 @@ def set_application_volume(app, value):
         if process and process.name().lower() == app.lower():
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             
-            is_muted = volume.GetMute()
-            print(f"{app} Current Mute State: {is_muted}")
-            
-            if is_muted:
-                volume.SetMute(0, None)
-                print(f"{app} has been unmuted.")
-            
             new_volume = max(0.0, min(1.0, value / 100.0))
             volume.SetMasterVolume(new_volume, None)
-            print(f"{app} New Volume: {new_volume}")
-            return
+            
+            if new_volume == 0:
+                volume.SetMute(1, None)
+            else:
+                volume.SetMute(0, None)
+            
+            print(f'{app} Volume > {new_volume} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
 
     pythoncom.CoUninitialize()
 
@@ -73,11 +68,9 @@ def toggle_application_volume_mute(app):
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
 
             is_muted = volume.GetMute()
-            print(f"{app} Current Mute State: {is_muted}")
             
             volume.SetMute(not is_muted, None)
-            print(f"{app} Mute state has been toggled to: {not is_muted}")
-            return
+            print(f'{app} Mute state has been toggled to: {not is_muted}')
 
     pythoncom.CoUninitialize()
 
@@ -97,7 +90,9 @@ def get_application_volume(app):
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             current_volume = volume.GetMasterVolume()
             current_volume_percent = int(current_volume * 100)
-            print(f"{app} Current Volume: {current_volume_percent}%")
+            print(f'{app} Current Volume: {current_volume_percent}%')
+            
+            pythoncom.CoUninitialize()
             return current_volume_percent
 
     # Program end: uninitialize COM library
@@ -119,7 +114,9 @@ def get_application_volume_mute(app):
         if process and process.name().lower() == app.lower():
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             is_muted = volume.GetMute()
-            print(f"{app} Current Mute State: {is_muted}")
+            print(f'{app} Current Mute State: {is_muted}')
+            
+            pythoncom.CoUninitialize()
             return is_muted
 
     # Program end: uninitialize COM library
