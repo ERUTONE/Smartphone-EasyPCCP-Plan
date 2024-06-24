@@ -25,7 +25,7 @@ function setRootFontSize(){
     console.log("fontSize: ",fontSize);
 }
 window.addEventListener("resize", setRootFontSize);
-window.addEventListener("load", setRootFontSize);
+setRootFontSize();
 // ------------------------------------------------ //
 
 function sendData(e) {

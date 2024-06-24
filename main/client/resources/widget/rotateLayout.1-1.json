@@ -1,0 +1,17 @@
+{
+    "column":1,
+    "row":1,
+    "title":"Action",
+    "sync":"websocket",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"button-icon",
+            "id":"soundOn",
+            "action":"client.rotate_layout(1)",
+            "src":"%resources%/icon/rotate.png",
+            "size":"l:m"
+
+        }
+    ]
+}

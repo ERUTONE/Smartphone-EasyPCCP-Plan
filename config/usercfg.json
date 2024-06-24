@@ -1,5 +1,5 @@
 {
-    "layout": "buttontest",
+    "layout": "default",
     "theme": "neumorphism",
     "host": "0.0.0.0",
     "layout_group":[

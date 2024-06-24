@@ -2,12 +2,8 @@
     "grid":[4,2],
     "placement":[
         {
-            "widget":"none.1-1",
-            "position": [1,1]
-        },
-        {
             "widget":"imgtest.2-1",
-            "position": [2,1]
+            "position": [1,1]
         },
         {
             "widget":"imgtest_hor.2-1",
@@ -15,15 +11,15 @@
         },
         {
             "widget":"imgtest.1-1",
-            "position": [3,2]
-        },
-        {
-            "widget":"none.1-1",
             "position": [4,2]
         },
         {
-            "widget":"imgtest.1-2",
+            "widget":"rotateLayout.1-1",
             "position": [4,1]
+        },
+        {
+            "widget":"imgtest.1-2",
+            "position": [3,1]
         }
     ]
 }

@@ -19,9 +19,10 @@
             "size":"m:m"
         },
         {
-            "type":"button-text",
-            "action":"client.rotate_layout(-1)",
-            "text":"m:layout default",
+            "type":"button-icon",
+            "id":"soundOn",
+            "action":"client.rotate_layout(1)",
+            "src":"%resources%/icon/rotate.png",
             "size":"m:m"
         }
     ]
