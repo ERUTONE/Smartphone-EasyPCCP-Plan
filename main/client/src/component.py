@@ -146,15 +146,16 @@ class customformattext:
     results = []
     plains = []
     
-    def __init__(self, original):
+    def __init__(self, original, nonealt="-"):
         self.actions = re.findall(r"(?<=\{\{)(.*?)(?=\}\})", original) # pattern: module.function(arg)
         self.plains =  re.split  (r"\{\{.*?\}\}", original)            # pattern: {{module.function(arg)}}
         self.results = []
+        self.nonealt = nonealt
     
     def execute(self):
         for action in self.actions:
             _result = host.execute_function(action)
-            self.results.append( _result if _result else "-" )
+            self.results.append( _result if _result else self.nonealt )
     
     def format(self):
         if(len(self.actions) != len(self.results)):
@@ -304,7 +305,7 @@ class slider:
         self.direction = direction
         self.value = obj.value if hasattr(obj, "value") else 0
         if type(self.value) == str:
-            _format = customformattext(self.value)
+            _format = customformattext(self.value, nonealt=0)
             self.value = int(_format.format())
         
         self.action = obj.action if hasattr(obj, "action") else None
