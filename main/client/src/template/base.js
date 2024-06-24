@@ -11,9 +11,8 @@ function sendData(e) {
         data: JSON.stringify({[submitter]: value}),
         contentType: 'application/json',
         success: function(responce) {
-            console.log("Success:",responce);
+            // console.log("Success:",responce);
 
-            console.log(Object.values(responce));
             if (Object.values(responce).includes("reload")) {
                 location.reload();
             }
@@ -22,6 +21,8 @@ function sendData(e) {
             // リクエストが失敗した場合の処理
             console.error('Error:', status, error);
         }
+    }).then(response => {
+    }).catch(error => {
     });
 }
 

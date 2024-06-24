@@ -46,11 +46,12 @@ def execute_action(name, arg=None): # param
         
         # arg
         if arg != None and arg != "":
+            arg = convert_string(arg)
             namespace["arg"] = arg
             if type(arg) == str:
                 action = action.replace("$", f'"{arg}"')
             else:
-                action = action.replace("$", arg)
+                action = action.replace("$", f"{arg}")
             
         
         # execute
@@ -67,6 +68,18 @@ def execute_action(name, arg=None): # param
     else:
         print(f"action '{name}' not found")
         return None
+
+# for private
+def convert_string(s):
+    try:
+        # まず浮動小数点数に変換を試みる
+        if '.' in s:
+            return float(s)
+        # 浮動小数点数が含まれていない場合、整数に変換を試みる
+        return int(s)
+    except ValueError:
+        # 数値に変換できない場合は文字列のまま返す
+        return s
 
 def execute_function(function): # module.function(args)
     import_all_modules()
