@@ -8,7 +8,7 @@
         {
             "type":"button-icon",
             "id":"soundOn",
-            "action":"audio.toggle_master_volume()",
+            "action":"audio.toggle_master_volume_mute()",
             "src":"%resources%/icon/audio.png",
             "size":"l:m"
 

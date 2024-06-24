@@ -1,0 +1,37 @@
+{
+    "column":2,
+    "row":2,
+    "title":"s:app volume",
+    "sync":"none",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_master_volume()}}",
+            "action":"audio.set_master_volume($)",
+            "min":0,
+            "max":100
+        },
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_application_volume('chrome.exe')}}",
+            "action":"audio.set_application_volume('chrome.exe', $)",
+            "min":0,
+            "max":100
+        },
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_application_volume('chrome.exe')}}",
+            "action":"audio.set_application_volume('chrome.exe', $)",
+            "min":0,
+            "max":100
+        },
+        {
+            "type":"slider-vertical",
+            "value":"{{audio.get_application_volume('chrome.exe')}}",
+            "action":"audio.set_application_volume('chrome.exe', $)",
+            "min":0,
+            "max":100
+        }
+    ]
+}

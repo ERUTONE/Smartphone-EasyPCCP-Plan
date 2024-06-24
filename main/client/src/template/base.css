@@ -124,3 +124,41 @@ button {
     left:50%;
     transform: translate(-50%, -50%);
 }
+
+/* .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+.slider::-webkit-slider-runnable-track {
+    width: 50%;
+    height: 0.5rem;
+    cursor: pointer;
+    border-radius: 2rem;
+}
+
+.slider::-webkit-slider-thumb {
+    -slider-thumb-color: var(--accent-color);
+} */
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+.slider_vertical {
+    -webkit-appearance: slider-vertical;
+    appearance: slider-vertical;
+    position: relative;
+    margin: auto;
+    width: 3rem;
+    height: 80%;
+}

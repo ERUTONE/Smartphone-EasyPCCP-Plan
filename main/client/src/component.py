@@ -27,12 +27,20 @@ class component:
             return self.c_text()
         if self.type == "image":
             return self.c_image()
+        
         if self.type == "button":
             return self.c_button()
         if self.type == "button-text":
             return self.c_button_text()
         if self.type == "button-icon":
             return self.c_button_icon()
+        
+        if self.type == "slider":
+            return self.c_slider("horizontal")
+        if self.type == "slider-horizontal":
+            return self.c_slider("horizontal")
+        if self.type == "slider-vertical":
+            return self.c_slider("vertical")
         
         return f"ERROR: No {self.type} type generator<br>"
     
@@ -82,30 +90,35 @@ class component:
         return _div + _imgtag + '</div>\n'
     
     def c_button(self):
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         return _div + '</button>\n'
         
     def c_button_text(self):
         _text = sizedtext(self.text)
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
     
     def c_button_icon(self):
         _icon = image(self, allow_fill=False)
-        _div = f'<button name=b_{self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
+        _div = f'<button name={self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
-        host.add_action(f"b_{self.cssid}", self.action)
+        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
+    def c_slider(self, direction="horizontal"):
+        _slider = slider(self, direction)
+        
+        host.add_action(f"{self.cssid}", self.action)
+        return _slider.get_slider() + "\n"
 # ---------------------------------------------------- #
 
 class sizedtext:
@@ -133,15 +146,16 @@ class customformattext:
     results = []
     plains = []
     
-    def __init__(self, original):
+    def __init__(self, original, nonealt="-"):
         self.actions = re.findall(r"(?<=\{\{)(.*?)(?=\}\})", original) # pattern: module.function(arg)
         self.plains =  re.split  (r"\{\{.*?\}\}", original)            # pattern: {{module.function(arg)}}
         self.results = []
+        self.nonealt = nonealt
     
     def execute(self):
         for action in self.actions:
             _result = host.execute_function(action)
-            self.results.append( _result if _result else "-" )
+            self.results.append( _result if _result else self.nonealt )
     
     def format(self):
         if(len(self.actions) != len(self.results)):
@@ -152,7 +166,7 @@ class customformattext:
             if i < len(self.plains):
                 _joined += self.plains[i]
             if i < len(self.results):
-                _joined += self.results[i]
+                _joined += str(self.results[i])
         return _joined
     
 class image:
@@ -276,3 +290,32 @@ class image:
     
     def get_imgtag(self):    
         return f'<img src="{self.src}" style="{self.style}">'
+
+class slider:
+    
+    def __init__(self, obj, direction="horizontal"):
+        self.parent = obj
+        self.cssid = obj.cssid
+        self.cls = obj.cls
+        
+        self.min = obj.min if hasattr(obj, "min") else 0
+        self.max = obj.max if hasattr(obj, "max") else 1
+        self.step = obj.step if hasattr(obj, "step") else \
+            1 if (self.max - self.min) > 1 else 0.1
+        
+        self.direction = direction
+        self.value = obj.value if hasattr(obj, "value") else 0
+        if type(self.value) == str:
+            _format = customformattext(self.value, nonealt=0)
+            self.value = int(_format.format())
+        
+        self.action = obj.action if hasattr(obj, "action") else None
+
+    def get_slider(self):
+        _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction} {self.cls}" name={self.cssid} \
+            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
+            style="{self.getStyle()}">'
+        return _slider
+
+    def getStyle(self):
+        return ""

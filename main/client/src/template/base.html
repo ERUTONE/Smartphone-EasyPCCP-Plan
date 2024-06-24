@@ -18,34 +18,7 @@
         外部から持ち込んだモジュールにより、
         不正な処理が行われる可能性がある。注意が必要
     -->
-    <script>
-        function sendData(e) {
-            // ajaxでデータを送信
-            e.preventDefault();
-            const submitter = e.submitter.name;
-            const value = e.submitter.value;
-            // {submitter : value}の形で送信
-
-            $.ajax({
-                url: "/action",
-                type: 'POST',
-                data: JSON.stringify({[submitter]: value}),
-                contentType: 'application/json',
-                success: function(responce) {
-                    console.log("Success:",responce);
-
-                    console.log(Object.values(responce));
-                    if (Object.values(responce).includes("reload")) {
-                        location.reload();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // リクエストが失敗した場合の処理
-                    console.error('Error:', status, error);
-                }
-            });
-        }
-    </script>
+    <script src="{{ url_for('static', filename='main/client/src/template/base.js') }}"></script>
     <script src="{{ url_for('static', filename='main/client/src/template/script.js') }}"></script>
 </body>
 </html>
