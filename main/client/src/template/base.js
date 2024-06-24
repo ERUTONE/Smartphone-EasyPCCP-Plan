@@ -17,7 +17,7 @@ function setRootFontSize(){
         fontSize = `${8/gridCols}vw`;
     }else{
         // containerの縦幅を優先
-        fontSize = `${8/gridRows}vh`;
+        fontSize = `${2/gridCols}vh`;
     }
 
     // :rootのfont-sizeに適用する例
