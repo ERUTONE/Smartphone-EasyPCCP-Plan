@@ -1,4 +1,5 @@
 __pycache__/
 *.pyc
+main/client/src/template/grid.html
 main/client/src/template/grid.css
 main/client/src/template/script.js

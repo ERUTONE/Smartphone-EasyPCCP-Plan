@@ -7,7 +7,6 @@ import json
 class widget:
     
     widget_html = ""
-    widget_style = []
     components = []
     
     # - public ------------------------------- #
@@ -15,7 +14,6 @@ class widget:
     def __init__(self, widget_path, id):
         
         self.widget_html = ""
-        self.widget_style = []
         self.components = []
         
         with open(widget_path, "r") as f:
@@ -47,7 +45,6 @@ class widget:
         # container | style
         if not hasattr(self, "container") : self.container = "vbox"
         widget_html+= '<div class=" subcontainer">'
-        self.widget_style.append(self.container_style())
         
         # content   | object, style, function
         if hasattr(self, "content") :
@@ -55,7 +52,6 @@ class widget:
                 _component = component(self, i)
                 self.components.append(_component)
                 widget_html += _component.create_component()
-                self.widget_style.append(_component.get_style())
         
         widget_html += '</div>'
         # if _title: widget_html += _title.div
@@ -63,7 +59,7 @@ class widget:
         return f'<div class="widget {self.cls}" id="w{self.id}">{widget_html}</div>' + ( _title.div if _title and _title.text!="" else "" )
 
     def get_style(self):
-        return "\n".join(self.widget_style)
+        return self.container_style()
     
     # - private ------------------------------- #
     
