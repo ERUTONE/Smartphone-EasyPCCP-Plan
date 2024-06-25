@@ -1,0 +1,33 @@
+{
+    "column":3,
+    "row":1,
+    "title":"",
+    "sync":"websocket",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"button-text",
+            "action":"print('GPT')",
+            "text":"l:GPT",
+            "size":"l:l"
+        },
+        {
+            "type":"button-text",
+            "action":"shortcut.take_screenshot()",
+            "text":"l:PrtSc",
+            "size":"l:l"
+        },
+        {
+            "type":"button-text",
+            "action":"print('Discord')",
+            "text":"m:Discord",
+            "size":"l:l"
+        },
+        {
+            "type":"button-text",
+            "action":"print('X')",
+            "text":"l:X",
+            "size":"l:l"
+        }
+    ]
+}

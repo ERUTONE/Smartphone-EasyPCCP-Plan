@@ -9,8 +9,8 @@
             "type":"button-text",
             "class": "border",
             "action":"shortcut.send_key('page down')",
-            "text":"l:&#x1f399;",
-            "size":"m:m"
+            "text":"xl:&#x1f399;",
+            "size":"l:l"
 
         }
     ]

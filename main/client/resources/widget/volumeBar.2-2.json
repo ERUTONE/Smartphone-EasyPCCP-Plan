@@ -1,7 +1,7 @@
 {
     "column":2,
     "row":2,
-    "title":"s:app volume",
+    "title":"s:Vpp Volume",
     "sync":"none",
     "container":"vbox",
     "content":[
