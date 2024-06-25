@@ -1,11 +1,11 @@
 {
-    "layout": "buttontest",
+    "layout": "home",
     "theme": "neumorphism",
     "host": "0.0.0.0",
     "layout_group":[
-        "default",
-        "buttontest",
-        "imagetest"
+        "home",
+        "media",
+        "obs"
     ],
     "audio_devices":{
         "koral_speaker":{

@@ -1,0 +1,20 @@
+{
+    "column":2,
+    "row":1,
+    "title":"s:",
+    "sync":"* * * * *",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"text",
+            "class":"accent_text",
+            "text":"7em:{{datetime.time('hh:mm')}}",
+            "customformat":true
+        },
+        {
+            "type":"text",
+            "text":"m:{{datetime.date('MM/DD')}} ({{datetime.dow('es')}})",
+            "customformat":true
+        }
+    ]
+}

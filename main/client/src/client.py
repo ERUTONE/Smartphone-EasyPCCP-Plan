@@ -1,6 +1,6 @@
 print("client importing...")
-import os, json, regex as re
-from flask import render_template, request, jsonify
+import os, json, gc, regex as re
+from flask import render_template, request, jsonify, Blueprint
 from app import app
 import main.globals as g
 import main.host.src.host as host
@@ -144,19 +144,22 @@ def init():
     create_gridcss()
     global widgets_html; widgets_html = "\n".join(layout_widgets)
     host.merge_onload_js()
+    gc.collect()
 
 # regen when py (re)starts
 load_usercfg()
 init()
 
-@app.route("/")
+client_module = Blueprint("client", __name__, url_prefix="/")
+
+@client_module.route("/")
 def show_interface():
     init()
     
     global widgets_html, theme_path
     return render_template("base.html",theme=theme_path)
 
-@app.route("/action", methods=["POST"])
+@client_module.route("/action", methods=["POST"])
 def action():
     
     print(f" ! got POST with arg {request.get_json()}")

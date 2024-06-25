@@ -1,0 +1,16 @@
+{
+    "column":1,
+    "row":1,
+    "title":"Discord",
+    "sync":"websocket",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"button-icon",
+            "action":"shortcut.send_key('pagedown')",
+            "src":"%resources%/icon/mic.png",
+            "size":"l:l"
+
+        }
+    ]
+}
