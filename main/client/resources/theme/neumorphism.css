@@ -36,6 +36,10 @@ body {
     box-shadow: inset var(--shadow);
 }
 
+.button {
+    box-shadow: var(--shadow);
+}
+
 .button_icon > img {
     filter : invert(0.5) brightness(100);
 }

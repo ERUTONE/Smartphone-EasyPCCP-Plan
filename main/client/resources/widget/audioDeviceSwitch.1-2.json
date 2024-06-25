@@ -8,14 +8,14 @@
         {
             "type":"button-icon",
             "action":"audio.set_audio_device('koral_speaker', by='name')",
-            "src":"%resources%/icon/speaker.svg",
+            "src":"%resources%/icon/audio/speaker.png",
             "size":"l:l"
 
         },
         {
             "type":"button-icon",
             "action":"audio.set_audio_device('koral_headset', by='name')",
-            "src":"%resources%/icon/headset.svg",
+            "src":"%resources%/icon/audio/headset.png",
             "size":"l:m"
 
         },

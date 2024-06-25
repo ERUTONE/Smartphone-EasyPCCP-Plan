@@ -8,7 +8,7 @@
         {
             "type":"button-icon",
             "action":"shortcut.send_key('pagedown')",
-            "src":"%resources%/icon/mic.png",
+            "src":"%resources%/icon/audio/mic1.png",
             "size":"l:l"
 
         }
