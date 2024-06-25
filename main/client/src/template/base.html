@@ -7,11 +7,11 @@
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename=theme) }}">
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='main/client/src/template/grid.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>EasyPCCP</title>
+    <title>{% block title %}EasyPCCP{% endblock %}</title>
 </head>
 <body style="overflow: hidden;">
     <form class="container" id="root_form" onsubmit="sendData(event);">
-        {{ content | safe  }}
+        {% include 'grid.html' %}
     </form>
     <!--
         safeとされた変数では、エスケープ処理が無くなる。

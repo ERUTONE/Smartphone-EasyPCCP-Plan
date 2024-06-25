@@ -85,20 +85,21 @@ def get_theme():
 
 from main.client.src.widget import widget as new_widget
 def create_widgets():
-    global layout, layout_widgets
-    for i in range(len(layout["placement"]) ):
-        jwidget = layout["placement"][i]
-        widget_path = g.widget + jwidget["widget"] + ".json"
-        if(os.path.exists(widget_path)):
-            # load as a new instance
-            print(f' - loading widget {jwidget["widget"]}...')
-            _widget = new_widget(widget_path, i)
-            layout_widgets.append( _widget.create_widget() )
-            widget_styles.append( _widget.get_style() )
-        else:
-            print("[ERROR] widget not found: " + widget_path)
-            layout_widgets.append(f"ERROR: widget {jwidget} not found")
-            widget_styles.append("")
+    global layout, layout_name
+    with open(g.template+"grid.html", "w", encoding='utf-8') as f:
+        for i in range(len(layout["placement"]) ):
+            jwidget = layout["placement"][i]
+            widget_path = g.widget + jwidget["widget"] + ".json"
+            if(os.path.exists(widget_path)):
+                # load as a new instance
+                print(f' - loading widget {jwidget["widget"]}...')
+                _widget = new_widget(widget_path, i)
+                f.write( _widget.create_widget() )
+                widget_styles.append( _widget.get_style() )
+            else:
+                print("[ERROR] widget not found: " + widget_path)
+                f.write(f"<div>ERROR: widget {jwidget} not found</div>")
+                widget_styles.append("")
 
 def create_gridcss():
     global layout
@@ -152,7 +153,7 @@ def show_interface():
     init()
     
     global widgets_html, theme_path
-    return render_template("base.html",theme=theme_path, content=widgets_html)
+    return render_template("base.html",theme=theme_path)
 
 @app.route("/action", methods=["POST"])
 def action():
