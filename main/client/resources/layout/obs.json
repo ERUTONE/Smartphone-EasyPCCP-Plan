@@ -1,5 +1,5 @@
 {
-    "grid":[4,2],
+    "grid":[6,3],
     "placement":[
         {
             "widget":"rotateLayout.1-1",

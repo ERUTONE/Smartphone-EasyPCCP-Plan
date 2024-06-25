@@ -6,25 +6,22 @@
     "container":"hbox",
     "content":[
         {
-            "type":"button-text",
-            "class": "border",
+            "type":"button-icon",
             "action":"media_control.previous_track()",
-            "text":"xl:&#x23ee;",
-            "size":"l:l"
+            "src":"%resources%/icon/audio/prevtrack.png",
+            "size":"l:m"
         },
         {
-            "type":"button-text",
-            "class": "border",
+            "type":"button-icon",
             "action":"media_control.play_pause()",
-            "text":"xl:&#x23ef;",
+            "src":"%resources%/icon/audio/playpause.png",
             "size":"l:l"
         },
         {
-            "type":"button-text",
-            "class": "border",
+            "type":"button-icon",
             "action":"media_control.next_track()",
-            "text":"xl:&#x23ed;",
-            "size":"l:l"
+            "src":"%resources%/icon/audio/nexttrack.png",
+            "size":"l:m"
         }
     ]
 }

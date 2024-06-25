@@ -13,7 +13,7 @@
         },
         {
             "type":"text",
-            "text":"m:{{datetime.date('MM/DD')}} ({{datetime.dow('es')}})",
+            "text":"m:{{datetime.date('MM/DD (dowes)')}}",
             "customformat":true
         }
     ]
