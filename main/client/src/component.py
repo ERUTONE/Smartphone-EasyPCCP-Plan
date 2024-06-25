@@ -90,34 +90,34 @@ class component:
         return _div + _imgtag + '</div>\n'
     
     def c_button(self):
+        host.add_action(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
-        host.add_action(f"{self.cssid}", self.action)
         return _div + '</button>\n'
         
     def c_button_text(self):
         _text = sizedtext(self.text)
+        host.add_action(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
-        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
     
     def c_button_icon(self):
+        host.add_action(f"{self.cssid}", self.action)
         _icon = image(self, allow_fill=False)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
-        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
     def c_slider(self, direction="horizontal"):
+        host.add_action(f"{self.cssid}", self.action)
         _slider = slider(self, direction)
         
-        host.add_action(f"{self.cssid}", self.action)
         return _slider.get_slider() + "\n"
 # ---------------------------------------------------- #
 

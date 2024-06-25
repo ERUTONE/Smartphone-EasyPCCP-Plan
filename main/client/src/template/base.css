@@ -126,6 +126,12 @@ button {
     transform: translate(-50%, -50%);
 }
 
+.border {
+    border: solid calc(var(--margin)/2) var(--accent-color);
+    border-radius: var(--border-radius);
+    background-color: var(--main-color);
+}
+
 .slider {
     -webkit-appearance: none;
     appearance: none;
@@ -135,7 +141,6 @@ button {
     cursor: pointer;
     width: 100%;
 }
-
 .slider_vertical {
     writing-mode: vertical-rl;
     direction: rtl;
@@ -147,7 +152,6 @@ button {
     margin-left: 1rem;
     margin-right: 1rem;
 }
-
 .slider_horizontal {
     position: relative;
     margin: auto;
@@ -157,7 +161,6 @@ button {
     margin-top:1rem;
     margin-bottom: 1rem;
 }
-
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
