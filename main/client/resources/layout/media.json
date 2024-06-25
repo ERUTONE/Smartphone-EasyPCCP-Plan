@@ -1,0 +1,21 @@
+{
+    "grid":[4,2],
+    "placement":[
+        {
+            "widget":"rotateLayout.1-1",
+            "position": [1,1]
+        },
+        {
+            "widget":"discord_micMute.1-1",
+            "position": [2,1]
+        },
+        {
+            "widget":"mediaControl.2-1",
+            "position": [1,2]
+        },
+        {
+            "widget":"volumeBar.2-2",
+            "position": [3,1]
+        }
+    ]
+}

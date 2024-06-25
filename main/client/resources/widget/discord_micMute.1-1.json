@@ -1,0 +1,17 @@
+{
+    "column":1,
+    "row":1,
+    "title":"Discord",
+    "sync":"websocket",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"button-text",
+            "class": "border",
+            "action":"shortcut.send_key('page down')",
+            "text":"l:&#x1f399;",
+            "size":"m:m"
+
+        }
+    ]
+}

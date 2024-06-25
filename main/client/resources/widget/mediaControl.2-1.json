@@ -1,0 +1,31 @@
+{
+    "column":2,
+    "row":1,
+    "title":"Media Control",
+    "sync":"websocket",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"button-text",
+            "class": "border",
+            "action":"media_control.previous_track()",
+            "text":"l:&#x23ee;",
+            "size":"m:m"
+
+        },
+        {
+            "type":"button-text",
+            "class": "border",
+            "action":"media_control.play_pause()",
+            "text":"l:&#x23ef;",
+            "size":"m:m"
+        },
+        {
+            "type":"button-text",
+            "class": "border",
+            "action":"media_control.next_track()",
+            "text":"l:&#x23ed;",
+            "size":"m:m"
+        }
+    ]
+}
