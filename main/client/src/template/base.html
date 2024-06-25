@@ -13,11 +13,6 @@
     <form class="container" id="root_form" onsubmit="sendData(event);">
         {% include 'grid.html' %}
     </form>
-    <!--
-        safeとされた変数では、エスケープ処理が無くなる。
-        外部から持ち込んだモジュールにより、
-        不正な処理が行われる可能性がある。注意が必要
-    -->
     <script src="{{ url_for('static', filename='main/client/src/template/base.js') }}"></script>
     <script src="{{ url_for('static', filename='main/client/src/template/script.js') }}"></script>
 </body>

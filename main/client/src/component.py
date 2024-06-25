@@ -306,9 +306,5 @@ class slider:
 
     def get_slider(self):
         _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction} {self.cls}" name={self.cssid} \
-            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
-            style="{self.getStyle()}">'
+            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" >'
         return _slider
-
-    def getStyle(self):
-        return ""
