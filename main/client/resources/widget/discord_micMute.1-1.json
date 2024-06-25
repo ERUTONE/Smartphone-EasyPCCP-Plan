@@ -6,10 +6,9 @@
     "container":"vbox",
     "content":[
         {
-            "type":"button-text",
-            "class": "border",
-            "action":"shortcut.send_key('page down')",
-            "text":"xl:&#x1f399;",
+            "type":"button-icon",
+            "action":"shortcut.send_key('pagedown')",
+            "src":"%resources%/icon/mic.png",
             "size":"l:l"
 
         }
