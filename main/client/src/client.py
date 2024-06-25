@@ -7,7 +7,6 @@ import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
-layout: dict
 theme_path = ""
 layout_widgets = []
 widget_styles = []
@@ -52,16 +51,16 @@ def get_layout():
     _path = g.c_layout + layout_name + ".json"
     if(os.path.exists(_path)) :
         with open(_path, "r", encoding='utf-8') as f:
-            layout = json.load(f)
-        return
+            return json.load(f)
+        
     
     _path = g.layout + layout_name + ".json"
     if(not os.path.exists(_path)) : 
         print("[ERROR] layout not found: " + _path)
-        _path = g.layout_default
+        _path = g.layout_default + ".json"
     
     with open(_path, "r", encoding='utf-8') as f:
-        layout = json.load(f)
+        return json.load(f)
 
 def set_theme(arg = "default"):
     global theme_name
@@ -79,29 +78,32 @@ def get_theme():
     _path = g.theme + theme_name + ".css"
     if(not os.path.exists(_path)) : 
         print("[ERROR] theme not found: " + _path)
-        _path = g.theme_default
+        _path = g.theme_default + ".css"
         
     theme_path = _path
 
 from main.client.src.widget import widget as new_widget
 def create_widgets():
-    global layout, layout_widgets
-    for i in range(len(layout["placement"]) ):
-        jwidget = layout["placement"][i]
-        widget_path = g.widget + jwidget["widget"] + ".json"
-        if(os.path.exists(widget_path)):
-            # load as a new instance
-            print(f' - loading widget {jwidget["widget"]}...')
-            _widget = new_widget(widget_path, i)
-            layout_widgets.append( _widget.create_widget() )
-            widget_styles.append( _widget.get_style() )
-        else:
-            print("[ERROR] widget not found: " + widget_path)
-            layout_widgets.append(f"ERROR: widget {jwidget} not found")
-            widget_styles.append("")
+    global layout_name
+    layout = get_layout()
+    with open(g.template+"grid.html", "w", encoding='utf-8') as f:
+        f.write('<!-- Auto generated html -->\n')
+        for i in range(len(layout["placement"]) ):
+            jwidget = layout["placement"][i]
+            widget_path = g.widget + jwidget["widget"] + ".json"
+            if(os.path.exists(widget_path)):
+                # load as a new instance
+                print(f' - loading widget {jwidget["widget"]}...')
+                _widget = new_widget(widget_path, i)
+                f.write( _widget.create_widget() )
+                widget_styles.append( _widget.get_style() )
+            else:
+                print("[ERROR] widget not found: " + widget_path)
+                f.write(f"<div>ERROR: widget {jwidget} not found</div>")
+                widget_styles.append("")
 
 def create_gridcss():
-    global layout
+    layout = get_layout()
     with open(g.template+"grid.css", "w", encoding='utf-8') as f:
         # .container
         grid_col = layout["grid"][0]
@@ -132,7 +134,7 @@ def create_gridcss():
 
 def init():
 
-    get_layout()
+    # get_layout()
     get_theme()
     
     host.clear_actions()
@@ -152,7 +154,7 @@ def show_interface():
     init()
     
     global widgets_html, theme_path
-    return render_template("base.html",theme=theme_path, content=widgets_html)
+    return render_template("base.html",theme=theme_path)
 
 @app.route("/action", methods=["POST"])
 def action():

@@ -22,6 +22,7 @@ def add_application_volume(app, change):
                 volume.SetMute(0, None)
                 
             print(f'{app} Volume {"+"if change>0 else""}{change}> {new_volume} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
+            volume.Release()
 
     pythoncom.CoUninitialize()
 
@@ -49,7 +50,8 @@ def set_application_volume(app, value):
                 volume.SetMute(0, None)
             
             print(f'{app} Volume > {new_volume} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
-
+            volume.Release()
+    
     pythoncom.CoUninitialize()
 
 
@@ -71,6 +73,7 @@ def toggle_application_volume_mute(app):
             
             volume.SetMute(not is_muted, None)
             print(f'{app} Mute state has been toggled to: {not is_muted}')
+            volume.Release()
 
     pythoncom.CoUninitialize()
 
@@ -94,6 +97,7 @@ def get_application_volume(app):
             
             pythoncom.CoUninitialize()
             return current_volume_percent
+            volume.Release()
 
     # Program end: uninitialize COM library
     pythoncom.CoUninitialize()
@@ -115,6 +119,7 @@ def get_application_volume_mute(app):
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
             is_muted = volume.GetMute()
             print(f'{app} Current Mute State: {is_muted}')
+            volume.Release()
             
             pythoncom.CoUninitialize()
             return is_muted

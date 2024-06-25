@@ -6,10 +6,7 @@ class component:
     
     # --public------ #
     
-    component_style = []
-    
     def __init__(self, parent_widget, content_num):
-        self.component_style = []
         
         _content_dict = parent_widget.content[content_num]
         self.parent = parent_widget
@@ -23,7 +20,6 @@ class component:
         if not hasattr(self, "type"): return "ERROR: No type specified"
         
         if self.type == "text":
-            self.component_style.append("margin: 0 auto;")
             return self.c_text()
         if self.type == "image":
             return self.c_image()
@@ -44,10 +40,6 @@ class component:
         
         return f"ERROR: No {self.type} type generator<br>"
     
-    def get_style(self):
-        if len(self.component_style) == 0: return ""
-        _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
-        return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
     # --private----- #
     
@@ -73,7 +65,8 @@ class component:
     
     def c_text(self):
         _text = sizedtext(self.text)
-        _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
+        _div = f'<div class="component {self.cls} text " id="{self.cssid}" \
+            style="font-size:{_text.font_size}; margin: 0 auto;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
         return _div + _text.text + "</div>\n"
@@ -313,9 +306,5 @@ class slider:
 
     def get_slider(self):
         _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction} {self.cls}" name={self.cssid} \
-            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
-            style="{self.getStyle()}">'
+            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" >'
         return _slider
-
-    def getStyle(self):
-        return ""
