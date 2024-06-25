@@ -94,10 +94,10 @@ def get_application_volume(app):
             current_volume = volume.GetMasterVolume()
             current_volume_percent = int(current_volume * 100)
             print(f'{app} Current Volume: {current_volume_percent}%')
+            volume.Release()
             
             pythoncom.CoUninitialize()
             return current_volume_percent
-            volume.Release()
 
     # Program end: uninitialize COM library
     pythoncom.CoUninitialize()

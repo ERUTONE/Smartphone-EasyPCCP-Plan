@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 print("starting app..")
-import json
+import json, logging
 from flask import Flask
 import main.globals as g
 
@@ -22,6 +22,10 @@ if (__name__ == "__main__"):
             host_ip = config["host"]
         else:
             host_ip = "0.0.0.0"
+    
+    # Werkzeugのロガーを無効化
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
     
     from main.client.src.client import client_module
     app.register_blueprint(client_module)
