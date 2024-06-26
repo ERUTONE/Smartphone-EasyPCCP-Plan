@@ -128,7 +128,7 @@ def create_gridcss():
 
 # -------------------------------- #
 
-def init():
+def generate_html():
 
     # get_layout()
     get_theme()

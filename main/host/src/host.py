@@ -154,7 +154,7 @@ request_module = Blueprint("host", __name__, url_prefix="/")
 
 @request_module.route("/")
 def show_interface():
-    client.init()
+    client.generate_html()
     
     from main.client.src.client import theme_path
     return render_template("base.html",theme=theme_path)
