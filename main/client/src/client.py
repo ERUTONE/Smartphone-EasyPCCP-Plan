@@ -1,16 +1,12 @@
 print("client importing...")
 import os, json, gc, regex as re
-from flask import render_template, request, jsonify, Blueprint
-from app import app
 import main.globals as g
 import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
 theme_path = ""
-layout_widgets = []
 widget_styles = []
-widgets_html = ""
 
 def load_usercfg():
     global layout_name, theme_name
@@ -138,33 +134,11 @@ def init():
     get_theme()
     
     host.clear_actions()
-    global layout_widgets; layout_widgets= []
     global widget_styles;  widget_styles = []
     create_widgets()
     create_gridcss()
-    global widgets_html; widgets_html = "\n".join(layout_widgets)
     host.merge_onload_js()
     gc.collect()
 
 # regen when py (re)starts
 load_usercfg()
-init()
-
-client_module = Blueprint("client", __name__, url_prefix="/")
-
-@client_module.route("/")
-def show_interface():
-    init()
-    
-    global widgets_html, theme_path
-    return render_template("base.html",theme=theme_path)
-
-@client_module.route("/action", methods=["POST"])
-def action():
-    
-    print(f" ! got POST with arg {request.get_json()}")
-    returns = {}
-    for key, value in request.get_json().items():
-        returns[key] = host.execute_action(key, value) 
-
-    return jsonify(returns)

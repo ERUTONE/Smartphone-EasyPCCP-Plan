@@ -1,6 +1,7 @@
 print("host importing...")
 
 import os, regex as re
+from flask import render_template, request, jsonify, Blueprint
 import importlib.util
 import main.globals as g
 
@@ -26,6 +27,8 @@ def import_all_modules():
     else: modules_imported = True
     
     import_all_modules_from_dir(g.functions)
+import main.client.src.client as client
+
     
 # ------------------ #
 actions = {}
@@ -144,4 +147,24 @@ def merge_onload_js():
             f.write("\n")
     clear_onload_js()
 
-import main.client.src.client as client
+
+# ------------------ #
+
+request_module = Blueprint("host", __name__, url_prefix="/")
+
+@request_module.route("/")
+def show_interface():
+    client.init()
+    
+    from main.client.src.client import theme_path
+    return render_template("base.html",theme=theme_path)
+
+@request_module.route("/action", methods=["POST"])
+def action():
+    
+    print(f" ! got POST with arg {request.get_json()}")
+    returns = {}
+    for key, value in request.get_json().items():
+        returns[key] = execute_action(key, value) 
+
+    return jsonify(returns)

@@ -27,8 +27,8 @@ if (__name__ == "__main__"):
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
     
-    from main.client.src.client import client_module
-    app.register_blueprint(client_module)
+    from main.host.src.host import request_module
+    app.register_blueprint(request_module)
 
     app.run(host=host_ip, port=5000, debug=True)
 
