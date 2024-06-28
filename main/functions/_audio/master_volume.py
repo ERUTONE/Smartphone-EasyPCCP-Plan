@@ -44,7 +44,7 @@ def set_master_volume(value): # 0~100 int
     interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-    adjustment = value / 100.0
+    adjustment = max(0.0, min(1.0, value / 100.0))
     volume.SetMasterVolumeLevelScalar(adjustment, None)
 
     if value == 0:
