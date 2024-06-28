@@ -1,6 +1,7 @@
 print("host importing...")
 
 import os, regex as re
+from flask import render_template, request, jsonify, Blueprint
 import importlib.util
 import main.globals as g
 
@@ -26,6 +27,8 @@ def import_all_modules():
     else: modules_imported = True
     
     import_all_modules_from_dir(g.functions)
+import main.client.src.client as client
+
     
 # ------------------ #
 actions = {}
@@ -103,7 +106,7 @@ def is_valid_path(path):
     pattern = r'^[a-zA-Z0-9_\-\/\.]+$'
     return bool(re.match(pattern, path))
 
-def add_onload_js_queue(arg, type=None): # path to js / js code
+def add_onload_js_queue(arg, type=None, static=False): # path to js / js code
     global onload_js
     if type == None:
         if is_valid_path(arg):
@@ -113,13 +116,18 @@ def add_onload_js_queue(arg, type=None): # path to js / js code
     
     if type == "path":
         if arg.endswith(".js") and os.path.exists(arg):
-            onload_js.append({"type":"path", "path":arg})
+            onload_js.append({"type":"path", "path":arg , "static":static})
         else:
             print(f"AddOnloadScriptQueue: invalid path: {arg}")
     elif type == "code":
-        onload_js.append({"type":"code", "code":arg})
+        onload_js.append({"type":"code", "code":arg, "static":static})
     else:
         print(f"AddOnloadScriptQueue: invalid type: {type}")
+
+def clear_onload_js():
+    global onload_js
+    # delete only "non-static" scripts
+    onload_js = [script for script in onload_js if script["static"]]
 
 def merge_onload_js():
     global onload_js
@@ -137,5 +145,26 @@ def merge_onload_js():
                 print(f" - ({script['type']}) {script['code']}")
                 f.write(script["code"])
             f.write("\n")
+    clear_onload_js()
 
-import main.client.src.client as client
+
+# ------------------ #
+
+request_module = Blueprint("host", __name__, url_prefix="/")
+
+@request_module.route("/")
+def show_interface():
+    client.generate_html()
+    
+    from main.client.src.client import theme_path
+    return render_template("base.html",theme=theme_path)
+
+@request_module.route("/action", methods=["POST"])
+def action():
+    
+    print(f" ! got POST with arg {request.get_json()}")
+    returns = {}
+    for key, value in request.get_json().items():
+        returns[key] = execute_action(key, value) 
+
+    return jsonify(returns)

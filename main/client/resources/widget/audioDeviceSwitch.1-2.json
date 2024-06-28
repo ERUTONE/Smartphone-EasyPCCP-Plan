@@ -1,0 +1,30 @@
+{
+    "column":1,
+    "row":2,
+    "title":"Action",
+    "sync":"websocket",
+    "container":"vbox",
+    "content":[
+        {
+            "type":"button-icon",
+            "action":"audio.set_audio_device('koral_speaker', by='name')",
+            "src":"%resources%/icon/audio/speaker.png",
+            "size":"l:l"
+
+        },
+        {
+            "type":"button-icon",
+            "action":"audio.set_audio_device('koral_headset', by='name')",
+            "src":"%resources%/icon/audio/headset.png",
+            "size":"l:m"
+
+        },
+        {
+            "type":"slider-horizontal",
+            "value":"{{audio.get_master_volume()}}",
+            "action":"audio.set_master_volume($)",
+            "min":0,
+            "max":100
+        }
+    ]
+}

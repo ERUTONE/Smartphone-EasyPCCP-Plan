@@ -7,20 +7,21 @@
     "content":[
         {
             "type":"button-text",
+            "class": "border",
             "action":"audio.add_master_volume(-10)",
-            "text":"m:vol-10",
+            "text":"l:&#x1f509;",
             "size":"m:m"
 
         },
         {
             "type":"button-text",
+            "class": "border",
             "action":"audio.add_master_volume(10)",
-            "text":"m:vol+10",
+            "text":"l:&#x1f50a;",
             "size":"m:m"
         },
         {
             "type":"button-icon",
-            "id":"soundOn",
             "action":"client.rotate_layout(1)",
             "src":"%resources%/icon/rotate.png",
             "size":"m:m"

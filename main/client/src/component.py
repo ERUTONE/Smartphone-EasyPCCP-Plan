@@ -6,10 +6,7 @@ class component:
     
     # --public------ #
     
-    component_style = []
-    
     def __init__(self, parent_widget, content_num):
-        self.component_style = []
         
         _content_dict = parent_widget.content[content_num]
         self.parent = parent_widget
@@ -23,7 +20,6 @@ class component:
         if not hasattr(self, "type"): return "ERROR: No type specified"
         
         if self.type == "text":
-            self.component_style.append("margin: 0 auto;")
             return self.c_text()
         if self.type == "image":
             return self.c_image()
@@ -44,10 +40,6 @@ class component:
         
         return f"ERROR: No {self.type} type generator<br>"
     
-    def get_style(self):
-        if len(self.component_style) == 0: return ""
-        _selector = f".widget#{self.parent.cssid} > .subcontainer > .component#{self.cssid}"
-        return f'{_selector}{{ {" ".join(self.component_style)} }}'
     
     # --private----- #
     
@@ -73,7 +65,8 @@ class component:
     
     def c_text(self):
         _text = sizedtext(self.text)
-        _div = f'<div class="component {self.cls} text " id="{self.cssid}" style="font-size:{_text.font_size};">'
+        _div = f'<div class="component {self.cls} text " id="{self.cssid}" \
+            style="font-size:{_text.font_size}; margin: 0 auto;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
         return _div + _text.text + "</div>\n"
@@ -90,34 +83,34 @@ class component:
         return _div + _imgtag + '</div>\n'
     
     def c_button(self):
+        host.add_action(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
-        host.add_action(f"{self.cssid}", self.action)
         return _div + '</button>\n'
         
     def c_button_text(self):
         _text = sizedtext(self.text)
+        host.add_action(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
             _text.text = customformattext(_text.text).format()
-        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _text.text + '</button>\n'
     
     def c_button_icon(self):
+        host.add_action(f"{self.cssid}", self.action)
         _icon = image(self, allow_fill=False)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
         
-        host.add_action(f"{self.cssid}", self.action)
         
         return _div + _icon.get_imgtag() + '</button>\n'
 
     def c_slider(self, direction="horizontal"):
+        host.add_action(f"{self.cssid}", self.action)
         _slider = slider(self, direction)
         
-        host.add_action(f"{self.cssid}", self.action)
         return _slider.get_slider() + "\n"
 # ---------------------------------------------------- #
 
@@ -313,9 +306,5 @@ class slider:
 
     def get_slider(self):
         _slider = f'<input type="range" id="{self.cssid}" class="slider slider_{self.direction} {self.cls}" name={self.cssid} \
-            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" \
-            style="{self.getStyle()}">'
+            min="{self.min}" max="{self.max}" step="{self.step}" value="{self.value}" >'
         return _slider
-
-    def getStyle(self):
-        return ""

@@ -1,17 +1,12 @@
 print("client importing...")
-import os, json, regex as re
-from flask import render_template, request, jsonify
-from app import app
+import os, json, gc, regex as re
 import main.globals as g
 import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
-layout: dict
 theme_path = ""
-layout_widgets = []
 widget_styles = []
-widgets_html = ""
 
 def load_usercfg():
     global layout_name, theme_name
@@ -52,16 +47,16 @@ def get_layout():
     _path = g.c_layout + layout_name + ".json"
     if(os.path.exists(_path)) :
         with open(_path, "r", encoding='utf-8') as f:
-            layout = json.load(f)
-        return
+            return json.load(f)
+        
     
     _path = g.layout + layout_name + ".json"
     if(not os.path.exists(_path)) : 
         print("[ERROR] layout not found: " + _path)
-        _path = g.layout_default
+        _path = g.layout_default + ".json"
     
     with open(_path, "r", encoding='utf-8') as f:
-        layout = json.load(f)
+        return json.load(f)
 
 def set_theme(arg = "default"):
     global theme_name
@@ -79,29 +74,32 @@ def get_theme():
     _path = g.theme + theme_name + ".css"
     if(not os.path.exists(_path)) : 
         print("[ERROR] theme not found: " + _path)
-        _path = g.theme_default
+        _path = g.theme_default + ".css"
         
     theme_path = _path
 
 from main.client.src.widget import widget as new_widget
 def create_widgets():
-    global layout, layout_widgets
-    for i in range(len(layout["placement"]) ):
-        jwidget = layout["placement"][i]
-        widget_path = g.widget + jwidget["widget"] + ".json"
-        if(os.path.exists(widget_path)):
-            # load as a new instance
-            print(f' - loading widget {jwidget["widget"]}...')
-            _widget = new_widget(widget_path, i)
-            layout_widgets.append( _widget.create_widget() )
-            widget_styles.append( _widget.get_style() )
-        else:
-            print("[ERROR] widget not found: " + widget_path)
-            layout_widgets.append(f"ERROR: widget {jwidget} not found")
-            widget_styles.append("")
+    global layout_name
+    layout = get_layout()
+    with open(g.template+"grid.html", "w", encoding='utf-8') as f:
+        f.write('<!-- Auto generated html -->\n')
+        for i in range(len(layout["placement"]) ):
+            jwidget = layout["placement"][i]
+            widget_path = g.widget + jwidget["widget"] + ".json"
+            if(os.path.exists(widget_path)):
+                # load as a new instance
+                print(f' - loading widget {jwidget["widget"]}...')
+                _widget = new_widget(widget_path, i)
+                f.write( _widget.create_widget() )
+                widget_styles.append( _widget.get_style() )
+            else:
+                print("[ERROR] widget not found: " + widget_path)
+                f.write(f"<div>ERROR: widget {jwidget} not found</div>")
+                widget_styles.append("")
 
 def create_gridcss():
-    global layout
+    layout = get_layout()
     with open(g.template+"grid.css", "w", encoding='utf-8') as f:
         # .container
         grid_col = layout["grid"][0]
@@ -130,36 +128,17 @@ def create_gridcss():
 
 # -------------------------------- #
 
-def init():
+def generate_html():
 
-    get_layout()
+    # get_layout()
     get_theme()
     
     host.clear_actions()
-    global layout_widgets; layout_widgets= []
     global widget_styles;  widget_styles = []
     create_widgets()
     create_gridcss()
-    global widgets_html; widgets_html = "\n".join(layout_widgets)
     host.merge_onload_js()
+    gc.collect()
 
 # regen when py (re)starts
 load_usercfg()
-init()
-
-@app.route("/")
-def show_interface():
-    init()
-    
-    global widgets_html, theme_path
-    return render_template("base.html",theme=theme_path, content=widgets_html)
-
-@app.route("/action", methods=["POST"])
-def action():
-    
-    print(f" ! got POST with arg {request.get_json()}")
-    returns = {}
-    for key, value in request.get_json().items():
-        returns[key] = host.execute_action(key, value) 
-
-    return jsonify(returns)

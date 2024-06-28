@@ -1,0 +1,27 @@
+{
+    "column":2,
+    "row":1,
+    "title":"Media Control",
+    "sync":"websocket",
+    "container":"hbox",
+    "content":[
+        {
+            "type":"button-icon",
+            "action":"media_control.previous_track()",
+            "src":"%resources%/icon/audio/prevtrack.png",
+            "size":"l:m"
+        },
+        {
+            "type":"button-icon",
+            "action":"media_control.play_pause()",
+            "src":"%resources%/icon/audio/playpause.png",
+            "size":"l:l"
+        },
+        {
+            "type":"button-icon",
+            "action":"media_control.next_track()",
+            "src":"%resources%/icon/audio/nexttrack.png",
+            "size":"l:m"
+        }
+    ]
+}

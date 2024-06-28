@@ -1,8 +1,8 @@
 {
     "column":2,
     "row":2,
-    "title":"s:app volume",
-    "sync":"none",
+    "title":"s:App Volume",
+    "sync":"websocket",
     "container":"vbox",
     "content":[
         {
