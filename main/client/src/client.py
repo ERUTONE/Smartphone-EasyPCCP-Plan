@@ -1,7 +1,6 @@
 print("client importing...")
 import os, json, gc, regex as re
 import main.globals as g
-import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
@@ -128,6 +127,7 @@ def create_gridcss():
 
 # -------------------------------- #
 
+import main.host.src.host as host
 def generate_html():
 
     # get_layout()
@@ -138,7 +138,10 @@ def generate_html():
     create_widgets()
     create_gridcss()
     host.merge_onload_js()
+    print("client: garbage collecting...")
+    gc.set_debug(gc.DEBUG_STATS)
     gc.collect()
+    print("client: garbage collected")
 
 # regen when py (re)starts
 load_usercfg()

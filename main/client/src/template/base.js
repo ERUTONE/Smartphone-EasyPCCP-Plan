@@ -6,10 +6,8 @@ function setRootFontSize(){
     const gridRowValue = containerStyles.getPropertyValue('grid-template-rows');
     const gridCols = gridColumnValue.trim().split(/\s+/).length; //空白文字で分割して配列の長さを取得
     const gridRows = gridRowValue.trim().split(/\s+/).length;
-    console.log("gridCols: ",gridCols, ", gridRows: ",gridRows);
 
     const window_ratio = window.innerWidth / window.innerHeight;
-    console.log("window_ratio: ",window_ratio);
 
     var fontSize;
     if( window_ratio < gridCols / gridRows ) {
@@ -22,7 +20,6 @@ function setRootFontSize(){
 
     // :rootのfont-sizeに適用する例
     document.documentElement.style.fontSize = fontSize;
-    console.log("fontSize: ",fontSize);
 }
 window.addEventListener("resize", setRootFontSize);
 setRootFontSize();
