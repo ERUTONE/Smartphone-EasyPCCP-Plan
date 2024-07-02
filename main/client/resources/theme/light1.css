@@ -1,10 +1,11 @@
 :root {
-    --accent-color: linear-gradient(180deg, #4fbeff, #4c9ff8);
+    --accent-color: linear-gradient(180deg, #4fbeff, #9fceff);
     --main-color: #ffffff;
-    --text-color: #000000;
+    --text-color: #949494;
 
     --margin: 0.2rem;
-    --border-radius: 0.5rem;
+    --border-radius: 0.7rem;
+    --button-radius: 0.5rem;
 }
 
 body {
@@ -13,15 +14,11 @@ body {
 }
 
 .widget_title {
-    background: var(--accent-color);
-    background-clip:border-box !important;
-    color: var(--main-color) !important;
-    font-size: 1.6rem !important;
-
-    min-width: calc(100% - 2.5rem);
-    min-height: 1em;
-    margin: 0 auto;
-    top: -0.5em;
+    font-size: 0.5rem !important;
+    font-weight: normal;
+    color: var(--text-color);
+    
+    top:calc(100% - 1.5rem);
 }
 
 .accent_text {
@@ -32,4 +29,12 @@ body {
 
 .transparent {
     background: linear-gradient(180deg, #ffffff33, #ffffff11);
+}
+
+.button_icon > img {
+    filter : invert(0.5) brightness(100);
+}
+
+.slider::-webkit-slider-thumb {
+    --accent-color: #4eb0fc;
 }
