@@ -1,4 +1,4 @@
-import os, json
+import os, json, logging
 
 def config():
     usercfg_path ="config/usercfg.json"
@@ -9,3 +9,7 @@ def config():
             json.dump({"layout":"default", "theme":"default"}, f, indent=4)
             
 config()
+
+# Werkzeugのロガーを無効化
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
