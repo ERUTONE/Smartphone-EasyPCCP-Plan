@@ -35,13 +35,14 @@ from main.host.src.host import execute_action
 from main.client.src.client import set_layout
 @app.route("/action", methods=["POST"])
 def action():
-    
-    if "layout" in request.get_json():
-        regen = set_layout(request.get_json()["layout"])
+    params = request.get_json()
+    if "layout" in params:
+        regen = set_layout(params["layout"])
+        del params["layout"]
         if regen: generate_html()
     
     returns = {}
-    for key, value in request.get_json().items():
+    for key, value in params.items():
         returns[key] = execute_action(key, value) 
 
     return jsonify(returns)
