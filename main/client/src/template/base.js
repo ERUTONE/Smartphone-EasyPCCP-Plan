@@ -35,7 +35,7 @@ function sendData(e) {
     $.ajax({
         url: "/action",
         type: 'POST',
-        data: JSON.stringify({[submitter]: value}),
+        data: JSON.stringify({[submitter]: value, "layout": layout}),
         contentType: 'application/json',
         success: function(responce) {
             // console.log("Success:",responce);

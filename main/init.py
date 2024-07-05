@@ -1,4 +1,4 @@
-import os, json, logging
+import os, json, logging, gc
 
 def config():
     usercfg_path ="config/usercfg.json"
@@ -13,3 +13,6 @@ config()
 # Werkzeugのロガーを無効化
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
+
+# ガベージコレクションのデバッグ情報
+gc.set_debug(gc.DEBUG_STATS)

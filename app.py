@@ -22,22 +22,30 @@ with open(g.usercfg) as f:
         host_ip = "0.0.0.0"
 
 
+from main.client.src.client import generate_html
 @app.route("/")
 def show_interface():
-    from main.client.src.client import generate_html, theme_path
     generate_html()
-    return render_template("base.html",theme=theme_path)
+    from main.client.src.client import theme_path, layout_name
+    
+    return render_template("base.html",theme=theme_path, layout=layout_name)
 
+
+from main.host.src.host import execute_action
+from main.client.src.client import set_layout
 @app.route("/action", methods=["POST"])
 def action():
     
-    print(f" ! got POST with arg {request.get_json()}")
+    if "layout" in request.get_json():
+        regen = set_layout(request.get_json()["layout"])
+        if regen: generate_html()
+    
     returns = {}
-    from main.host.src.host import execute_action
     for key, value in request.get_json().items():
         returns[key] = execute_action(key, value) 
 
     return jsonify(returns)
 
-app.run(host=host_ip, port=5000, debug=True)
+
+app.run(host=host_ip, port=5000, debug=False)
 

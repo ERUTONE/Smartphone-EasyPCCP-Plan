@@ -30,7 +30,7 @@ def import_all_modules():
 def execute_module_function(call_string):
     match = re.match(r'(\w+)\.(\w+)\((.*)\)', call_string)
     if not match:
-        raise ValueError("Invalid call string format")
+        raise ValueError(f" !> {call_string}: Invalid call string format")
     
     module_name, function_name, args_str = match.groups()
     del match
@@ -54,7 +54,7 @@ def parse_arguments(args_str):
     try:
         args = ast.literal_eval(f'[{args_str}]')
     except (ValueError, SyntaxError) as e:
-        raise ValueError(f"Failed to parse arguments: {e}")
+        raise ValueError(f" !> Failed to parse arguments {args_str}: {e}")
     
     return args
 

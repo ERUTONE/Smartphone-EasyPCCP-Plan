@@ -1,5 +1,5 @@
 print("client importing...")
-import os, json, gc, regex as re
+import os, json, regex as re
 import main.globals as g
 
 layout_name = ""
@@ -17,6 +17,8 @@ def load_usercfg():
 
 def set_layout(arg = "default"):
     global layout_name
+    if layout_name == arg: return None
+    
     if type(arg) == str: layout_name = arg
     elif type(arg) == int:
         with open(g.usercfg, "r", encoding='utf-8') as f:
@@ -138,10 +140,6 @@ def generate_html():
     create_widgets()
     create_gridcss()
     host.merge_onload_js()
-    print("client: garbage collecting...")
-    gc.set_debug(gc.DEBUG_STATS)
-    gc.collect()
-    print("client: garbage collected")
 
 # regen when py (re)starts
 load_usercfg()

@@ -9,3 +9,6 @@ def messagebox(message, title="PCCP"):
     button = Button(root, text="OK", width=20, bg="lightgray", command=root.quit)
     button.pack(side="bottom",padx=10, pady=10)
     root.mainloop()
+
+def println(message):
+    print(message)
