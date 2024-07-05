@@ -1,34 +1,48 @@
 print("host importing...")
 
-import os, regex as re
-import importlib.util
+import os, importlib, ast
+import regex as re
 import main.globals as g
 
-modules_imported = False
+modules = {}
 
-def import_all_modules_from_dir(directory):
+def import_modules_from_directory(directory):
     print(f"host: importing all modules from {directory}...")
-    print("> loaded: ",end="")
+    modules = {}
     for filename in os.listdir(directory):
         if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3]
-            file_path = os.path.join(directory, filename)
-            spec = importlib.util.spec_from_file_location(module_name, file_path)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            globals()[module_name] = module
-            print(module_name, end=" ")
-    print()
+            module = importlib.import_module(module_name)
+            functions = {name: item for name, item in module.__dict__.items() if callable(item) and not name.startswith('__')}
+            modules[module_name] = functions
+            print(f"> {module_name} : {[f'{k}, ' for k in functions.keys()[:5]]} {'\b\b...' if len(functions) > 5 else ''}")
+    return modules
 
 def import_all_modules():
-    global modules_imported
-    if modules_imported : return
-    else: modules_imported = True
-    
-    import_all_modules_from_dir(g.functions)
+    global modules
+    if len(modules)>0 : return
+    else: modules = import_modules_from_directory(g.functions)
 import main.client.src.client as client
 
+def execute_module_function(call_string):
+    match = re.match(r'(\w+)\.(\w+)\((.*)\)', call_string)
+    if not match:
+        raise ValueError("Invalid call string format")
     
+    module_name, function_name, args_string = match.groups()
+    
+    global modules
+    if module_name in modules and function_name in modules[module_name]:
+        func = modules[module_name][function_name]
+        
+        # ast.literal_eval to safely evaluate the arguments string
+        args = ast.literal_eval(f"({args_string},)")
+        
+        return func(*args)
+    else:
+        raise ValueError("Module or function not found")
+
+
 # ------------------ #
 actions = {}
 
@@ -55,18 +69,12 @@ def execute_action(name, arg=None): # param
             else:
                 action = action.replace("$", f"{arg}")
             
-        
         # execute
         try:
-            print(f" - executing {name} : {action} ...")
-            exec(f"result = {action}", globals(), namespace)
+            return execute_module_function(action)
         except Exception as e:
-            print("   > execution failed: ",e)
-        
-        if "result" in namespace:
-            return namespace["result"]
-        else:
-            return None
+            print(f"  > execution failed: ",e)
+        return None
     else:
         print(f"action '{name}' not found")
         return None
@@ -85,17 +93,11 @@ def convert_string(s):
 
 def execute_function(function): # module.function(args)
     import_all_modules()
-    namespace = {}
     try:
-        print(f" - executing {function} ...")
-        exec(f"result = {function}", globals(), namespace)
+        return execute_module_function(function)
     except Exception as e:
         print(f"  > execution failed: ",e)
-    
-    if "result" in namespace:
-        return namespace["result"]
-    else:
-        return None
+    return None
 
 # ------------------ #
 onload_js = []
