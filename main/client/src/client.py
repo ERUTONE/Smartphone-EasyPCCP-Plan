@@ -98,6 +98,7 @@ def create_widgets():
                 print("[ERROR] widget not found: " + widget_path)
                 f.write(f"<div>ERROR: widget {jwidget} not found</div>")
                 widget_styles.append("")
+    print("client: create_widgets complete")
 
 def create_gridcss():
     layout = get_layout()
@@ -126,6 +127,7 @@ def create_gridcss():
                 f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
                 "}\n")
         f.write("\n".join(widget_styles))
+    print("client: create_gridcss complete")
 
 # -------------------------------- #
 

@@ -67,6 +67,12 @@ function updateSliderGradient(slider, direction) {
     slider.style.background = `linear-gradient(${dir}, ${sld_activeColor} ${progress}%, ${sld_baseColor} ${progress}%)`;
 }
 
+let cooldown = false;
+let cooltime = 200; // milliseconds
+let lastRequest = null;
+let cooldownTimeout;
+let lastRequestTimeout;
+
 function initSliders(){
 
     // visual & sender init
@@ -76,8 +82,31 @@ function initSliders(){
             
             slider.addEventListener('input', (e) => {
                 updateSliderGradient(e.target, direction);
+                
+                // interval
+                lastRequest = {preventDefault: () => {}, submitter: {name: slider.name, value: e.target.value}};
+                if (!cooldown) {
+                    cooldown = true;
+                    sendData(lastRequest);
+                    
+                    cooldownTimeout = setTimeout(() => {
+                        cooldown = false;
+                    }, cooltime);
+                    lastRequestTimeout = setTimeout(() => {
+                        if (!cooldown) {
+                            sendData(lastRequest);
+                        }
+                    }, cooltime *1.5);
+                }
+            });
+
+            slider.addEventListener('change', (e) => {
+                clearTimeout(cooldownTimeout);
+                clearTimeout(lastRequestTimeout);
+                cooldown = false;
                 sendData({preventDefault: () => {}, submitter: {name: slider.name, value: e.target.value}});
             });
+
             updateSliderGradient(slider, direction);
         });
     }

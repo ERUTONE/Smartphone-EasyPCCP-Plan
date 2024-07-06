@@ -39,24 +39,36 @@ def execute_module_function(call_string):
     if module_name in modules and function_name in modules[module_name]:
         func = modules[module_name][function_name]
         
-        args = parse_arguments(args_str)
+        args, kwargs = parse_arguments(args_str)
         try:
-            return func(*args)
+            return func(*args, **kwargs)
         except Exception as e:
-            raise ValueError(f" !> Function call failed: {module_name}.{function_name}({args_str})") from e
+            print(f" !> Function call failed: {module_name}.{function_name}({args_str}) : {e}")
+            # raise ValueError(f" !> Function call failed: {module_name}.{function_name}({args_str})") from e
     else:
         raise ValueError(f"Module or function not found: {module_name}.{function_name}")
 
 def parse_arguments(args_str):
     if not args_str.strip():
-        return []
+        return [], {}
     
-    try:
-        args = ast.literal_eval(f'[{args_str}]')
-    except (ValueError, SyntaxError) as e:
-        raise ValueError(f" !> Failed to parse arguments {args_str}: {e}")
-    
-    return args
+    args = []
+    kwargs = {}
+
+    # 引数文字列をカンマで分割
+    for arg in args_str.split(','):
+        arg = arg.strip()
+        try:
+            # イコールで分割して、キーワード引数かどうか判定
+            if '=' in arg:
+                key, value = arg.split('=', 1)
+                kwargs[key.strip()] = ast.literal_eval(value.strip())
+            else:
+                args.append(ast.literal_eval(arg))
+        except Exception as e:
+            print(f" !> Failed to parse argument: {arg}")
+
+    return args, kwargs
 
 # ------------------ #
 actions = {}
@@ -153,4 +165,5 @@ def merge_onload_js():
                 f.write(script["code"])
             f.write("\n")
     clear_onload_js()
+    print("host: merge_onload_js complete")
 

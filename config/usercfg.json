@@ -4,8 +4,7 @@
     "host": "0.0.0.0",
     "layout_group":[
         "home",
-        "media",
-        "obs"
+        "media"
     ],
     "audio_devices":{
         "koral_speaker":{
