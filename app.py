@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 print("starting app..")
-import json
+import json, weakref
 from flask import Flask
 from flask import render_template, request, jsonify
 
@@ -21,6 +21,8 @@ with open(g.usercfg) as f:
     else:
         host_ip = "0.0.0.0"
 
+import main.host.src.host as host
+g.host = host
 
 from main.client.src.client import generate_html
 @app.route("/")
@@ -28,10 +30,12 @@ def show_interface():
     generate_html()
     from main.client.src.client import theme_path, layout_name
     
-    return render_template("base.html",theme=theme_path, layout=layout_name)
+    print("gen...", end="")
+    rendered = render_template("base.html",theme=theme_path, layout=layout_name)
+    print("ok")
+    return rendered
 
 
-from main.host.src.host import execute_action
 from main.client.src.client import set_layout
 @app.route("/action", methods=["POST"])
 def action():
@@ -43,10 +47,11 @@ def action():
     
     returns = {}
     for key, value in params.items():
-        returns[key] = execute_action(key, value) 
+        returns[key] = g.host.execute_action(key, value) 
 
+    print("post ok")
     return jsonify(returns)
 
 
-app.run(host=host_ip, port=5000, debug=False)
+app.run(host=host_ip, port=5000, debug=True)
 

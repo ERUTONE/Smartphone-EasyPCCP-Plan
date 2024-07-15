@@ -31,3 +31,7 @@ c_img:      Final[str] = custom + "img/"
 # Main
 
 functions:  Final[str] = home + "main/functions/"
+
+# Host
+
+host                   = None

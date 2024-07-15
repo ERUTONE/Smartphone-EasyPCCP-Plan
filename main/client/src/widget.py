@@ -52,6 +52,7 @@ class widget:
                 _component = component(self, i)
                 self.components.append(_component)
                 widget_html += _component.create_component()
+                _component = None
         
         widget_html += '</div>'
         # if _title: widget_html += _title.div

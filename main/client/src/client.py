@@ -1,5 +1,5 @@
 print("client importing...")
-import os, json, regex as re
+import os, json, regex as re, weakref, gc
 import main.globals as g
 
 layout_name = ""
@@ -131,17 +131,21 @@ def create_gridcss():
 
 # -------------------------------- #
 
-import main.host.src.host as host
 def generate_html():
+    # weakref
+    _clear_actions = weakref.ref(g.host.clear_actions)
+    _merge_onload_js = weakref.ref(g.host.merge_onload_js)
 
     # get_layout()
     get_theme()
     
-    host.clear_actions()
+    _clear_actions()()
     global widget_styles;  widget_styles = []
     create_widgets()
     create_gridcss()
-    host.merge_onload_js()
+    _merge_onload_js()()
+    
+    gc.collect()
 
 # regen when py (re)starts
 load_usercfg()
