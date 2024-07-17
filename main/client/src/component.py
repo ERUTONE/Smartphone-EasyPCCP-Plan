@@ -1,6 +1,10 @@
-import regex as re
-import main.host.src.host as host
+import regex as re, weakref
+import main.globals as g
 import main.client.src.client as client
+
+# weakref
+_add_action = weakref.ref(g.host.add_action)
+_execute_function = weakref.ref(g.host.execute_function)
 
 class component:
     
@@ -83,14 +87,14 @@ class component:
         return _div + _imgtag + '</div>\n'
     
     def c_button(self):
-        host.add_action(f"{self.cssid}", self.action)
+        _add_action()(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button" id="{self.cssid}"\
             style="width:{self.length}; height:{self.length}; position: relative;">'
         return _div + '</button>\n'
         
     def c_button_text(self):
         _text = sizedtext(self.text)
-        host.add_action(f"{self.cssid}", self.action)
+        _add_action()(f"{self.cssid}", self.action)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_text" id="{self.cssid}"\
             style="font-size:{_text.font_size}; width:{self.length}; height:{self.length}; position: relative;">'
         if hasattr(self,"customformat") and self.customformat == True:
@@ -99,7 +103,7 @@ class component:
         return _div + _text.text + '</button>\n'
     
     def c_button_icon(self):
-        host.add_action(f"{self.cssid}", self.action)
+        _add_action()(f"{self.cssid}", self.action)
         _icon = image(self, allow_fill=False)
         _div = f'<button name={self.cssid} class="component {self.cls} button button_icon" id="{self.cssid}"\
             style="overflow:hidden; width:{self.length}; height:{self.length}; position: relative;">'
@@ -108,7 +112,7 @@ class component:
         return _div + _icon.get_imgtag() + '</button>\n'
 
     def c_slider(self, direction="horizontal"):
-        host.add_action(f"{self.cssid}", self.action)
+        _add_action()(f"{self.cssid}", self.action)
         _slider = slider(self, direction)
         
         return _slider.get_slider() + "\n"
@@ -147,7 +151,7 @@ class customformattext:
     
     def execute(self):
         for action in self.actions:
-            _result = host.execute_function(action)
+            _result = _execute_function()(action)
             self.results.append( _result if _result else self.nonealt )
     
     def format(self):

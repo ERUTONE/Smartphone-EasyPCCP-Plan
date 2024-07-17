@@ -10,9 +10,9 @@ def config():
             
 config()
 
-# Werkzeugのロガーを無効化
+# log
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
+# logging.basicConfig(level=logging.DEBUG)
 
-# ガベージコレクションのデバッグ情報
 gc.set_debug(gc.DEBUG_STATS)
