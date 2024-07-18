@@ -49,7 +49,6 @@ def action():
     for key, value in params.items():
         returns[key] = g.host.execute_action(key, value) 
 
-    print("post ok")
     return jsonify(returns)
 
 

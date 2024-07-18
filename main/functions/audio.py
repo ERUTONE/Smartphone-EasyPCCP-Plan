@@ -16,9 +16,9 @@ def set_audio_device(arg, by = "uuid"): # by = "uuid" or "name"
 
 # ----------------------------------------------------------- #
 
-clr.AddReference("main/functions/_audio/MasterVolume")
+clr.AddReference("main/functions/_audio/VolumeLib")
 # import dll
-from MasterVolume import MasterVolumeController
+from VolumeLib import MasterVolumeController
 mvc = MasterVolumeController()
 
 def set_master_volume(level):
