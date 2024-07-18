@@ -6,10 +6,8 @@ function setRootFontSize(){
     const gridRowValue = containerStyles.getPropertyValue('grid-template-rows');
     const gridCols = gridColumnValue.trim().split(/\s+/).length; //空白文字で分割して配列の長さを取得
     const gridRows = gridRowValue.trim().split(/\s+/).length;
-    console.log("gridCols: ",gridCols, ", gridRows: ",gridRows);
 
     const window_ratio = window.innerWidth / window.innerHeight;
-    console.log("window_ratio: ",window_ratio);
 
     var fontSize;
     if( window_ratio < gridCols / gridRows ) {
@@ -22,7 +20,6 @@ function setRootFontSize(){
 
     // :rootのfont-sizeに適用する例
     document.documentElement.style.fontSize = fontSize;
-    console.log("fontSize: ",fontSize);
 }
 window.addEventListener("resize", setRootFontSize);
 setRootFontSize();
@@ -38,7 +35,7 @@ function sendData(e) {
     $.ajax({
         url: "/action",
         type: 'POST',
-        data: JSON.stringify({[submitter]: value}),
+        data: JSON.stringify({[submitter]: value, "layout": layout}),
         contentType: 'application/json',
         success: function(responce) {
             // console.log("Success:",responce);
@@ -70,6 +67,12 @@ function updateSliderGradient(slider, direction) {
     slider.style.background = `linear-gradient(${dir}, ${sld_activeColor} ${progress}%, ${sld_baseColor} ${progress}%)`;
 }
 
+let cooldown = false;
+let cooltime = 200; // milliseconds
+let lastRequest = null;
+let cooldownTimeout;
+let lastRequestTimeout;
+
 function initSliders(){
 
     // visual & sender init
@@ -79,8 +82,31 @@ function initSliders(){
             
             slider.addEventListener('input', (e) => {
                 updateSliderGradient(e.target, direction);
+                
+                // interval
+                lastRequest = {preventDefault: () => {}, submitter: {name: slider.name, value: e.target.value}};
+                if (!cooldown) {
+                    cooldown = true;
+                    sendData(lastRequest);
+                    
+                    cooldownTimeout = setTimeout(() => {
+                        cooldown = false;
+                    }, cooltime);
+                    lastRequestTimeout = setTimeout(() => {
+                        if (!cooldown) {
+                            sendData(lastRequest);
+                        }
+                    }, cooltime *1.5);
+                }
+            });
+
+            slider.addEventListener('change', (e) => {
+                clearTimeout(cooldownTimeout);
+                clearTimeout(lastRequestTimeout);
+                cooldown = false;
                 sendData({preventDefault: () => {}, submitter: {name: slider.name, value: e.target.value}});
             });
+
             updateSliderGradient(slider, direction);
         });
     }

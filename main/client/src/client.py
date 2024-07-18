@@ -1,7 +1,6 @@
 print("client importing...")
-import os, json, gc, regex as re
+import os, json, regex as re, weakref, gc
 import main.globals as g
-import main.host.src.host as host
 
 layout_name = ""
 theme_name = ""
@@ -18,6 +17,8 @@ def load_usercfg():
 
 def set_layout(arg = "default"):
     global layout_name
+    if layout_name == arg: return None
+    
     if type(arg) == str: layout_name = arg
     elif type(arg) == int:
         with open(g.usercfg, "r", encoding='utf-8') as f:
@@ -97,6 +98,7 @@ def create_widgets():
                 print("[ERROR] widget not found: " + widget_path)
                 f.write(f"<div>ERROR: widget {jwidget} not found</div>")
                 widget_styles.append("")
+    print("client: create_widgets complete")
 
 def create_gridcss():
     layout = get_layout()
@@ -125,19 +127,24 @@ def create_gridcss():
                 f"grid-row: {jwidget['position'][1]}/{jwidget['position'][1]+_scale[1]}; " +
                 "}\n")
         f.write("\n".join(widget_styles))
+    print("client: create_gridcss complete")
 
 # -------------------------------- #
 
 def generate_html():
+    # weakref
+    _clear_actions = weakref.ref(g.host.clear_actions)
+    _merge_onload_js = weakref.ref(g.host.merge_onload_js)
 
     # get_layout()
     get_theme()
     
-    host.clear_actions()
+    _clear_actions()()
     global widget_styles;  widget_styles = []
     create_widgets()
     create_gridcss()
-    host.merge_onload_js()
+    _merge_onload_js()()
+    
     gc.collect()
 
 # regen when py (re)starts

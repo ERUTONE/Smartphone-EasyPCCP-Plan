@@ -1,134 +1,32 @@
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
-from comtypes import CLSCTX_ALL
 from ctypes import cast, POINTER
-import pythoncom
+from comtypes import CLSCTX_ALL
 
-def add_master_volume(change): # -100 ~ 100 int
+# Audio endpoint volume interfaceを取得
+devices = AudioUtilities.GetSpeakers()
+interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-    pythoncom.CoInitialize()
-    volume = None
+def add_master_volume(change):         # ARG change = -100 to 100
+    current_volume = get_master_volume()
+    new_volume = min(max(current_volume + change, 0), 100)
+    set_master_volume(new_volume)
 
-    try:
-        # スピーカーデバイスの取得
-        devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
-        
-        # 現在のミュート状態を取得
-        is_muted = volume.GetMute()
-        print("Current Mute State:", is_muted)
-        
-        if is_muted:
-            # ミュートを解除する
-            volume.SetMute(0, None)
-            print("Mute has been turned off.")
-        else:
-            # 現在の音量を取得（0.0から1.0の範囲）
-            current_volume = volume.GetMasterVolumeLevelScalar()
-            print("Current volume: %f" % current_volume)
-            
-            # 音量を変更する（1.0を超えないようにする、0.0未満にならないようにする）
-            adjustment = change / 100.0
-            new_volume = max(0.0, min(1.0, current_volume + adjustment))
-            volume.SetMasterVolumeLevelScalar(new_volume, None)
-            print("New volume: %f" % new_volume)
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if volume:
-            volume.Release()
-            
-    pythoncom.CoUninitialize()
+def set_master_volume(level):          # ARG level = 0 to 100
+    level = min(max(level, 0), 100)
+    volume.SetMasterVolumeLevelScalar(level / 100, None)
 
-# ------------------- #
+def get_master_volume():               # RETURN 0 to 100
+    return int(volume.GetMasterVolumeLevelScalar() * 100)
 
-def set_master_volume(value): # 0~100 int
+def set_master_volume_mute(mute):      # ARG mute = True or False
+    volume.SetMute(mute, None)
 
-    pythoncom.CoInitialize()
-    volume = None
-    try:
-        devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
+def toggle_master_volume_mute():       # RETURN True or False
+    current_mute = get_master_volume_mute()
+    set_master_volume_mute(not current_mute)
+    return get_master_volume_mute()
 
-        adjustment = max(0.0, min(1.0, value / 100.0))
-        volume.SetMasterVolumeLevelScalar(adjustment, None)
-
-        if value == 0:
-            volume.SetMute(1, None)
-        else:
-            volume.SetMute(0, None)
-
-        print(f'Master Volume > {value} mute: {"Muted" if volume.GetMute() else "Unmuted"}')
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if volume:
-            volume.Release()
-            
-    pythoncom.CoUninitialize()
-
-# ------------------- #
-
-def toggle_master_volume_mute():
-
-    pythoncom.CoInitialize()
-    volume = None
-    try:
-        devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
-
-        volume.SetMute(not volume.GetMute(), None)
-        print(f'Master Volume Mute state toggled > {volume.GetMute()}')
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if volume:
-            volume.Release()
-    
-    pythoncom.CoUninitialize()
-
-# ------------------- #
-
-def get_master_volume():
-
-    pythoncom.CoInitialize()
-    volume = None
-    try:
-        devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
-
-        current_volume = int(volume.GetMasterVolumeLevelScalar()*100)
-        print("Current volume: %f" % current_volume)
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if volume:
-            volume.Release()
-
-    pythoncom.CoUninitialize()
-    return current_volume
-
-# ------------------- #
-
-def get_master_volume_mute():
-
-    pythoncom.CoInitialize()
-    volume = None
-    try:
-        devices = AudioUtilities.GetSpeakers()
-        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
-
-        is_muted = volume.GetMute()
-        print("Current Mute State:", is_muted)
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if volume:
-            volume.Release()
-
-    pythoncom.CoUninitialize()
-    return is_muted
+def get_master_volume_mute():          # RETURN True or False
+    return volume.GetMute() == 1

@@ -7,7 +7,7 @@
     "content":[
         {
             "type":"button-text",
-            "action":"print('GPT')",
+            "action":"dialog.println('GPT')",
             "text":"l:GPT",
             "size":"l:l"
         },
@@ -19,13 +19,13 @@
         },
         {
             "type":"button-text",
-            "action":"print('Discord')",
+            "action":"dialog.println('Discord')",
             "text":"m:Discord",
             "size":"l:l"
         },
         {
             "type":"button-text",
-            "action":"print('X')",
+            "action":"dialog.println('X')",
             "text":"l:X",
             "size":"l:l"
         }

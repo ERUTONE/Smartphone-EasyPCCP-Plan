@@ -13,6 +13,9 @@
     <form class="container" id="root_form" onsubmit="sendData(event);">
         {% include 'grid.html' %}
     </form>
+    <script>
+        var layout = "{{ layout }}";
+    </script>
     <script src="{{ url_for('static', filename='main/client/src/template/base.js') }}"></script>
     <script src="{{ url_for('static', filename='main/client/src/template/script.js') }}"></script>
 </body>

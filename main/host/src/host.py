@@ -1,15 +1,14 @@
 print("host importing...")
 
-import os, regex as re
-from flask import render_template, request, jsonify, Blueprint
-import importlib.util
+import os, importlib.util, ast, inspect
+import regex as re
 import main.globals as g
 
-modules_imported = False
+modules = {}
 
-def import_all_modules_from_dir(directory):
+def import_modules_from_directory(directory):
     print(f"host: importing all modules from {directory}...")
-    print("> loaded: ",end="")
+    modules = {}
     for filename in os.listdir(directory):
         if filename.endswith('.py') and filename != '__init__.py':
             module_name = filename[:-3]
@@ -17,19 +16,60 @@ def import_all_modules_from_dir(directory):
             spec = importlib.util.spec_from_file_location(module_name, file_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            globals()[module_name] = module
-            print(module_name, end=" ")
-    print()
+            
+            functions = {name: item for name, item in module.__dict__.items() if inspect.isfunction(item) and not name.startswith('__')}
+            modules[module_name] = functions
+            print(f'  > {"{:<15}".format(module_name)} : {len(functions)} functions')
+    return modules
 
 def import_all_modules():
-    global modules_imported
-    if modules_imported : return
-    else: modules_imported = True
-    
-    import_all_modules_from_dir(g.functions)
-import main.client.src.client as client
+    global modules
+    if len(modules)>0 : return
+    else: modules = import_modules_from_directory(g.functions)
 
+def execute_module_function(call_string):
+    match = re.match(r'(\w+)\.(\w+)\((.*)\)', call_string)
+    if not match:
+        raise ValueError(f" !> {call_string}: Invalid call string format")
     
+    module_name, function_name, args_str = match.groups()
+    del match
+    
+    global modules
+    if module_name in modules and function_name in modules[module_name]:
+        func = modules[module_name][function_name]
+        
+        args, kwargs = parse_arguments(args_str)
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            print(f" !> Function call failed: {module_name}.{function_name}({args_str}) : {e}")
+            # raise ValueError(f" !> Function call failed: {module_name}.{function_name}({args_str})") from e
+    else:
+        raise ValueError(f"Module or function not found: {module_name}.{function_name}")
+
+def parse_arguments(args_str):
+    if not args_str.strip():
+        return [], {}
+    
+    args = []
+    kwargs = {}
+
+    # 引数文字列をカンマで分割
+    for arg in args_str.split(','):
+        arg = arg.strip()
+        try:
+            # イコールで分割して、キーワード引数かどうか判定
+            if '=' in arg:
+                key, value = arg.split('=', 1)
+                kwargs[key.strip()] = ast.literal_eval(value.strip())
+            else:
+                args.append(ast.literal_eval(arg))
+        except Exception as e:
+            print(f" !> Failed to parse argument: {arg}")
+
+    return args, kwargs
+
 # ------------------ #
 actions = {}
 
@@ -56,18 +96,8 @@ def execute_action(name, arg=None): # param
             else:
                 action = action.replace("$", f"{arg}")
             
-        
         # execute
-        try:
-            print(f" - executing {name} : {action} ...")
-            exec(f"result = {action}", globals(), namespace)
-        except Exception as e:
-            print("   > execution failed: ",e)
-        
-        if "result" in namespace:
-            return namespace["result"]
-        else:
-            return None
+        return execute_module_function(action)
     else:
         print(f"action '{name}' not found")
         return None
@@ -86,18 +116,7 @@ def convert_string(s):
 
 def execute_function(function): # module.function(args)
     import_all_modules()
-    namespace = {}
-    try:
-        print(f" - executing {function} ...")
-        exec(f"result = {function}", globals(), namespace)
-    except Exception as e:
-        print(f"  > execution failed: ",e)
-    
-    if "result" in namespace:
-        return namespace["result"]
-    else:
-        return None
-
+    return execute_module_function(function)
 # ------------------ #
 onload_js = []
 
@@ -146,25 +165,5 @@ def merge_onload_js():
                 f.write(script["code"])
             f.write("\n")
     clear_onload_js()
+    print("host: merge_onload_js complete")
 
-
-# ------------------ #
-
-request_module = Blueprint("host", __name__, url_prefix="/")
-
-@request_module.route("/")
-def show_interface():
-    client.generate_html()
-    
-    from main.client.src.client import theme_path
-    return render_template("base.html",theme=theme_path)
-
-@request_module.route("/action", methods=["POST"])
-def action():
-    
-    print(f" ! got POST with arg {request.get_json()}")
-    returns = {}
-    for key, value in request.get_json().items():
-        returns[key] = execute_action(key, value) 
-
-    return jsonify(returns)
