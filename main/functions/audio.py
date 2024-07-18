@@ -1,4 +1,5 @@
 import subprocess
+import clr
 
 def get_audio_devices():
     # PowerShell 実行ファイルのパス
@@ -15,29 +16,28 @@ def set_audio_device(arg, by = "uuid"): # by = "uuid" or "name"
 
 # ----------------------------------------------------------- #
 
-def set_master_volume(value):
-    from main.functions._audio.master_volume import set_master_volume as function
-    function(value)
+clr.AddReference("main/functions/_audio/MasterVolume")
+# import dll
+from MasterVolume import MasterVolumeController
+mvc = MasterVolumeController()
+
+def set_master_volume(level):
+    mvc.SetMasterVolume(level)
 
 def add_master_volume(change):
-    from main.functions._audio.master_volume import add_master_volume as function
-    function(change)
+    mvc.AddMasterVolume(change)
 
 def get_master_volume():
-    from main.functions._audio.master_volume import get_master_volume as function
-    return function()
+    return mvc.GetMasterVolume()
 
 def set_master_volume_mute(mute):
-    from main.functions._audio.master_volume import set_master_volume_mute as function
-    function(mute)
+    mvc.SetMasterVolumeMute(mute)
 
 def toggle_master_volume_mute():
-    from main.functions._audio.master_volume import toggle_master_volume_mute as function
-    function()
+    mvc.ToggleMasterVolumeMute()
 
 def get_master_volume_mute():
-    from main.functions._audio.master_volume import get_master_volume_mute as function
-    return function()
+    return mvc.GetMasterVolumeMute()
 
 # ----------------------------------------------------------- #
 

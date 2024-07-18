@@ -3,3 +3,4 @@ regex
 pyautogui #shortcut.py
 pycaw #volume
 comtypes #volume
+pythonnet #cs
