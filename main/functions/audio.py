@@ -1,5 +1,5 @@
-import subprocess
-import clr
+import subprocess, clr
+import main.globals as g
 
 def get_audio_devices():
     # PowerShell 実行ファイルのパス

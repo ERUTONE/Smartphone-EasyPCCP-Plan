@@ -25,6 +25,8 @@ window.addEventListener("resize", setRootFontSize);
 setRootFontSize();
 // ------------------------------------------------ //
 
+var eventstream = new EventSource('/stream');
+
 function sendData(e) {
     // ajaxでデータを送信
     e.preventDefault();

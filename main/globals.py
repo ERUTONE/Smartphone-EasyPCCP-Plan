@@ -35,3 +35,4 @@ functions:  Final[str] = home + "main/functions/"
 # Host
 
 host                   = None
+notify_client          = None

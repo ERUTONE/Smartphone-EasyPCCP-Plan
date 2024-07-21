@@ -1,6 +1,5 @@
 import regex as re, weakref
 import main.globals as g
-import main.client.src.client as client
 
 # weakref
 _add_action = weakref.ref(g.host.add_action)
@@ -44,6 +43,12 @@ class component:
         
         return f"ERROR: No {self.type} type generator<br>"
     
+    def get_syncaction(self):
+        if hasattr(self, "value"):
+            return {self.cssid : ["value", self.value]}
+        elif hasattr(self, "text") and hasattr(self, "customformat") and self.customformat == True:
+            return {self.cssid : ["text", self.text]}
+        return None
     
     # --private----- #
     

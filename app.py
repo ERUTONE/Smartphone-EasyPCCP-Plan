@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 print("starting app..")
-import json, weakref
+import json, queue
 from flask import Flask
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, Response
 
 import main.globals as g
 import main.init
@@ -52,5 +52,27 @@ def action():
     return jsonify(returns)
 
 
-app.run(host=host_ip, port=5000, debug=True)
+clients = []
+def notify_clients(message):
+    global clients
+    for client in clients:
+        client.put(message)
+g.notify_clients = notify_clients
 
+@app.route("/stream")
+def stream():
+    def event_stream():
+        q = queue.Queue()
+        clients.append(q)
+        try:
+            while True:
+                result = q.get()
+                yield f'data: {result}\n\n'
+        except GeneratorExit:
+            clients.remove(q)
+    
+    return Response(event_stream(), mimetype="text/event-stream")
+
+
+if __name__ == "__main__":
+    app.run(host=host_ip, port=5000, debug=False)
